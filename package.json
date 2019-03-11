@@ -1,0 +1,28 @@
+{
+  "name": "pocflare",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node webserver.js",
+    "prod": "webpack --mode=production",
+    "watch": "webpack --mode=development --watch --progress"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "stacktrace-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-polyfill": "^6.26.0",
+    "eslint": "^5.15.1",
+    "eslint-config-prettier": "^4.1.0",
+    "prettier": "^1.16.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "whatwg-fetch": "^3.0.0"
+  }
+}
