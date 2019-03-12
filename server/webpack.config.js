@@ -1,10 +1,12 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    entry: ['whatwg-fetch', './src/index.js'],
+    entry: './src/index.js',
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
     },
-    target: 'browser',
+    target: 'node',
+    externals: [nodeExternals()]
 };

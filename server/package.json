@@ -4,12 +4,20 @@
     "description": "",
     "private": true,
     "scripts": {
-        "server": "node ./webserver.js"
+        "server": "webpack --mode=development && node ./dist/index.js"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "async": "^2.6.2",
         "body-parser": "^1.18.3",
-        "express": "^4.16.4"
+        "express": "^4.16.4",
+        "source-map": "^0.7.3"
+    },
+    "devDependencies": {
+        "babel-polyfill": "^6.26.0",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.2.3",
+        "webpack-node-externals": "^1.7.2"
     }
 }
