@@ -5,13 +5,14 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node webserver.js",
+    "server": "node webserver.js",
     "prod": "webpack --mode=production",
     "watch": "webpack --mode=development --watch --progress"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "stacktrace-js": "^2.0.0"
   },

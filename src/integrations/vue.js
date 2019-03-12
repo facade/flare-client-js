@@ -1,20 +1,16 @@
 import StackTrace from 'stacktrace-js';
 
+import { kebabToPascal, stringifyStackframes } from '../util';
+
 const useVuePlugin = (reportError, Vue) => {
     if (!Vue || !Vue.config) {
         return;
     }
 
     Vue.config.errorHandler = (error, vm, info) => {
-        StackTrace.fromError(error).then(stacktrace => {
-            // kebab to camel https://stackoverflow.com/a/6661012/6374824
-            const componentName = vm.$options._componentTag.replace(/-([a-z])/g, function(g) {
-                return g[1].toUpperCase();
-            });
+        console.error(error);
 
-            const props = vm.$options.propsData;
-            const data = vm._data;
-
+        StackTrace.fromError(error).then(stackframes => {
             const computed = Object.keys(vm._computedWatchers).map(key => {
                 return { [key]: vm._computedWatchers[key].value };
             });
@@ -24,14 +20,14 @@ const useVuePlugin = (reportError, Vue) => {
 
             const formattedError = {
                 message: error.message,
-                originalError: error,
-                stacktrace,
+                originalError: stringifyStackframes(stackframes),
+                stackframes,
                 extraInfo: {
                     vue: {
-                        componentName,
                         info,
-                        props,
-                        data,
+                        componentName: kebabToPascal(vm.$options._componentTag),
+                        props: vm.$options.propsData,
+                        data: vm._data,
                         computed,
                     },
                 },

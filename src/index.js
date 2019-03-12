@@ -23,6 +23,7 @@ const reportError = report => {
         headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
+            'Access-Control-Request-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
         },
     });
 };
