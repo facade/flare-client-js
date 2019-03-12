@@ -8,6 +8,8 @@ const useVuePlugin = (reportError, Vue) => {
     }
 
     Vue.config.errorHandler = (error, vm, info) => {
+        /* This is needed to still output the error to the user's console,
+            I'm not entirely sure why it's not being bubbled up after this function */
         console.error(error);
 
         StackTrace.fromError(error).then(stackframes => {
