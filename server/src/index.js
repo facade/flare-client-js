@@ -11,11 +11,15 @@ const app = express()
         next();
     });
 
-app.post('/', (req, res) => {
+app.post('/', async(req, res) => {
     res.send('Hello World');
-    /* console.log(req.body); */
 
-    consumeStackframes(req.body.stackframes).then(answer => console.log(answer));
+    console.log(JSON.stringify(req.body));
+    console.log();
+
+    const consumedStackframes = await consumeStackframes(req.body.stackframes);
+
+    console.log(consumedStackframes);
 });
 
 app.listen(3000);

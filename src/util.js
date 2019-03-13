@@ -1,3 +1,5 @@
+import StackTrace from 'stacktrace-js';
+
 //https://stackoverflow.com/a/44082344/6374824
 export function kebabToPascal(str) {
     str += '';
@@ -14,4 +16,10 @@ export function stringifyStackframes(stackframes) {
             return sf.toString();
         })
         .join('\n');
+}
+
+export function stackframesFromError(error) {
+    return new Promise(resolve => {
+        StackTrace.fromError(error).then(stackframes => resolve(stackframes));
+    });
 }

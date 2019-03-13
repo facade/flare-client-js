@@ -12,6 +12,7 @@ const useVuePlugin = (reportError, Vue) => {
             I'm not entirely sure why it's not being bubbled up after this function */
         console.error(error);
 
+        // TODO: use stackframesFromError from util and remove StackTrace import in this file
         StackTrace.fromError(error).then(stackframes => {
             const computed = Object.keys(vm._computedWatchers).map(key => {
                 return { [key]: vm._computedWatchers[key].value };
