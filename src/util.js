@@ -1,4 +1,5 @@
 import StackTrace from 'stacktrace-js';
+import platform from 'platform';
 
 //https://stackoverflow.com/a/44082344/6374824
 export function kebabToPascal(str) {
@@ -22,4 +23,8 @@ export function stackframesFromError(error) {
     return new Promise(resolve => {
         StackTrace.fromError(error).then(stackframes => resolve(stackframes));
     });
+}
+
+export function getPlatformInfo() {
+    return platform;
 }
