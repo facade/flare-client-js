@@ -21,7 +21,7 @@ export function stringifyStackframes(stackframes) {
 
 export function stackframesFromError(error) {
     return new Promise(resolve => {
-        StackTrace.fromError(error).then(stackframes => resolve(stackframes));
+        StackTrace.fromError(error).then(resolve);
     });
 }
 

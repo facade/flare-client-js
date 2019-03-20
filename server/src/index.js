@@ -11,15 +11,21 @@ const app = express()
         next();
     });
 
-app.post('/', async(req, res) => {
+app.post('/', async (req, res) => {
     res.send('Hello World');
 
-    console.log(JSON.stringify(req.body));
+    /* console.log(JSON.stringify(req.body)); */
     console.log();
 
-    const consumedStackframes = await consumeStackframes(req.body.stackframes);
+    /* const consumedStackframes = await consumeStackframes(req.body.report.stacktrace); */
 
-    console.log(consumedStackframes);
+    consumeStackframes(req.body.report.stacktrace).then(res => {
+        console.log('result:', res);
+    }).catch(err => {
+        /* console.log('error:', err); */
+    });
+
+    /* console.log('kek', consumedStackframes); */
 });
 
 app.listen(3000);

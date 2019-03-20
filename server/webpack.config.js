@@ -8,5 +8,8 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     target: 'node',
-    externals: [nodeExternals()]
+    externals: [nodeExternals()],
+    optimization: {
+		minimize: false
+	},
 };

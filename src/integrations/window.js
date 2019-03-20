@@ -1,14 +1,12 @@
-import StackTrace from 'stacktrace-js';
+import { stringifyStackframes, stackframesFromError } from '../util';
 
 const catchWindowErrors = reportError => {
     window.onerror = (message, source, lineno, colno, error) => {
-        // TODO: use stackframesFromError from util and remove StackTrace import in this file
-        StackTrace.fromError(error).then(stacktrace => {
-
+        stackframesFromError.then(stackframes => {
             const formattedError = {
                 message: error.message,
-                originalError: error,
-                stacktrace,
+                originalError: stringifyStackframes(stackframes),
+                stackframes,
             };
 
             reportError(formattedError);

@@ -3,6 +3,7 @@ import { default as asyncMap } from 'async/map';
 import fs from 'fs';
 
 export async function consumeStackframes(stackframes) {
+    /* console.log(stackframes); */
     return new Promise((resolve, reject) => {
         asyncMap(
             stackframes,
@@ -10,8 +11,10 @@ export async function consumeStackframes(stackframes) {
                 const fileName = frame.fileName.split('/').slice(-1);
 
                 fs.readFile(`./sourcemaps/${fileName}.map`, 'utf8', async function(err, data) {
-                    if (err) {
-                        callback(err);
+                    if (err || !data) {
+                        callback(null, frame);
+
+                        return;
                     }
 
                     const consumer = await new SourceMapConsumer(JSON.parse(data));
