@@ -8,16 +8,19 @@ const useVuePlugin = (reportError, Vue) => {
     Vue.config.errorHandler = (error, vm, info) => {
         /* This is needed to still output the error to the user's console,
             I'm not entirely sure why it's not being bubbled up after this function */
-        console.error(error);
+        console.error(error); // TODO: figure out how to get the original Vue error and log that
 
-        stackframesFromError(error).then(stackframes => {
-            const computed = Object.keys(vm._computedWatchers).map(key => {
+        let computed = undefined;
+        if (vm._computedWatchers) {
+            computed = Object.keys(vm._computedWatchers).map(key => {
                 return { [key]: vm._computedWatchers[key].value };
             });
+        }
 
-            // TODO: get vuex store if exists
-            // TODO: get Vue events from last x seconds?
+        // TODO: get vuex store if exists
+        // TODO: get Vue events from last x seconds?
 
+        stackframesFromError(error).then(stackframes => {
             const formattedError = {
                 message: error.message,
                 originalError: stringifyStackframes(stackframes),

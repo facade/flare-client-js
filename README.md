@@ -10,7 +10,7 @@ To start developing:
 As early as possible in the application you want to log:
 
 ```js
-import igniteFlare from 'pocflare/src';
+import igniteFlare from 'flare-client-js/src';
 
 const flareOptions = {
     serverUrl: 'public server url',
