@@ -14,18 +14,13 @@ const app = express()
 app.post('/', async (req, res) => {
     res.send('Hello World');
 
-    /* console.log(JSON.stringify(req.body)); */
-    console.log();
+    console.log(req.body);
 
-    /* const consumedStackframes = await consumeStackframes(req.body.report.stacktrace); */
-
-    consumeStackframes(req.body.report.stacktrace).then(res => {
+    /* consumeStackframes(req.body.report.stacktrace).then(res => {
         console.log('result:', res);
     }).catch(err => {
-        /* console.log('error:', err); */
-    });
-
-    /* console.log('kek', consumedStackframes); */
+        console.log('error:', err);
+    }); */
 });
 
 app.listen(3000);

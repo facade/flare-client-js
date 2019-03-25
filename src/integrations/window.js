@@ -1,16 +1,10 @@
-import { stringifyStackframes, stackframesFromError } from '../util';
+import { getCurrentEpochTime } from '../util';
 
 const catchWindowErrors = reportError => {
     window.onerror = (message, source, lineno, colno, error) => {
-        stackframesFromError(error).then(stackframes => {
-            const formattedError = {
-                message: error.message,
-                originalError: stringifyStackframes(stackframes),
-                stackframes,
-            };
+        const seenAt = getCurrentEpochTime();
 
-            reportError(formattedError);
-        });
+        reportError({error, seenAt, });
     };
 };
 

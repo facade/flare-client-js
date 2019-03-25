@@ -1,4 +1,4 @@
-import { kebabToPascal, stringifyStackframes, stackframesFromError } from '../util';
+import { kebabToPascal, getCurrentEpochTime } from '../util';
 
 const useVuePlugin = (reportError, Vue) => {
     if (!Vue || !Vue.config) {
@@ -7,8 +7,10 @@ const useVuePlugin = (reportError, Vue) => {
 
     Vue.config.errorHandler = (error, vm, info) => {
         /* This is needed to still output the error to the user's console,
-            I'm not entirely sure why it's not being bubbled up after this function */
+        I'm not entirely sure why it's not being bubbled up after this function */
         console.error(error); // TODO: figure out how to get the original Vue error and log that
+
+        const seenAt = getCurrentEpochTime();
 
         let computed = undefined;
         if (vm._computedWatchers) {
@@ -17,27 +19,20 @@ const useVuePlugin = (reportError, Vue) => {
             });
         }
 
+        const context = {
+            vue: {
+                info,
+                componentName: kebabToPascal(vm.$options._componentTag),
+                props: vm.$options.propsData,
+                data: vm._data,
+                computed,
+            },
+        };
+
         // TODO: get vuex store if exists
         // TODO: get Vue events from last x seconds?
 
-        stackframesFromError(error).then(stackframes => {
-            const formattedError = {
-                message: error.message,
-                originalError: stringifyStackframes(stackframes),
-                stackframes,
-                extraInfo: {
-                    vue: {
-                        info,
-                        componentName: kebabToPascal(vm.$options._componentTag),
-                        props: vm.$options.propsData,
-                        data: vm._data,
-                        computed,
-                    },
-                },
-            };
-
-            reportError(formattedError);
-        });
+        reportError({error, seenAt, context});
     };
 };
 

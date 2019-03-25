@@ -3,7 +3,6 @@ import { default as asyncMap } from 'async/map';
 import fs from 'fs';
 
 export async function consumeStackframes(stackframes) {
-    /* console.log(stackframes); */
     return new Promise((resolve, reject) => {
         asyncMap(
             stackframes,

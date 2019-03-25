@@ -1,6 +1,6 @@
 import useVuePlugin from './integrations/vue';
 import catchWindowErrors from './integrations/window';
-import { getPlatformInfo } from './util';
+import { getPlatformInfo, errorToFormattedStacktrace } from './util';
 
 let reportingServerUrl;
 
@@ -17,10 +17,33 @@ const lightFlare = ({ serverUrl = '', withVue, Vue = window.Vue }) => {
     catchWindowErrors(reportError);
 };
 
-const reportError = report => {
+const reportError = async function({ error, seenAt, context = {} }) {
+    const notifier = 'Flare JavaScript Client V1.0'; // TODO: get version dynamically from package.json (webpack plugin?)
+    const exceptionClass = error.constructor.name;
+    const message = error.message;
+    const language = 'javascript';
+    const glows = [];
+    const stacktrace = await errorToFormattedStacktrace(error);
+
+    context.platform = getPlatformInfo();
+
+    const body = {
+        key: '',
+        notifier,
+        exceptionClass,
+        seenAt,
+        message,
+        language,
+        glows,
+        context,
+        stacktrace,
+    };
+
+    /* console.log(body); */
+
     fetch(reportingServerUrl, {
         method: 'POST',
-        body: JSON.stringify({ report, platform: getPlatformInfo() }),
+        body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
