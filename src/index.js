@@ -39,7 +39,7 @@ const reportError = async function({ error, seenAt, context = {} }) {
         stacktrace,
     };
 
-    /* console.log(body); */
+    console.log(body);
 
     fetch(reportingServerUrl, {
         method: 'POST',

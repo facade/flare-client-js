@@ -1,8 +1,5 @@
 import StackTrace from 'stacktrace-js';
 import platform from 'platform';
-import { default as asyncMap } from 'async/map';
-/* import sourceMapResolve from 'source-map-resolve'; */
-/* import { SourceMapConsumer } from 'source-map'; */
 
 //https://stackoverflow.com/a/44082344/6374824
 export function kebabToPascal(str) {
@@ -18,54 +15,19 @@ export function errorToFormattedStacktrace(error) {
     return new Promise(async function(resolve) {
         const stacktrace = await StackTrace.fromError(error);
 
-
-
         const formattedStacktrace = stacktrace.map(frame => {
-            const resolvedFrame = resolveStacktrace(frame);
-
             const codeSnippet = [];
 
             return {
-                lineNumber: resolvedFrame.lineNumber,
-                columnNumber: resolvedFrame.columnNumber,
-                method: resolvedFrame.functionName,
+                lineNumber: frame.lineNumber,
+                columnNumber: frame.columnNumber,
+                method: frame.functionName,
                 codeSnippet,
-                file: resolvedFrame.fileName,
+                file: frame.fileName,
             };
         });
 
         resolve(formattedStacktrace);
-    });
-}
-
-function resolveStacktrace(stacktrace) {
-    return new Promise(resolve => {
-        asyncMap(
-            stacktrace,
-            async function (frame, callback) {
-                const fileName = frame.fileName;
-
-                // TODO: read file
-
-                if (err || !data) {
-                    // Return original, unresolved frame
-                    callback(null, frame);
-                    return;
-                }
-
-                const consumer = await new SourceMapConsumer(JSON.parse(data));
-                const originalPosition = consumer.originalPositionFor({
-                    line: frame.lineNumber,
-                    column: frame.columnNumber,
-                });
-
-                callback(null, originalPosition);
-
-            },
-            (err, results) => {
-                resolve(results || stacktrace);
-            }
-        );
     });
 }
 
