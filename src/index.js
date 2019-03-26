@@ -1,6 +1,6 @@
 import useVuePlugin from './integrations/vue';
 import catchWindowErrors from './integrations/window';
-import { getPlatformInfo, errorToFormattedStacktrace } from './util';
+import { errorToFormattedStacktrace, getContext } from './util';
 
 let reportingServerUrl;
 
@@ -18,25 +18,16 @@ const lightFlare = ({ serverUrl = '', withVue, Vue = window.Vue }) => {
 };
 
 const reportError = async function({ error, seenAt, context = {} }) {
-    const notifier = 'Flare JavaScript Client V1.0'; // TODO: get version dynamically from package.json (webpack plugin?)
-    const exceptionClass = error.constructor.name;
-    const message = error.message;
-    const language = 'javascript';
-    const glows = [];
-    const stacktrace = await errorToFormattedStacktrace(error);
-
-    context.platform = getPlatformInfo();
-
     const body = {
         key: '',
-        notifier,
-        exceptionClass,
+        notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
+        exceptionClass: error.constructor.name,
         seenAt,
-        message,
-        language,
-        glows,
-        context,
-        stacktrace,
+        message: error.message,
+        language: 'javascript',
+        glows: [], // todo
+        context: getContext(context),
+        stacktrace: await errorToFormattedStacktrace(error),
     };
 
     console.log(body);

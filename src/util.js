@@ -1,5 +1,4 @@
 import StackTrace from 'stacktrace-js';
-import platform from 'platform';
 
 //https://stackoverflow.com/a/44082344/6374824
 export function kebabToPascal(str) {
@@ -31,10 +30,22 @@ export function errorToFormattedStacktrace(error) {
     });
 }
 
-export function getPlatformInfo() {
-    return platform;
-}
-
 export function getCurrentEpochTime() {
     return Math.round(new Date() / 1000);
+}
+
+export function getContext(context = {}) {
+    context.request = {
+        url: document.location.href,
+        useragent: navigator.userAgent,
+        referrer: document.referrer,
+        readyState: document.readyState,
+    };
+
+    context.cookies = document.cookie.split('; ').map(cookie => {
+        const splitCookie = cookie.split(/=/);
+        return { [splitCookie[0]]: splitCookie[1] };
+    });
+
+    return context;
 }
