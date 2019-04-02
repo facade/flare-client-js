@@ -13,9 +13,11 @@ As early as possible in the application you want to log:
 import igniteFlare from 'flare-client-js/src';
 
 const flareOptions = {
-    serverUrl: 'public server url',
+    reportingUrl: 'public server url',
     withVue: true, // optional
     Vue, // optional
+    withReact: true, // optional
+    React, // optional
 };
 
 igniteFlare(flareOptions);

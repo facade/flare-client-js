@@ -11,6 +11,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "react": "^16.8.6",
         "stacktrace-js": "^2.0.0"
     },
     "devDependencies": {

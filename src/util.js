@@ -30,11 +30,16 @@ export function errorToFormattedStacktrace(error) {
     });
 }
 
+// Adapted from bugsnag: https://github.com/bugsnag/bugsnag-js/blob/c2020c6522fc075d284ad9441bbde8be155450d2/packages/plugin-react/src/index.js#L38-L45
+export function formatReactComponentStack(stack) {
+    return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
+}
+
 export function getCurrentEpochTime() {
     return Math.round(new Date() / 1000);
 }
 
-export function getContext(context = {}) {
+export function getExtraContext(context) {
     context.request = {
         url: document.location.href,
         useragent: navigator.userAgent,
@@ -48,4 +53,28 @@ export function getContext(context = {}) {
     });
 
     return context;
+}
+
+export async function reporter({ reportingUrl, error, seenAt, context }) {
+    const body = {
+        key: '',
+        notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
+        exceptionClass: error.constructor.name,
+        seenAt,
+        message: error.message,
+        language: 'javascript',
+        glows: [], // todo
+        context: getExtraContext(context),
+        stacktrace: await errorToFormattedStacktrace(error),
+    };
+
+    fetch(reportingUrl, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Access-Control-Request-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        },
+    });
 }

@@ -1,46 +1,27 @@
 import useVuePlugin from './integrations/vue';
+import ReactErrorBoundary from './integrations/react';
 import catchWindowErrors from './integrations/window';
-import { errorToFormattedStacktrace, getContext } from './util';
+import { reporter } from './util';
 
-let reportingServerUrl;
-
-const lightFlare = ({ serverUrl = '', withVue, Vue = window.Vue }) => {
-    reportingServerUrl = serverUrl;
-    if (!reportingServerUrl) {
-        return;
+export default function lightFlare({ reportingUrl = '', withVue, Vue = window.Vue, withReact, React = window.React, ReactFallbackUi = null }) {
+    if (!reportingUrl) {
+        console.error('Flare JS Client: no reportingUrl was passed, shutting down.');
+        return false;
     }
 
-    if (withVue) {
-        useVuePlugin(reportError, Vue);
+    function reportError({ error, seenAt, context = {} }) {
+        reporter({ reportingUrl, error, seenAt, context });
     }
 
     catchWindowErrors(reportError);
-};
 
-const reportError = async function({ error, seenAt, context = {} }) {
-    const body = {
-        key: '',
-        notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
-        exceptionClass: error.constructor.name,
-        seenAt,
-        message: error.message,
-        language: 'javascript',
-        glows: [], // todo
-        context: getContext(context),
-        stacktrace: await errorToFormattedStacktrace(error),
-    };
+    if (Vue || (withVue && Vue)) {
+        useVuePlugin(reportError, Vue);
+    }
 
-    console.log(body);
+    if (React || (withReact && React)) {
+        return ReactErrorBoundary(reportError, React, ReactFallbackUi);
+    }
 
-    fetch(reportingServerUrl, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'Access-Control-Request-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        },
-    });
-};
-
-export default lightFlare;
+    return true;
+}
