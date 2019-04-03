@@ -55,6 +55,12 @@ export function getExtraContext(context) {
     return context;
 }
 
+function getAwsApiKeyFromCompoundKey(compoundKey) {
+    const compountKeyPieces = compoundKey.split('---');
+
+    return compountKeyPieces[0];
+}
+
 export async function reporter({ reportingUrl, key, error, seenAt, context }) {
     const body = {
         key,
@@ -74,6 +80,7 @@ export async function reporter({ reportingUrl, key, error, seenAt, context }) {
         headers: {
             'Content-Type': 'application/json',
             'X-Requested-With': 'XMLHttpRequest',
+            'x-api-key': getAwsApiKeyFromCompoundKey(key),
             'Access-Control-Request-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
         },
     });
