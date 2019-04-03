@@ -55,9 +55,9 @@ export function getExtraContext(context) {
     return context;
 }
 
-export async function reporter({ reportingUrl, error, seenAt, context }) {
+export async function reporter({ reportingUrl, key, error, seenAt, context }) {
     const body = {
-        key: '',
+        key,
         notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
         exceptionClass: error.constructor.name,
         seenAt,
