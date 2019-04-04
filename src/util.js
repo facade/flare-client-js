@@ -55,33 +55,8 @@ export function getExtraContext(context) {
     return context;
 }
 
-function getAwsApiKeyFromCompoundKey(compoundKey) {
+export function getAwsApiKeyFromCompoundKey(compoundKey) {
     const compountKeyPieces = compoundKey.split('---');
 
     return compountKeyPieces[0];
-}
-
-export async function reporter({ reportingUrl, key, error, seenAt, context }) {
-    const body = {
-        key,
-        notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
-        exceptionClass: error.constructor.name,
-        seenAt,
-        message: error.message,
-        language: 'javascript',
-        glows: [], // todo
-        context: getExtraContext(context),
-        stacktrace: await errorToFormattedStacktrace(error),
-    };
-
-    fetch(reportingUrl, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest',
-            'x-api-key': getAwsApiKeyFromCompoundKey(key),
-            'Access-Control-Request-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        },
-    });
 }

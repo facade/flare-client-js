@@ -1,7 +1,9 @@
 import useVuePlugin from './integrations/vue';
 import ReactErrorBoundary from './integrations/react';
 import catchWindowErrors from './integrations/window';
-import { reporter } from './util';
+import { reporter } from './reporter';
+
+export const flare = {};
 
 export default function lightFlare({ reportingUrl = '', key = '', withVue, Vue = window.Vue, withReact, React = window.React, ReactFallbackUi = null }) {
     if (!reportingUrl) {

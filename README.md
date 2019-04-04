@@ -22,3 +22,24 @@ const flareOptions = {
 
 igniteFlare(flareOptions);
 ```
+
+# React example
+
+In the root component, outside of the class definition:
+```js
+import React from "react";
+import igniteFlare from "flare-client-js/src";
+
+const FlareErrorBoundary = igniteFlare({
+    reportingUrl: "https://b09ae4f2.ngrok.io",
+    React,
+    ReactFallbackUi: <div>Error occurred :(</div>,
+});
+```
+
+In the render template:
+```js
+<FlareErrorBoundary>
+    <Component {...props} />
+</FlareErrorBoundary>,
+```
