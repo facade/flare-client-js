@@ -1,7 +1,7 @@
 import { kebabToPascal, getCurrentEpochTime } from '../util';
 import { reportError } from '../reporter';
 
-const useVuePlugin = (Vue) => {
+export default function useVuePlugin(Vue) {
     if (!Vue || !Vue.config) {
         return;
     }
@@ -33,8 +33,6 @@ const useVuePlugin = (Vue) => {
         // TODO: get vuex store if exists
         // TODO: get Vue events from last x seconds?
 
-        reportError({error, seenAt, context});
+        reportError({ error, seenAt, context });
     };
-};
-
-export default useVuePlugin;
+}
