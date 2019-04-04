@@ -12,15 +12,10 @@ As early as possible in the application you want to log:
 ```js
 import igniteFlare from 'flare-client-js/src';
 
-const flareOptions = {
-    reportingUrl: 'public server url',
-    withVue: true, // optional
-    Vue, // optional
-    withReact: true, // optional
-    React, // optional
-};
-
-igniteFlare(flareOptions);
+igniteFlare({
+    key: 'key',
+    reportingUrl: 'https://flare.com/report',
+});
 ```
 
 # React example
@@ -29,12 +24,14 @@ In the root component, outside of the class definition:
 ```js
 import React from "react";
 import igniteFlare from "flare-client-js/src";
+import FlareReact from "flare-client-js/src/integrations/react";
 
-const FlareErrorBoundary = igniteFlare({
-    reportingUrl: "https://b09ae4f2.ngrok.io",
-    React,
-    ReactFallbackUi: <div>Error occurred :(</div>,
+igniteFlare({
+    key: 'key',
+    reportingUrl: 'https://flare.com/report',
 });
+
+const FlareErrorBoundary = FlareReact(React, <div>Error occurred :(</div>);
 ```
 
 In the render template:

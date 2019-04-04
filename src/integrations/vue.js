@@ -1,6 +1,7 @@
 import { kebabToPascal, getCurrentEpochTime } from '../util';
+import { reportError } from '../reporter';
 
-const useVuePlugin = (reportError, Vue) => {
+const useVuePlugin = (Vue) => {
     if (!Vue || !Vue.config) {
         return;
     }
