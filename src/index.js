@@ -1,11 +1,14 @@
-import useVuePlugin from './integrations/vue';
-import ReactErrorBoundary from './integrations/react';
 import catchWindowErrors from './integrations/window';
-import { reporter } from './reporter';
 
-export const flare = {};
+export const flareClient = {
+    reportingUrl: '',
+    key: '',
+};
 
-export default function lightFlare({ reportingUrl = '', key = '', withVue, Vue = window.Vue, withReact, React = window.React, ReactFallbackUi = null }) {
+export default function lightFlare({
+    reportingUrl = '',
+    key = '',
+}) {
     if (!reportingUrl) {
         console.error('Flare JS Client: no reportingUrl was passed, shutting down.');
         return false;
@@ -16,19 +19,10 @@ export default function lightFlare({ reportingUrl = '', key = '', withVue, Vue =
         return false;
     }
 
-    function reportError({ error, seenAt, context = {} }) {
-        reporter({ reportingUrl, key, error, seenAt, context });
-    }
+    flareClient.reportingUrl = reportingUrl;
+    flareClient.key = key;
 
-    catchWindowErrors(reportError);
+    catchWindowErrors();
 
-    if (Vue || (withVue && Vue)) {
-        useVuePlugin(reportError, Vue);
-    }
-
-    if (React || (withReact && React)) {
-        return ReactErrorBoundary(reportError, React, ReactFallbackUi);
-    }
-
-    return true;
+    return flareClient;
 }

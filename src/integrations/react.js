@@ -1,6 +1,7 @@
 import { getCurrentEpochTime, formatReactComponentStack } from '../util';
+import { reportError } from '../reporter';
 
-export default function ReactErrorBoundary(reportError, React, FallbackUi) {
+export default function ReactErrorBoundary(React, FallbackUi) {
     return class ErrorBoundary extends React.Component {
         constructor() {
             super();
