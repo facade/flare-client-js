@@ -6,11 +6,9 @@ export default function useVuePlugin(Vue) {
         return;
     }
 
-    Vue.config.errorHandler = (error, vm, info) => {
-        /* This is needed to still output the error to the user's console,
-        I'm not entirely sure why it's not being bubbled up after this function */
-        console.error(error); // TODO: figure out how to get the original Vue error and log that
+    const original = Vue.config.errorHandler;
 
+    Vue.config.errorHandler = (error, vm, info) => {
         const seenAt = getCurrentEpochTime();
 
         let computed = undefined;
@@ -30,9 +28,10 @@ export default function useVuePlugin(Vue) {
             },
         };
 
-        // TODO: get vuex store if exists
-        // TODO: get Vue events from last x seconds?
-
         reportError({ error, seenAt, context });
+
+        if (typeof original === 'function') {
+            original(error, vm, info);
+        }
     };
 }
