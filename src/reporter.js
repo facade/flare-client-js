@@ -1,4 +1,4 @@
-import { getExtraContext, errorToFormattedStacktrace, getAwsApiKeyFromCompoundKey } from './util';
+import { getExtraContext, errorToFormattedStacktrace, getAwsApiKeyFromCompoundKey, formatTime } from './util';
 import { flareClient } from './index';
 
 export async function reportError({ error, seenAt, context }) {
@@ -6,7 +6,7 @@ export async function reportError({ error, seenAt, context }) {
         key: flareClient.key,
         notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
         exceptionClass: error.constructor.name,
-        seenAt,
+        seenAt: formatTime(seenAt),
         message: error.message,
         language: 'javascript',
         glows: [], // todo

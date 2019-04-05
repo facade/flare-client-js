@@ -1,11 +1,8 @@
-import { getCurrentEpochTime } from '../util';
-import { reportError } from '../reporter';
-
-const catchWindowErrors = () => {
+const catchWindowErrors = flareClient => {
     window.onerror = (message, source, lineno, colno, error) => {
-        const seenAt = getCurrentEpochTime();
+        const seenAt = new Date();
 
-        reportError({error, seenAt });
+        flareClient.reportError({ error, seenAt });
     };
 };
 

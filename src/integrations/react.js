@@ -1,7 +1,4 @@
-import { getCurrentEpochTime, formatReactComponentStack } from '../util';
-import { reportError } from '../reporter';
-
-export default function ReactErrorBoundary(React, FallbackUi) {
+export default function ReactErrorBoundary(flareClient, React, FallbackUi) {
     return class ErrorBoundary extends React.Component {
         constructor() {
             super();
@@ -10,7 +7,7 @@ export default function ReactErrorBoundary(React, FallbackUi) {
         }
 
         componentDidCatch(error, info) {
-            const seenAt = getCurrentEpochTime();
+            const seenAt = new Date();
 
             const context = {
                 react: {
@@ -18,7 +15,7 @@ export default function ReactErrorBoundary(React, FallbackUi) {
                 },
             };
 
-            reportError({ error, seenAt, context });
+            flareClient.reportError({ error, seenAt, context });
 
             this.setState({ hasError: true });
         }
@@ -31,4 +28,9 @@ export default function ReactErrorBoundary(React, FallbackUi) {
             return this.props.children;
         }
     };
+}
+
+// Regex taken from bugsnag: https://github.com/bugsnag/bugsnag-js/blob/c2020c6522fc075d284ad9441bbde8be155450d2/packages/plugin-react/src/index.js#L39
+function formatReactComponentStack(stack) {
+    return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
 }

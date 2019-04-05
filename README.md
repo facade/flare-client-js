@@ -23,7 +23,7 @@ igniteFlare({
 In the root component, outside of the class definition:
 ```js
 import React from "react";
-import igniteFlare from "flare-client-js/src";
+import igniteFlare, { flareClient } from "flare-client-js/src";
 import FlareReact from "flare-client-js/src/integrations/react";
 
 igniteFlare({
@@ -31,7 +31,7 @@ igniteFlare({
     reportingUrl: 'https://flare.com/report',
 });
 
-const FlareErrorBoundary = FlareReact(React, <div>Error occurred :(</div>);
+const FlareErrorBoundary = FlareReact(flareClient, React, <div>Error occurred :(</div>);
 ```
 
 In the render template:

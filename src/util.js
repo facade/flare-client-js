@@ -1,15 +1,5 @@
 import StackTrace from 'stacktrace-js';
 
-//https://stackoverflow.com/a/44082344/6374824
-export function kebabToPascal(str) {
-    str += '';
-    str = str.split('-');
-    for (let i = 0; i < str.length; i++) {
-        str[i] = str[i].slice(0, 1).toUpperCase() + str[i].slice(1, str[i].length);
-    }
-    return str.join('');
-}
-
 export function errorToFormattedStacktrace(error) {
     return new Promise(async function(resolve) {
         const stacktrace = await StackTrace.fromError(error);
@@ -30,13 +20,8 @@ export function errorToFormattedStacktrace(error) {
     });
 }
 
-// Adapted from bugsnag: https://github.com/bugsnag/bugsnag-js/blob/c2020c6522fc075d284ad9441bbde8be155450d2/packages/plugin-react/src/index.js#L38-L45
-export function formatReactComponentStack(stack) {
-    return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
-}
-
-export function getCurrentEpochTime() {
-    return Math.round(new Date() / 1000);
+export function formatTime(date) {
+    return Math.round(date / 1000);
 }
 
 export function getExtraContext(context) {

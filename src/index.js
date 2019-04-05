@@ -1,14 +1,13 @@
 import catchWindowErrors from './integrations/window';
+import { reportError } from './reporter';
 
 export const flareClient = {
+    reportError,
     reportingUrl: '',
     key: '',
 };
 
-export default function lightFlare({
-    reportingUrl = '',
-    key = '',
-}) {
+export default function lightFlare({ reportingUrl = '', key = '' }) {
     if (!reportingUrl) {
         console.error('Flare JS Client: no reportingUrl was passed, shutting down.');
         return false;
@@ -22,7 +21,7 @@ export default function lightFlare({
     flareClient.reportingUrl = reportingUrl;
     flareClient.key = key;
 
-    catchWindowErrors();
+    catchWindowErrors(flareClient);
 
     return flareClient;
 }
