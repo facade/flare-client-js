@@ -1,11 +1,17 @@
-export default function useVuePlugin(flareClient, Vue) {
+interface FlareClient {
+    reportError: Function;
+    reportingUrl: string;
+    key: string;
+}
+
+export default function useVuePlugin(flareClient: FlareClient, Vue) {
     if (!Vue || !Vue.config) {
         return;
     }
 
     const original = Vue.config.errorHandler;
 
-    Vue.config.errorHandler = (error, vm, info) => {
+    Vue.config.errorHandler = (error: Error, vm, info: String) => {
         const seenAt = new Date();
 
         let computed = undefined;

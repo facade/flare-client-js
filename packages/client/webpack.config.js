@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './index.js',
+    entry: './index.ts',
 
     output: {
         filename: 'index.js',

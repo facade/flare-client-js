@@ -1,5 +1,11 @@
 import { reportError } from './reporter';
 
+interface FlareClient {
+    reportError: Function;
+    reportingUrl: string;
+    key: string;
+}
+
 export const flareClient = {
     reportError,
     reportingUrl: '',
@@ -25,8 +31,8 @@ export default function lightFlare({ reportingUrl = '', key = '' }) {
     return flareClient;
 }
 
-const catchWindowErrors = flareClient => {
-    window.onerror = (message, source, lineno, colno, error) => {
+const catchWindowErrors = (flareClient: FlareClient) => {
+    window.onerror = (_1, _2, _3, _4, error) => {
         const seenAt = new Date();
 
         flareClient.reportError({ error, seenAt });

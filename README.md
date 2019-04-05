@@ -38,5 +38,5 @@ In the render template:
 ```js
 <FlareErrorBoundary>
     <Component {...props} />
-</FlareErrorBoundary>,
+</FlareErrorBoundary>
 ```

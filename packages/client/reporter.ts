@@ -1,7 +1,33 @@
 import { getExtraContext, errorToFormattedStacktrace, getAwsApiKeyFromCompoundKey, formatTime } from './util';
 import { flareClient } from './index';
 
-export function reportError({ error, seenAt, context }) {
+export interface Context {
+    react?: {
+        componentStack: Array<String>;
+    };
+    vue?: {
+        info: String;
+        componentName: String;
+        props: Object;
+        data: Object;
+        computed?: Array<Object>;
+    };
+    request?: {
+        url: String;
+        useragent: String;
+        referrer: String;
+        readyState: String;
+    };
+    cookies?: Array<Object>;
+}
+
+interface ErrorReport {
+    error: Error;
+    seenAt: number;
+    context: Context;
+}
+
+export function reportError({ error, seenAt, context }: ErrorReport) {
     errorToFormattedStacktrace(error).then(stacktrace => {
         const body = {
             key: flareClient.key,
