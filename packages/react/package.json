@@ -1,0 +1,14 @@
+{
+    "name": "flare-react",
+    "main": "dist/index.js",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "prod": "../../node_modules/webpack/bin/webpack.js --mode=production",
+        "dev": "../../node_modules/webpack/bin/webpack.js --mode=development --progress",
+        "watch": "../../node_modules/webpack/bin/webpack.js --mode=development --watch --progress"
+    },
+    "author": "adriaan@spatie.be",
+    "license": "ISC"
+}

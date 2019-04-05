@@ -10,7 +10,7 @@ To start developing:
 As early as possible in the application you want to log:
 
 ```js
-import igniteFlare from 'flare-client-js/src';
+import igniteFlare from 'flare-client-js/packages/client';
 
 igniteFlare({
     key: 'key',
@@ -23,8 +23,8 @@ igniteFlare({
 In the root component, outside of the class definition:
 ```js
 import React from "react";
-import igniteFlare, { flareClient } from "flare-client-js/src";
-import FlareReact from "flare-client-js/src/integrations/react";
+import igniteFlare, { flareClient } from "flare-client-js/packages/client";
+import FlareReact from "flare-client-js/packages/react";
 
 igniteFlare({
     key: 'key',

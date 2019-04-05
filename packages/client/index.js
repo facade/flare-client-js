@@ -1,4 +1,3 @@
-import catchWindowErrors from './integrations/window';
 import { reportError } from './reporter';
 
 export const flareClient = {
@@ -25,3 +24,11 @@ export default function lightFlare({ reportingUrl = '', key = '' }) {
 
     return flareClient;
 }
+
+const catchWindowErrors = flareClient => {
+    window.onerror = (message, source, lineno, colno, error) => {
+        const seenAt = new Date();
+
+        flareClient.reportError({ error, seenAt });
+    };
+};

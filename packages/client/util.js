@@ -1,22 +1,22 @@
 import StackTrace from 'stacktrace-js';
 
 export function errorToFormattedStacktrace(error) {
-    return new Promise(async function(resolve) {
-        const stacktrace = await StackTrace.fromError(error);
+    return new Promise(resolve => {
+        StackTrace.fromError(error).then(stacktrace => {
+            const formattedStacktrace = stacktrace.map(frame => {
+                const codeSnippet = [];
 
-        const formattedStacktrace = stacktrace.map(frame => {
-            const codeSnippet = [];
+                return {
+                    lineNumber: frame.lineNumber,
+                    columnNumber: frame.columnNumber,
+                    method: frame.functionName,
+                    codeSnippet,
+                    file: frame.fileName,
+                };
+            });
 
-            return {
-                lineNumber: frame.lineNumber,
-                columnNumber: frame.columnNumber,
-                method: frame.functionName,
-                codeSnippet,
-                file: frame.fileName,
-            };
+            resolve(formattedStacktrace);
         });
-
-        resolve(formattedStacktrace);
     });
 }
 
@@ -24,7 +24,7 @@ export function formatTime(date) {
     return Math.round(date / 1000);
 }
 
-export function getExtraContext(context) {
+export function getExtraContext(context = {}) {
     context.request = {
         url: document.location.href,
         useragent: navigator.userAgent,
