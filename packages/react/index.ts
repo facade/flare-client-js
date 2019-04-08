@@ -14,14 +14,8 @@ interface Context {
     };
 }
 
-export default function ReactErrorBoundary(flareClient: FlareClient, React, FallbackUi) {
+export default function ReactErrorBoundary(flareClient: FlareClient, React) {
     return class ErrorBoundary extends React.Component {
-        constructor() {
-            super();
-
-            this.state = { hasError: false };
-        }
-
         componentDidCatch(error: Error, info: ReactErrorInfo) {
             const seenAt = new Date();
 
@@ -33,14 +27,10 @@ export default function ReactErrorBoundary(flareClient: FlareClient, React, Fall
 
             flareClient.reportError({ error, seenAt, context });
 
-            this.setState({ hasError: true });
+            throw error;
         }
 
         render() {
-            if (this.state.hasError && FallbackUi) {
-                return FallbackUi;
-            }
-
             return this.props.children;
         }
     };
