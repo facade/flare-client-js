@@ -35,9 +35,3 @@ export function getExtraContext(context: Context = {}) {
 
     return context;
 }
-
-export function getAwsApiKeyFromCompoundKey(compoundKey: String) {
-    const compountKeyPieces = compoundKey.split('---');
-
-    return compountKeyPieces[0];
-}

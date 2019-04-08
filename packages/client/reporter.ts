@@ -1,4 +1,4 @@
-import { getExtraContext, errorToFormattedStacktrace, getAwsApiKeyFromCompoundKey, formatTime } from './util';
+import { getExtraContext, errorToFormattedStacktrace, formatTime } from './util';
 import { flareClient } from './index';
 
 export interface Context {
@@ -36,7 +36,7 @@ export function reportError({ error, seenAt, context }: ErrorReport) {
 
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('x-api-key', getAwsApiKeyFromCompoundKey(flareClient.key));
+        xhr.setRequestHeader('x-api-key', flareClient.key);
         xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
         xhr.send(JSON.stringify(body));
