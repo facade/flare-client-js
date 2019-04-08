@@ -10,5 +10,8 @@
         "watch": "../../node_modules/webpack/bin/webpack.js --mode=development --watch --progress"
     },
     "author": "adriaan@spatie.be",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "@babel/preset-typescript": "^7.3.3"
+    }
 }
