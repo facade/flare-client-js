@@ -8,6 +8,12 @@ interface FlareClient {
     key: string;
 }
 
+interface Context {
+    react: {
+        componentStack: Array<String>;
+    };
+}
+
 export default function ReactErrorBoundary(flareClient: FlareClient, React, FallbackUi) {
     return class ErrorBoundary extends React.Component {
         constructor() {
@@ -19,7 +25,7 @@ export default function ReactErrorBoundary(flareClient: FlareClient, React, Fall
         componentDidCatch(error: Error, info: ReactErrorInfo) {
             const seenAt = new Date();
 
-            const context = {
+            const context: Context = {
                 react: {
                     componentStack: formatReactComponentStack(info.componentStack),
                 },

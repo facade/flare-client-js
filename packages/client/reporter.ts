@@ -2,16 +2,6 @@ import { getExtraContext, errorToFormattedStacktrace, getAwsApiKeyFromCompoundKe
 import { flareClient } from './index';
 
 export interface Context {
-    react?: {
-        componentStack: Array<String>;
-    };
-    vue?: {
-        info: String;
-        componentName: String;
-        props: Object;
-        data: Object;
-        computed?: Array<Object>;
-    };
     request?: {
         url: String;
         useragent: String;
