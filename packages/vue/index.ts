@@ -1,11 +1,27 @@
-export default function useVuePlugin(flareClient, Vue) {
+interface FlareClient {
+    reportError: Function;
+    reportingUrl: string;
+    key: string;
+}
+
+interface Context {
+    vue: {
+        info: String;
+        componentName: String;
+        props: Object;
+        data: Object;
+        computed?: Array<Object>;
+    };
+}
+
+export default function useVuePlugin(flareClient: FlareClient, Vue) {
     if (!Vue || !Vue.config) {
         return;
     }
 
     const original = Vue.config.errorHandler;
 
-    Vue.config.errorHandler = (error, vm, info) => {
+    Vue.config.errorHandler = (error: Error, vm, info: String) => {
         const seenAt = new Date();
 
         let computed = undefined;
@@ -15,7 +31,7 @@ export default function useVuePlugin(flareClient, Vue) {
             });
         }
 
-        const context = {
+        const context: Context = {
             vue: {
                 info,
                 componentName: kebabToPascal(vm.$options._componentTag),
@@ -34,11 +50,11 @@ export default function useVuePlugin(flareClient, Vue) {
 }
 
 //https://stackoverflow.com/a/44082344/6374824
-function kebabToPascal(str) {
+function kebabToPascal(str: String) {
     str += '';
-    str = str.split('-');
-    for (let i = 0; i < str.length; i++) {
-        str[i] = str[i].slice(0, 1).toUpperCase() + str[i].slice(1, str[i].length);
+    const splitStr = str.split('-');
+    for (let i = 0; i < splitStr.length; i++) {
+        splitStr[i] = splitStr[i].slice(0, 1).toUpperCase() + splitStr[i].slice(1, splitStr[i].length);
     }
-    return str.join('');
+    return splitStr.join('');
 }

@@ -15,6 +15,7 @@
         "stacktrace-js": "^2.0.0"
     },
     "devDependencies": {
+        "@types/stacktrace-js": "^0.0.32",
         "@babel/preset-typescript": "^7.3.3"
     }
 }
