@@ -1,0 +1,15 @@
+{
+    "name": "flare-window",
+    "main": "dist/index.js",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "build": "../../node_modules/webpack/bin/webpack.js --mode=production"
+    },
+    "author": "adriaan@spatie.be",
+    "license": "ISC",
+    "dependencies": {
+        "@babel/preset-typescript": "^7.3.3"
+    }
+}

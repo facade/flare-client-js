@@ -1,5 +1,14 @@
 import StackTrace from 'stacktrace-js';
-import { Context } from './reporter';
+
+interface Context {
+    request?: {
+        url: String;
+        useragent: String;
+        referrer: String;
+        readyState: String;
+    };
+    cookies?: Array<Object>;
+}
 
 export function errorToFormattedStacktrace(error: Error) {
     return new Promise(resolve => {
