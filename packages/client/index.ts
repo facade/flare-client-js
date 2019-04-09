@@ -32,7 +32,7 @@ export default class FlareClient {
         errorToFormattedStacktrace(error).then(stacktrace => {
             const body = {
                 key: this.key,
-                notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack env plugin?),
+                notifier: 'Flare JavaScript Client V' + VERSION,
                 exceptionClass: error.constructor ? error.constructor.name : undefined,
                 seenAt: getCurrentTime(),
                 message: error.message,

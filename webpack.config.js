@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
     entry: './index.ts',
 
@@ -9,6 +11,12 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js', '.json'],
     },
+
+    plugins: [
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(require('./package.json').version),
+        }),
+    ],
 
     module: {
         rules: [
