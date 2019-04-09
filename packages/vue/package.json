@@ -5,9 +5,7 @@
     "description": "",
     "private": true,
     "scripts": {
-        "prod": "../../node_modules/webpack/bin/webpack.js --mode=production",
-        "dev": "../../node_modules/webpack/bin/webpack.js --mode=development --progress",
-        "watch": "../../node_modules/webpack/bin/webpack.js --mode=development --watch --progress"
+        "build": "../../node_modules/webpack/bin/webpack.js --mode=production"
     },
     "author": "adriaan@spatie.be",
     "license": "ISC",

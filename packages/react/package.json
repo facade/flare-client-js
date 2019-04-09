@@ -5,13 +5,15 @@
     "description": "",
     "private": true,
     "scripts": {
-        "prod": "../../node_modules/webpack/bin/webpack.js --mode=production",
-        "dev": "../../node_modules/webpack/bin/webpack.js --mode=development --progress",
-        "watch": "../../node_modules/webpack/bin/webpack.js --mode=development --watch --progress"
+        "build": "../../node_modules/webpack/bin/webpack.js --mode=production"
     },
     "author": "adriaan@spatie.be",
     "license": "ISC",
     "dependencies": {
         "@babel/preset-typescript": "^7.3.3"
+    },
+    "devDependencies": {
+        "@types/react": "^16.8.13",
+        "react": "^16.8.6"
     }
 }

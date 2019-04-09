@@ -16,6 +16,6 @@
         "webpack-cli": "^3.2.3"
     },
     "scripts": {
-        "build": "lerna run prod"
+        "build": "lerna run build"
     }
 }
