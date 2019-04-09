@@ -22,15 +22,13 @@ export default function ReactErrorBoundary() {
 
         componentDidCatch(error: Error, info: ReactErrorInfo) {
             if (this.props.client) {
-                const seenAt = new Date();
-
                 const context: Context = {
                     react: {
                         componentStack: formatReactComponentStack(info.componentStack),
                     },
                 };
 
-                this.props.client.reportError({ error, seenAt, context });
+                this.props.client.reportError({ error, context });
             }
 
             throw error;

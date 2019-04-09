@@ -1,4 +1,4 @@
-import { getExtraContext, errorToFormattedStacktrace, formatTime } from './util';
+import { getExtraContext, errorToFormattedStacktrace, getCurrentTime } from './util';
 import { flareClient } from './index';
 
 export interface Context {
@@ -13,17 +13,16 @@ export interface Context {
 
 interface ErrorReport {
     error: Error;
-    seenAt: number;
     context: Context;
 }
 
-export function reportError({ error, seenAt, context }: ErrorReport) {
+export function reportError({ error, context }: ErrorReport) {
     errorToFormattedStacktrace(error).then(stacktrace => {
         const body = {
             key: flareClient.key,
-            notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack plugin?),
+            notifier: 'Flare JavaScript Client V1.0', // TODO: get version dynamically from package.json (webpack env plugin?),
             exceptionClass: error.constructor.name,
-            seenAt: formatTime(seenAt),
+            seenAt: getCurrentTime(),
             message: error.message,
             language: 'javascript',
             glows: [], // todo

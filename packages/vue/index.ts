@@ -22,8 +22,6 @@ export default function useVuePlugin(flareClient: FlareClient, Vue) {
     const original = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm, info: String) => {
-        const seenAt = new Date();
-
         let computed = undefined;
         if (vm._computedWatchers) {
             computed = Object.keys(vm._computedWatchers).map(key => {
@@ -41,7 +39,7 @@ export default function useVuePlugin(flareClient: FlareClient, Vue) {
             },
         };
 
-        flareClient.reportError({ error, seenAt, context });
+        flareClient.reportError({ error, context });
 
         if (typeof original === 'function') {
             original(error, vm, info);

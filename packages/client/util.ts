@@ -16,8 +16,8 @@ export function errorToFormattedStacktrace(error: Error) {
     });
 }
 
-export function formatTime(date: number) {
-    return Math.round(date / 1000);
+export function getCurrentTime() {
+    return Math.round(Date.now() / 1000);
 }
 
 export function getExtraContext(context: Context = {}) {
