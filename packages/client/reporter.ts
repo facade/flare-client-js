@@ -11,12 +11,7 @@ export interface Context {
     cookies?: Array<Object>;
 }
 
-interface ErrorReport {
-    error: Error;
-    context: Context;
-}
-
-export function reportError({ error, context }: ErrorReport) {
+export function reportError(error: Error, context: Context = {}) {
     errorToFormattedStacktrace(error).then(stacktrace => {
         const body = {
             key: flareClient.key,

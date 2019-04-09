@@ -39,7 +39,7 @@ export default function useVuePlugin(flareClient: FlareClient, Vue) {
             },
         };
 
-        flareClient.reportError({ error, context });
+        flareClient.reportError(error, context);
 
         if (typeof original === 'function') {
             original(error, vm, info);

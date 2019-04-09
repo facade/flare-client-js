@@ -20,7 +20,7 @@ export function getCurrentTime() {
     return Math.round(Date.now() / 1000);
 }
 
-export function getExtraContext(context: Context = {}) {
+export function getExtraContext(context: Context) {
     context.request = {
         url: document.location.href,
         useragent: navigator.userAgent,

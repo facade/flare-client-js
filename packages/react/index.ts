@@ -16,7 +16,9 @@ export default function ReactErrorBoundary() {
             super(props);
 
             if (!this.props.client) {
-                console.error('Flare React Plugin: no `client` prop received, we will not report errors in your React components.');
+                console.error(
+                    'Flare React Plugin: no `client` prop received, we will not report errors in your React components.'
+                );
             }
         }
 
@@ -28,7 +30,7 @@ export default function ReactErrorBoundary() {
                     },
                 };
 
-                this.props.client.reportError({ error, context });
+                this.props.client.reportError(error, context);
             }
 
             throw error;

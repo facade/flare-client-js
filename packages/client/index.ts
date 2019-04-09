@@ -33,6 +33,6 @@ export default function lightFlare({ reportingUrl = '', key = '' }) {
 
 const catchWindowErrors = (flareClient: FlareClient) => {
     window.onerror = (_1, _2, _3, _4, error) => {
-        flareClient.reportError({ error });
+        flareClient.reportError(error);
     };
 };
