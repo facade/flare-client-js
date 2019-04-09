@@ -13,7 +13,8 @@
         "lerna": "^3.13.1",
         "prettier": "^1.16.4",
         "webpack": "^4.29.6",
-        "webpack-cli": "^3.2.3"
+        "webpack-cli": "^3.2.3",
+        "webpack-merge": "^4.2.1"
     },
     "scripts": {
         "build": "lerna run build"

@@ -1,25 +1,11 @@
+const merge = require('../../node_modules/webpack-merge');
 const path = require('path');
 
-module.exports = {
-    entry: './index.ts',
+const baseConfig = require('../../webpack.config');
 
+module.exports = merge(baseConfig, {
     output: {
-        filename: 'index.js',
-        path: path.resolve(__dirname, 'dist'),
         library: 'flare-vue',
-        libraryTarget: 'umd',
+        path: path.resolve(__dirname, 'dist'),
     },
-
-    module: {
-        rules: [
-            {
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-typescript'],
-                    },
-                },
-            },
-        ],
-    },
-};
+});
