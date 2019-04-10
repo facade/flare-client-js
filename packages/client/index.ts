@@ -1,15 +1,31 @@
 import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify } from './util';
 
+interface Glow {
+    time: Number;
+    name: String;
+    messageLevel: 'info' | 'debug' | 'warning' | 'error' | 'critical';
+    metaData: Array<Object>;
+}
+
 export default new class FlareClient {
     key: string;
     reportingUrl: string;
+    glows: Array<Glow>;
+    config: {
+        maxGlows: number;
+    };
 
     constructor() {
         this.key = '';
         this.reportingUrl = '';
+        this.glows = [];
+
+        this.config = {
+            maxGlows: 10,
+        };
     }
 
-    light(key: string, reportingUrl: string) {
+    light(key: String, reportingUrl: string) {
         if (!key) {
             throw new Error(
                 `Flare JS Client: No Flare key was passed, shutting down.
@@ -23,6 +39,14 @@ export default new class FlareClient {
 
         this.key = key;
         this.reportingUrl = reportingUrl;
+    }
+
+    glow({ time = getCurrentTime(), name, messageLevel = 'info', metaData = [] }: Glow) {
+        this.glows.push({ time, name, messageLevel, metaData });
+
+        if (this.glows.length > this.config.maxGlows) {
+            this.glows = this.glows.slice(this.glows.length - this.config.maxGlows);
+        }
     }
 
     reportError(error: Error, context = {}) {
@@ -49,7 +73,7 @@ export default new class FlareClient {
                 seenAt: getCurrentTime(),
                 message: error.message,
                 language: 'javascript',
-                glows: [], // todo
+                glows: this.glows,
                 context: getExtraContext(context),
                 stacktrace: stacktrace,
             };
@@ -61,7 +85,6 @@ export default new class FlareClient {
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('x-api-key', this.key);
             xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
 
             xhr.send(flatJsonStringify(body));
         });
