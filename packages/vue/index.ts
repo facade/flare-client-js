@@ -1,8 +1,4 @@
-interface FlareClient {
-    reportError: Function;
-    reportingUrl: string;
-    key: string;
-}
+import flareClient from 'flare-client';
 
 interface Context {
     vue: {
@@ -14,11 +10,7 @@ interface Context {
     };
 }
 
-export default function useVuePlugin(flareClient: FlareClient, Vue) {
-    if (!Vue || !Vue.config) {
-        return;
-    }
-
+export default function install(Vue) {
     const original = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm, info: String) => {

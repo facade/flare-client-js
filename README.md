@@ -1,40 +1,31 @@
 The JavaScript client for Flare to catch your frontend errors.
 
-Comes with Vue (and soon React) integrations.
+Comes with Vue and React integrations.
 
-To start developing:
-- Run `npm link` in this repository's root directory
-
-- Run `npm link pocflare` in the project where you want to log frontend errors
-
-As early as possible in the application you want to log:
+# Vue example
 
 ```js
-import igniteFlare from 'flare-client-js/packages/client';
+import flareClient from 'flare-client';
+import flareVlue from 'flare-vue';
 
-igniteFlare({
-    key: 'key',
-    reportingUrl: 'https://flare.com/report',
-});
+flareClient.light('flare-api-token', 'http://flare.laravel.com/api/report');
+
+Vue.use(flareVlue);
 ```
 
 # React example
 
 In the root component, outside of the class definition:
+
 ```js
-import React from "react";
-import igniteFlare, { flareClient } from "flare-client-js/packages/client";
-import FlareReact from "flare-client-js/packages/react";
+import flareClient from 'flare-client';
+import FlareErrorBoundary from 'flare-react';
 
-igniteFlare({
-    key: 'key',
-    reportingUrl: 'https://flare.com/report',
-});
-
-const FlareErrorBoundary = FlareReact(flareClient, React, <div>Error occurred :(</div>);
+flareClient.light('flare-api-token', 'http://flare.laravel.com/api/report');
 ```
 
 In the render template:
+
 ```js
 <FlareErrorBoundary>
     <Component {...props} />

@@ -1,4 +1,4 @@
-import { getExtraContext, errorToFormattedStacktrace, getCurrentTime } from './util';
+import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify } from './util';
 
 export default new class FlareClient {
     key: string;
@@ -62,7 +62,8 @@ export default new class FlareClient {
             xhr.setRequestHeader('x-api-key', this.key);
             xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-            xhr.send(JSON.stringify(body));
+
+            xhr.send(flatJsonStringify(body));
         });
     }
-}
+}();
