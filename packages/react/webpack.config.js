@@ -8,4 +8,8 @@ module.exports = merge(baseConfig, {
         library: 'flare-react',
         path: path.resolve(__dirname, 'dist'),
     },
+
+    externals: {
+        'react': 'react',
+    },
 });

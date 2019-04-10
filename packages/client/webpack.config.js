@@ -1,3 +1,4 @@
+const webpack = require('../../node_modules/webpack');
 const merge = require('../../node_modules/webpack-merge');
 const path = require('path');
 
@@ -8,4 +9,10 @@ module.exports = merge(baseConfig, {
         library: 'flare-client',
         path: path.resolve(__dirname, 'dist'),
     },
+
+    plugins: [
+        new webpack.DefinePlugin({
+            VERSION: JSON.stringify(require('./package.json').version),
+        }),
+    ],
 });
