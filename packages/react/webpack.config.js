@@ -11,5 +11,6 @@ module.exports = merge(baseConfig, {
 
     externals: {
         'react': 'react',
+        'flare-client': 'flare-client',
     },
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import flareClient from 'flare-client';
 
 interface ReactErrorInfo {
     componentStack: String;
@@ -10,27 +11,32 @@ interface Context {
     };
 }
 
+interface Props {
+    children: React.ReactNode;
+}
+
 export default function ReactErrorBoundary() {
     return class ErrorBoundary extends React.Component {
-        constructor(props) {
+        constructor(props: Props) {
             super(props);
 
-            if (!this.props.client) {
+            if (!flareClient) {
                 console.error(
-                    'Flare React Plugin: no `client` prop received, we will not report errors in your React components.'
+                    `Flare React Plugin: the Flare Client could not be found.
+                    Errors in your React components will not be reported.`
                 );
             }
         }
 
         componentDidCatch(error: Error, info: ReactErrorInfo) {
-            if (this.props.client) {
+            if (flareClient) {
                 const context: Context = {
                     react: {
                         componentStack: formatReactComponentStack(info.componentStack),
                     },
                 };
 
-                this.props.client.reportError(error, context);
+                flareClient.reportError(error, context);
             }
 
             throw error;

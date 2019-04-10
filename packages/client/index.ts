@@ -1,18 +1,24 @@
 import { getExtraContext, errorToFormattedStacktrace, getCurrentTime } from './util';
 
-export default class FlareClient {
+export class FlareClient {
     key: string;
     reportingUrl: string;
 
-    constructor(key: string, reportingUrl: string) {
+    constructor() {
+        this.key = '';
+        this.reportingUrl = '';
+    }
+
+    light(key: string, reportingUrl: string) {
         if (!key) {
             throw new Error(
-                'Flare JS Client: no Flare key was passed, shutting down. Find your token at https://flare.laravel.com/settings'
+                `Flare JS Client: No Flare key was passed, shutting down.
+                Find your token at https://flare.laravel.com/settings`
             );
         }
 
         if (!reportingUrl) {
-            throw new Error('Flare JS Client: no reportingUrl was passed, shutting down.');
+            throw new Error(`Flare JS Client: No reportingUrl was passed, shutting down.`);
         }
 
         this.key = key;
@@ -20,13 +26,19 @@ export default class FlareClient {
     }
 
     reportError(error: Error, context = {}) {
+        if (!this.key || !this.reportingUrl) {
+            throw new Error(
+                `Flare JS Client: The client was not yet initialised with an API key.
+                Run client.light('api-token-goes-here') towards the start of your app.`
+            );
+        }
+
         if (!error.message) {
-            console.error(
-                `Flare JS Client: the error object that was passed to
+            throw new Error(
+                `Flare JS Client: The error object that was passed to
                 flareClient.reportError() does not have a message key.
                 This error will not be reported to the server.`
             );
-            return;
         }
 
         errorToFormattedStacktrace(error).then(stacktrace => {
@@ -54,3 +66,7 @@ export default class FlareClient {
         });
     }
 }
+
+const client = new FlareClient();
+
+export default client;
