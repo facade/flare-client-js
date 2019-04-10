@@ -10,23 +10,55 @@ interface Context {
     };
 }
 
-export default function install(Vue) {
+interface Vue {
+    config: {
+        errorHandler: Function;
+    };
+}
+
+interface Vm {
+    $options: {
+        _componentTag?: string;
+        propsData?: Object;
+    };
+    _computedWatchers?: any;
+    _data?: Object;
+}
+
+export default function install(Vue: Vue) {
     const original = Vue.config.errorHandler;
 
-    Vue.config.errorHandler = (error: Error, vm, info: String) => {
-        let computed = undefined;
-        if (vm._computedWatchers) {
-            computed = Object.keys(vm._computedWatchers).map(key => {
-                return { [key]: vm._computedWatchers[key].value };
-            });
+    Vue.config.errorHandler = (error: Error, vm: Vm, info: String) => {
+        let computed, componentName, props, data;
+
+        if (vm) {
+            if (vm._computedWatchers) {
+                computed = Object.keys(vm._computedWatchers).map(key => {
+                    return { [key]: vm._computedWatchers![key].value };
+                });
+            }
+
+            if (vm._data) {
+                data = vm._data;
+            }
+
+            if (vm.$options) {
+                if (vm.$options._componentTag) {
+                    componentName = kebabToPascal(vm.$options._componentTag);
+                }
+
+                if (vm.$options.propsData) {
+                    props = vm.$options.propsData;
+                }
+            }
         }
 
         const context: Context = {
             vue: {
                 info,
-                componentName: kebabToPascal(vm.$options._componentTag),
-                props: vm.$options.propsData,
-                data: vm._data,
+                componentName: componentName || 'Anonymous Component',
+                props: props || {},
+                data: data || {},
                 computed,
             },
         };

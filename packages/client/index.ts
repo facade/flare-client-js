@@ -25,7 +25,7 @@ export default new class FlareClient {
         };
     }
 
-    light(key: String, reportingUrl: string) {
+    light(key: string, reportingUrl: string) {
         if (!key) {
             throw new Error(
                 `Flare JS Client: No Flare key was passed, shutting down.
