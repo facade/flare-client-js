@@ -8,4 +8,8 @@ module.exports = merge(baseConfig, {
         library: 'flare-vue',
         path: path.resolve(__dirname, 'dist'),
     },
+
+    externals: {
+        'flare-client': 'flare-client',
+    },
 });

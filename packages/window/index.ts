@@ -1,11 +1,9 @@
-interface FlareClient {
-    reportError: Function;
-    reportingUrl: string;
-    key: string;
-}
+import flareClient from 'flare-client';
 
-export default function catchWindowErrors(flareClient: FlareClient) {
+export default function catchWindowErrors() {
     window.onerror = (_1, _2, _3, _4, error) => {
-        flareClient.reportError(error);
+        if (error) {
+            flareClient.reportError(error);
+        }
     };
 }

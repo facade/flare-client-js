@@ -1,6 +1,6 @@
 import { getExtraContext, errorToFormattedStacktrace, getCurrentTime } from './util';
 
-export class FlareClient {
+export default new class FlareClient {
     key: string;
     reportingUrl: string;
 
@@ -66,7 +66,3 @@ export class FlareClient {
         });
     }
 }
-
-const client = new FlareClient();
-
-export default client;
