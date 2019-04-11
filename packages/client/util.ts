@@ -1,4 +1,5 @@
-import StackTrace from 'stacktrace-js';
+import ErrorStackParser from 'error-stack-parser';
+import StackGenerator from 'stack-generator';
 
 interface Context {
     request?: {
@@ -10,19 +11,20 @@ interface Context {
     cookies?: Array<Object>;
 }
 
+// https://github.com/bugsnag/bugsnag-js/blob/9a49dc0bdc6dc8bb13a74631c3426778e9c49c9f/packages/core/report.js#L154
 export function errorToFormattedStacktrace(error: Error) {
-    return new Promise(resolve => {
-        StackTrace.fromError(error).then(stacktrace => {
-            const formattedStacktrace = stacktrace.map(frame => ({
-                lineNumber: frame.lineNumber,
-                columnNumber: frame.columnNumber,
-                method: frame.functionName,
-                file: frame.fileName,
-            }));
+    const parsedStack = hasStack(error)
+        ? ErrorStackParser.parse(error)
+        : StackGenerator.backtrace()
+              .filter(frame => (frame.functionName || '').indexOf('StackGenerator$$') === -1)
+              .slice(1);
 
-            resolve(formattedStacktrace);
-        });
-    });
+    return parsedStack.map(frame => ({
+        lineNumber: frame.lineNumber,
+        columnNumber: frame.columnNumber,
+        method: frame.functionName,
+        file: frame.fileName,
+    }));
 }
 
 export function getCurrentTime() {
@@ -66,4 +68,14 @@ export function flatJsonStringify(json: Object) {
     cache = null;
 
     return flattenedStringifiedJson;
+}
+
+// https://github.com/bugsnag/bugsnag-js/blob/9a49dc0bdc6dc8bb13a74631c3426778e9c49c9f/packages/core/lib/has-stack.js
+function hasStack(err: any) {
+    return (
+        !!err &&
+        (!!err.stack || !!err.stacktrace || !!err['opera#sourceloc']) &&
+        typeof (err.stack || err.stacktrace || err['opera#sourceloc']) === 'string' &&
+        err.stack !== `${err.name}: ${err.message}`
+    );
 }

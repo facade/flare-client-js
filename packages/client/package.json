@@ -10,10 +10,11 @@
     "author": "adriaan@spatie.be",
     "license": "ISC",
     "dependencies": {
-        "stacktrace-js": "^2.0.0"
+        "error-stack-parser": "^2.0.2",
+        "stack-generator": "^2.0.3"
     },
     "devDependencies": {
-        "@types/stacktrace-js": "^0.0.32",
-        "@babel/preset-typescript": "^7.3.3"
+        "@babel/preset-typescript": "^7.3.3",
+        "@types/stacktrace-js": "^0.0.32"
     }
 }

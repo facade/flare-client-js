@@ -8,7 +8,7 @@ interface Glow {
 }
 
 interface Config {
-    maxGlows?: number;
+    maxGlows: number;
     maxReportsPerSession?: number;
 }
 
@@ -31,7 +31,7 @@ export default new class FlareClient {
 
     setConfig(newConfig: Config) {
         // TODO: Figure out a clean way to set a min & max for each option, eg https://github.com/bugsnag/bugsnag-js/blob/master/packages/core/config.js
-        this.config = {...this.config, ...newConfig};
+        this.config = { ...this.config, ...newConfig };
     }
 
     light(key: string, reportingUrl: string) {
@@ -50,7 +50,7 @@ export default new class FlareClient {
         this.reportingUrl = reportingUrl;
     }
 
-    glow({ time = getCurrentTime(), name, messageLevel = 'info', metaData = [] }: Glow) {
+    glow({ name, messageLevel = 'info', metaData = [], time = getCurrentTime() }: Glow) {
         this.glows.push({ time, name, messageLevel, metaData });
 
         if (this.glows.length > this.config.maxGlows) {
@@ -66,36 +66,32 @@ export default new class FlareClient {
             );
         }
 
-        if (!error.message) {
-            throw new Error(
-                `Flare JS Client: The error object that was passed to
-                flareClient.reportError() does not have a message key.
-                This error will not be reported to the server.`
-            );
+        if (!error) {
+            throw new Error(`Flare JS Client: No error was provided, not reporting.`);
         }
 
-        errorToFormattedStacktrace(error).then(stacktrace => {
-            const body = {
-                key: this.key,
-                notifier: 'Flare JavaScript Client V' + VERSION,
-                exceptionClass: error.constructor ? error.constructor.name : undefined,
-                seenAt: getCurrentTime(),
-                message: error.message,
-                language: 'javascript',
-                glows: this.glows,
-                context: getExtraContext(context),
-                stacktrace: stacktrace,
-            };
+        const stacktrace = errorToFormattedStacktrace(error);
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', this.reportingUrl);
+        const body = {
+            key: this.key,
+            notifier: 'Flare JavaScript Client V' + VERSION,
+            exceptionClass: error.constructor ? error.constructor.name : undefined,
+            seenAt: getCurrentTime(),
+            message: error.message,
+            language: 'javascript',
+            glows: this.glows,
+            context: getExtraContext(context),
+            stacktrace: stacktrace,
+        };
 
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('x-api-key', this.key);
-            xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', this.reportingUrl);
 
-            xhr.send(flatJsonStringify(body));
-        });
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.setRequestHeader('x-api-key', this.key);
+        xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+        xhr.send(flatJsonStringify(body));
     }
 }();
