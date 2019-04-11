@@ -7,13 +7,16 @@ interface Glow {
     metaData: Array<Object>;
 }
 
+interface Config {
+    maxGlows?: number;
+    maxReportsPerSession?: number;
+}
+
 export default new class FlareClient {
     key: string;
     reportingUrl: string;
     glows: Array<Glow>;
-    config: {
-        maxGlows: number;
-    };
+    config: Config;
 
     constructor() {
         this.key = '';
@@ -22,7 +25,13 @@ export default new class FlareClient {
 
         this.config = {
             maxGlows: 10,
+            maxReportsPerSession: 5, // TODO: https://github.com/spatie/flare-client-js/issues/28
         };
+    }
+
+    setConfig(newConfig: Config) {
+        // TODO: Figure out a clean way to set a min & max for each option, eg https://github.com/bugsnag/bugsnag-js/blob/master/packages/core/config.js
+        this.config = {...this.config, ...newConfig};
     }
 
     light(key: string, reportingUrl: string) {
