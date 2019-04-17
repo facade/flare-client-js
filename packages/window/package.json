@@ -4,8 +4,15 @@
     "version": "1.0.0",
     "description": "",
     "private": true,
+    "bundlesize": [
+        {
+            "path": "./dist/index.js",
+            "maxSize": "1 kB"
+        }
+    ],
     "scripts": {
-        "build": "../../node_modules/webpack/bin/webpack.js --mode=production"
+        "build": "../../node_modules/webpack/bin/webpack.js --mode=production && $npm_execpath run bundlesize",
+        "bundlesize": "../../node_modules/bundlesize/index.js"
     },
     "author": "adriaan@spatie.be",
     "license": "ISC",
