@@ -1,4 +1,4 @@
-import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify } from './util';
+import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify, throwError } from './util';
 
 interface Glow {
     time: Number;
@@ -36,14 +36,11 @@ export default new class FlareClient {
 
     light(key: string, reportingUrl: string) {
         if (!key) {
-            throw new Error(
-                `Flare JS Client: No Flare key was passed, shutting down.
-                Find your token at https://flare.laravel.com/settings`
-            );
+            throwError('No Flare key was passed, shutting down. Find your token at https://flare.laravel.com/settings');
         }
 
         if (!reportingUrl) {
-            throw new Error(`Flare JS Client: No reportingUrl was passed, shutting down.`);
+            throwError('No reportingUrl was passed, shutting down.');
         }
 
         this.key = key;
@@ -60,14 +57,14 @@ export default new class FlareClient {
 
     reportError(error: Error, context = {}) {
         if (!this.key || !this.reportingUrl) {
-            throw new Error(
-                `Flare JS Client: The client was not yet initialised with an API key.
+            throwError(
+                `The client was not yet initialised with an API key.
                 Run client.light('api-token-goes-here') towards the start of your app.`
             );
         }
 
         if (!error) {
-            throw new Error(`Flare JS Client: No error was provided, not reporting.`);
+            throwError('No error was provided, not reporting.');
         }
 
         const stacktrace = errorToFormattedStacktrace(error);

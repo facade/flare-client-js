@@ -14,13 +14,13 @@ const app = express()
 app.post('/', async (req, res) => {
     res.send('Hello World');
 
-    console.log(req.body);
+    console.log(req.body.stacktrace);
 
-    /* consumeStackframes(req.body.report.stacktrace).then(res => {
-        console.log('result:', res);
+    consumeStackframes(req.body.stacktrace).then(res => {
+        /* console.log('\nresult:', res); */
     }).catch(err => {
         console.log('error:', err);
-    }); */
+    });
 });
 
 app.listen(3000);

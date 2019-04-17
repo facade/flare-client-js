@@ -7,7 +7,7 @@ export async function consumeStackframes(stackframes) {
         asyncMap(
             stackframes,
             (frame, callback) => {
-                const fileName = frame.fileName.split('/').slice(-1);
+                const fileName = frame.file.split('/').slice(-1);
 
                 fs.readFile(`./sourcemaps/${fileName}.map`, 'utf8', async function(err, data) {
                     if (err || !data) {
@@ -21,6 +21,8 @@ export async function consumeStackframes(stackframes) {
                         line: frame.lineNumber,
                         column: frame.columnNumber,
                     });
+
+                    console.log('\n', frame, '\n', originalPosition);
 
                     callback(null, originalPosition);
                 });

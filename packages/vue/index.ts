@@ -29,9 +29,6 @@ export default function install(Vue: Vue) {
     const original = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm: Vm, info: String) => {
-        // TODO: figure out a way to get the original Vue error (or don't run this while developing)
-        console.error(error);
-
         let computed, componentName, props, data;
 
         if (vm) {
@@ -70,7 +67,10 @@ export default function install(Vue: Vue) {
 
         if (typeof original === 'function') {
             original(error, vm, info);
+            return;
         }
+
+        throw error;
     };
 }
 

@@ -10,8 +10,7 @@
     "author": "adriaan@spatie.be",
     "license": "ISC",
     "dependencies": {
-        "error-stack-parser": "^2.0.2",
-        "stack-generator": "^2.0.3"
+        "error-stack-parser": "^2.0.2"
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.3.3",

@@ -1,5 +1,4 @@
 import ErrorStackParser from 'error-stack-parser';
-import StackGenerator from 'stack-generator';
 
 interface Context {
     request?: {
@@ -11,15 +10,12 @@ interface Context {
     cookies?: Array<Object>;
 }
 
-// https://github.com/bugsnag/bugsnag-js/blob/9a49dc0bdc6dc8bb13a74631c3426778e9c49c9f/packages/core/report.js#L154
 export function errorToFormattedStacktrace(error: Error) {
-    const parsedStack = hasStack(error)
-        ? ErrorStackParser.parse(error)
-        : StackGenerator.backtrace()
-              .filter(frame => (frame.functionName || '').indexOf('StackGenerator$$') === -1)
-              .slice(1);
+    if (!hasStack(error)) {
+        throwError('No error stack was found, not reporting the error.');
+    }
 
-    return parsedStack.map(frame => ({
+    return ErrorStackParser.parse(error).map(frame => ({
         lineNumber: frame.lineNumber,
         columnNumber: frame.columnNumber,
         method: frame.functionName,
@@ -68,6 +64,10 @@ export function flatJsonStringify(json: Object) {
     cache = null;
 
     return flattenedStringifiedJson;
+}
+
+export function throwError(errorMessage: string) {
+    throw new Error(`Flare JS Client V${VERSION}: ${errorMessage}`);
 }
 
 // https://github.com/bugsnag/bugsnag-js/blob/9a49dc0bdc6dc8bb13a74631c3426778e9c49c9f/packages/core/lib/has-stack.js
