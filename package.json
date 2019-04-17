@@ -2,22 +2,27 @@
     "version": "1.0.0",
     "name": "flare-client-js",
     "license": "ISC",
+    "scripts": {
+        "prettier": "prettier --write '*.{css,js,ts}' 'packages/**/*.{css,js,ts}'",
+        "eslint": "eslint packages --fix --ext ts",
+        "format": "$npm_execpath run eslint && $npm_execpath run prettier",
+        "build": "lerna run build"
+    },
     "devDependencies": {
         "@babel/core": "^7.4.0",
         "@babel/polyfill": "^7.4.0",
         "@babel/preset-env": "^7.4.2",
         "@babel/runtime": "^7.4.2",
+        "@typescript-eslint/parser": "^1.6.0",
         "babel-eslint": "^10.0.1",
         "babel-loader": "^8.0.5",
         "eslint": "^5.15.1",
         "eslint-config-prettier": "^4.1.0",
         "lerna": "^3.13.1",
         "prettier": "^1.16.4",
+        "typescript": "^3.4.3",
         "webpack": "^4.29.6",
         "webpack-cli": "^3.2.3",
         "webpack-merge": "^4.2.1"
-    },
-    "scripts": {
-        "build": "lerna run build"
     }
 }

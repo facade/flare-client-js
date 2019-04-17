@@ -12,7 +12,7 @@ interface Config {
     maxReportsPerSession?: number;
 }
 
-export default new class FlareClient {
+export default new (class FlareClient {
     key: string;
     reportingUrl: string;
     glows: Array<Glow>;
@@ -91,4 +91,4 @@ export default new class FlareClient {
 
         xhr.send(flatJsonStringify(body));
     }
-}();
+})();

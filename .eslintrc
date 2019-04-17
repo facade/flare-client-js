@@ -11,5 +11,7 @@
     },
     "rules": {
         "no-console": 0
-    }
+    },
+    "parser": "@typescript-eslint/parser",
+    "globals": { "VERSION": true }
 }
