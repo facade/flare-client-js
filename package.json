@@ -3,7 +3,7 @@
     "name": "flare-client-js",
     "license": "ISC",
     "scripts": {
-        "prettier": "prettier --write '*.{css,js,ts}' 'packages/**/*.{css,js,ts}'",
+        "prettier": "prettier --write '*.{js,ts}' 'packages/**/*.{js,ts}'",
         "eslint": "eslint packages --fix --ext ts",
         "format": "$npm_execpath run eslint && $npm_execpath run prettier",
         "build": "lerna run build"
@@ -19,12 +19,30 @@
         "bundlesize": "^0.17.1",
         "eslint": "^5.15.1",
         "eslint-config-prettier": "^4.1.0",
+        "husky": "^1.3.1",
         "lerna": "^3.13.1",
+        "lint-staged": "^8.1.5",
         "prettier": "^1.16.4",
         "size-limit": "^1.0.1",
         "typescript": "^3.4.3",
         "webpack": "^4.29.6",
         "webpack-cli": "^3.2.3",
         "webpack-merge": "^4.2.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "linters": {
+            "*.{js,ts}": [
+                "prettier --write",
+                "git add"
+            ]
+        },
+        "ignore": [
+            "**/dist/**"
+        ]
     }
 }
