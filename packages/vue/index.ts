@@ -31,7 +31,7 @@ export default function install(Vue: Vue) {
     Vue.config.errorHandler = (error: Error, vm: Vm, info: String) => {
         let computed, componentName, props, data;
 
-        if (vm) {
+        /* if (vm) {
             if (vm._computedWatchers) {
                 computed = Object.keys(vm._computedWatchers).map(key => {
                     return { [key]: vm._computedWatchers![key].value };
@@ -51,7 +51,7 @@ export default function install(Vue: Vue) {
                     props = vm.$options.propsData;
                 }
             }
-        }
+        } */
 
         const context: Context = {
             vue: {
