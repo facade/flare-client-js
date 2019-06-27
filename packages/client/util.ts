@@ -1,15 +1,5 @@
 import ErrorStackParser from 'error-stack-parser';
 
-interface Context {
-    request?: {
-        url: String;
-        useragent: String;
-        referrer: String;
-        readyState: String;
-    };
-    cookies?: Array<Object>;
-}
-
 export function errorToFormattedStacktrace(error: Error) {
     if (!hasStack(error)) {
         throwError('No error stack was found, not reporting the error.');
@@ -35,10 +25,12 @@ export function getExtraContext(context: Context) {
         readyState: document.readyState,
     };
 
-    context.cookies = document.cookie.split('; ').map(cookie => {
-        const splitCookie = cookie.split(/=/);
-        return { [splitCookie[0]]: splitCookie[1] };
-    });
+    if (document.cookie) {
+        context.cookies = document.cookie.split('; ').map(cookie => {
+            const splitCookie = cookie.split(/=/);
+            return { [splitCookie[0]]: splitCookie[1] };
+        });
+    }
 
     return context;
 }

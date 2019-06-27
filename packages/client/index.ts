@@ -9,32 +9,42 @@ interface Glow {
 
 interface Config {
     maxGlows: number;
-    maxReportsPerSession?: number;
+    maxReportsPerMinute?: number;
 }
+
+type BeforeSubmit = (context: Context) => Context;
 
 export default new (class FlareClient {
     key: string;
     reportingUrl: string;
     glows: Array<Glow>;
     config: Config;
+    beforeSubmit: BeforeSubmit;
 
     constructor() {
         this.key = '';
         this.reportingUrl = '';
         this.glows = [];
+        this.beforeSubmit = (context: Context) => context;
 
         this.config = {
             maxGlows: 10,
-            maxReportsPerSession: 5, // TODO: https://github.com/spatie/flare-client-js/issues/28
+            maxReportsPerMinute: 10, // TODO: https://github.com/spatie/flare-client-js/issues/28
         };
     }
 
-    setConfig(newConfig: Config) {
+    public setBeforeSubmit(newBeforeSubmit: BeforeSubmit) {
+        if (typeof newBeforeSubmit === 'function') {
+            this.beforeSubmit = newBeforeSubmit;
+        }
+    }
+
+    public setConfig(newConfig: Config) {
         // TODO: Figure out a clean way to set a min & max for each option, eg https://github.com/bugsnag/bugsnag-js/blob/master/packages/core/config.js
         this.config = { ...this.config, ...newConfig };
     }
 
-    light(key: string, reportingUrl: string) {
+    public light(key: string, reportingUrl: string) {
         if (!key) {
             throwError('No Flare key was passed, shutting down. Find your token at https://flare.laravel.com/settings');
         }
@@ -47,7 +57,7 @@ export default new (class FlareClient {
         this.reportingUrl = reportingUrl;
     }
 
-    glow({ name, messageLevel = 'info', metaData = [], time = getCurrentTime() }: Glow) {
+    public glow({ name, messageLevel = 'info', metaData = [], time = getCurrentTime() }: Glow) {
         this.glows.push({ time, name, messageLevel, metaData });
 
         if (this.glows.length > this.config.maxGlows) {
@@ -55,19 +65,17 @@ export default new (class FlareClient {
         }
     }
 
-    reportError(error: Error, context = {}) {
+    public reportError(error: Error, context = {}) {
         if (!this.key || !this.reportingUrl) {
             throwError(
                 `The client was not yet initialised with an API key.
-                Run client.light('api-token-goes-here') towards the start of your app.`
+                Run client.light('api-token-goes-here') when you initialise your app.`
             );
         }
 
         if (!error) {
             throwError('No error was provided, not reporting.');
         }
-
-        const stacktrace = errorToFormattedStacktrace(error);
 
         const body = {
             key: this.key,
@@ -77,8 +85,8 @@ export default new (class FlareClient {
             message: error.message,
             language: 'javascript',
             glows: this.glows,
-            context: getExtraContext(context),
-            stacktrace: stacktrace,
+            context: this.beforeSubmit(getExtraContext(context)),
+            stacktrace: errorToFormattedStacktrace(error),
         };
 
         const xhr = new XMLHttpRequest();

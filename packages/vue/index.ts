@@ -4,9 +4,6 @@ interface Context {
     vue: {
         info: String;
         componentName: String;
-        props: Object;
-        data: Object;
-        computed?: Array<Object>;
     };
 }
 
@@ -19,47 +16,37 @@ interface Vue {
 interface Vm {
     $options: {
         _componentTag?: string;
-        propsData?: Object;
     };
-    _computedWatchers?: any;
-    _data?: Object;
 }
 
 export default function install(Vue: Vue) {
+    if (!flareClient) {
+        console.error(
+            `Flare Vue Plugin: the Flare Client could not be found.
+            Errors in your Vue components will not be reported.`
+        );
+    }
+
+    if (!Vue || !Vue.config) {
+        console.error(
+            `Flare Vue Plugin: The Vue errorHandler could not be found.
+            Errors in your Vue components will not be reported.`
+        );
+    }
+
     const original = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm: Vm, info: String) => {
-        let computed, componentName, props, data;
+        let componentName;
 
-        /* if (vm) {
-            if (vm._computedWatchers) {
-                computed = Object.keys(vm._computedWatchers).map(key => {
-                    return { [key]: vm._computedWatchers![key].value };
-                });
-            }
-
-            if (vm._data) {
-                data = vm._data;
-            }
-
-            if (vm.$options) {
-                if (vm.$options._componentTag) {
-                    componentName = kebabToPascal(vm.$options._componentTag);
-                }
-
-                if (vm.$options.propsData) {
-                    props = vm.$options.propsData;
-                }
-            }
-        } */
+        if (vm && vm.$options && vm.$options._componentTag) {
+            componentName = kebabToPascal(vm.$options._componentTag);
+        }
 
         const context: Context = {
             vue: {
                 info,
                 componentName: componentName || 'Anonymous Component',
-                props: props || {},
-                data: data || {},
-                computed,
             },
         };
 
