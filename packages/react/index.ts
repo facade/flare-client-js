@@ -37,8 +37,6 @@ export default class ErrorBoundary extends React.Component {
 
             flareClient.reportError(error, context);
         }
-
-        throw error;
     }
 
     render() {
