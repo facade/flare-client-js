@@ -6,10 +6,10 @@ export function errorToFormattedStacktrace(error: Error) {
     }
 
     return ErrorStackParser.parse(error).map(frame => ({
-        lineNumber: frame.lineNumber,
-        columnNumber: frame.columnNumber,
-        method: frame.functionName,
-        file: frame.fileName,
+        lineNumber: frame.lineNumber || 1,
+        columnNumber: frame.columnNumber || 1,
+        method: frame.functionName || 'Anonymous or unknown function',
+        file: frame.fileName || 'Unknown file',
     }));
 }
 
