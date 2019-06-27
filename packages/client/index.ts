@@ -9,7 +9,7 @@ interface Glow {
 
 interface Config {
     maxGlows: number;
-    maxReportsPerMinute?: number;
+    maxReportsPerMinute: number;
 }
 
 type BeforeSubmit = (context: Context) => Context;
@@ -20,16 +20,18 @@ export default new (class FlareClient {
     glows: Array<Glow>;
     config: Config;
     beforeSubmit: BeforeSubmit;
+    reportedErrorsTimestamps: Array<number>;
 
     constructor() {
         this.key = '';
         this.reportingUrl = '';
         this.glows = [];
         this.beforeSubmit = (context: Context) => context;
+        this.reportedErrorsTimestamps = [];
 
         this.config = {
             maxGlows: 10,
-            maxReportsPerMinute: 10, // TODO: https://github.com/spatie/flare-client-js/issues/28
+            maxReportsPerMinute: 10,
         };
     }
 
@@ -77,6 +79,17 @@ export default new (class FlareClient {
             throwError('No error was provided, not reporting.');
         }
 
+        if (this.reportedErrorsTimestamps.length >= this.config.maxReportsPerMinute) {
+            const nErrorsBack = this.reportedErrorsTimestamps[
+                this.reportedErrorsTimestamps.length - this.config.maxReportsPerMinute
+            ];
+
+            if (nErrorsBack > Date.now() - 60 * 1000) {
+                // Too many errors reported in the last minute, not reporting this one.
+                return;
+            }
+        }
+
         const body = {
             key: this.key,
             notifier: 'Flare JavaScript Client V' + VERSION,
@@ -98,5 +111,7 @@ export default new (class FlareClient {
         xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
         xhr.send(flatJsonStringify(body));
+
+        this.reportedErrorsTimestamps.push(Date.now());
     }
 })();
