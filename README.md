@@ -10,7 +10,7 @@ import flareVlue from 'flare-vue';
 
 flareClient.light('flare-api-token', 'http://flare.laravel.com/api/report');
 
-Vue.use(flareVlue);
+Vue.use(flareVue);
 ```
 
 # React example
