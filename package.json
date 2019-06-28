@@ -6,7 +6,10 @@
         "prettier": "prettier --write '*.{js,ts}' 'packages/**/*.{js,ts}'",
         "eslint": "eslint packages --fix --ext ts",
         "format": "$npm_execpath run eslint && $npm_execpath run prettier",
-        "build": "lerna run build"
+        "install-deps": "lerna run install-deps",
+        "build": "lerna run build",
+        "link-all": "lerna run run-link",
+        "setup-all-packages": "lerna run install-deps && lerna run build && lerna run run-link"
     },
     "devDependencies": {
         "@babel/core": "^7.4.0",
@@ -44,5 +47,6 @@
         "ignore": [
             "**/dist/**"
         ]
-    }
+    },
+    "dependencies": {}
 }
