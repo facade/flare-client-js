@@ -71,7 +71,8 @@ export default new (class FlareClient {
         if (!this.key || !this.reportingUrl) {
             throwError(
                 `The client was not yet initialised with an API key.
-                Run client.light('api-token-goes-here') when you initialise your app.`
+                Run client.light('api-token-goes-here') when you initialise your app.
+                If you are running in dev mode and didn't run the light command on purpose, you can ignore this error.`
             );
         }
 
