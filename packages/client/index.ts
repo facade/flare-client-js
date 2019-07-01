@@ -12,6 +12,19 @@ interface Config {
     maxReportsPerMinute: number;
 }
 
+interface Context {
+    request?: {
+        url?: String;
+        useragent?: String;
+        referrer?: String;
+        readyState?: String;
+    };
+    cookies?: Array<Object>;
+    [key: string]: any;
+}
+
+declare const VERSION: string;
+
 type BeforeSubmit = (context: Context) => Context;
 
 export default new (class FlareClient {

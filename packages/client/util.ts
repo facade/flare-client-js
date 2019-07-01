@@ -1,5 +1,18 @@
 import ErrorStackParser from 'error-stack-parser';
 
+interface Context {
+    request?: {
+        url?: String;
+        useragent?: String;
+        referrer?: String;
+        readyState?: String;
+    };
+    cookies?: Array<Object>;
+    [key: string]: any;
+}
+
+declare const VERSION: string;
+
 export function errorToFormattedStacktrace(error: Error) {
     if (!hasStack(error)) {
         throwError('No error stack was found, not reporting the error.');
