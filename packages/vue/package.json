@@ -14,7 +14,8 @@
         "build": "../../node_modules/webpack/bin/webpack.js --mode=production && $npm_execpath run bundlesize",
         "bundlesize": "../../node_modules/bundlesize/index.js",
         "run-link": "yarn link",
-        "install-deps": "yarn install"
+        "install-deps": "yarn install",
+        "link-client": "yarn link flare-client"
     },
     "author": "adriaan@spatie.be",
     "license": "ISC",
