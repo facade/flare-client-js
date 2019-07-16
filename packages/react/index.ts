@@ -44,7 +44,6 @@ export default class ErrorBoundary extends React.Component {
     }
 }
 
-// Regex taken from bugsnag: https://github.com/bugsnag/bugsnag-js/blob/c2020c6522fc075d284ad9441bbde8be155450d2/packages/plugin-react/src/index.js#L39
 function formatReactComponentStack(stack: String) {
     return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
 }

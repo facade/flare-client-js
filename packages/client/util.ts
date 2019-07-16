@@ -75,7 +75,6 @@ export function throwError(errorMessage: string) {
     throw new Error(`Flare JS Client V${VERSION}: ${errorMessage}`);
 }
 
-// https://github.com/bugsnag/bugsnag-js/blob/9a49dc0bdc6dc8bb13a74631c3426778e9c49c9f/packages/core/lib/has-stack.js
 function hasStack(err: any) {
     return (
         !!err &&
