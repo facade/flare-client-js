@@ -14,10 +14,10 @@ Comes with Vue and React integrations.
 ```js
 import flareClient from 'flare-client';
 
-flareClient.light('your-api-key', 'http://flare.laravel.com.test/api/reports');
+flareClient.light('your-api-key', 'http://flareapp.iotest/api/reports');
 
 /* TODO: remove the reporting URL in the production client.
-Maybe let it default to https://flare.laravel.com/api/reports,
+Maybe let it default to https://flareapp.io/api/reports,
 but allow us to overwrite it for testing purposes? */
 ```
 
@@ -39,7 +39,7 @@ registerFlareWindow();
 import flareClient from 'flare-client';
 import flareVlue from 'flare-vue';
 
-flareClient.light('flare-api-token', 'http://flare.laravel.com/api/report');
+flareClient.light('flare-api-token', 'http://flareapp.io/api/report');
 
 Vue.use(flareVue);
 ```
