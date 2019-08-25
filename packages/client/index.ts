@@ -61,7 +61,7 @@ export default new (class FlareClient {
 
     public light(key: string, reportingUrl: string) {
         if (!key) {
-            throwError('No Flare key was passed, shutting down. Find your token at https://flare.laravel.com/settings');
+            throwError('No Flare key was passed, shutting down.');
         }
 
         if (!reportingUrl) {
