@@ -13,6 +13,8 @@ interface Context {
 
 declare const VERSION: string;
 
+const clientVersion = typeof VERSION === 'undefined' ? '?' : VERSION;
+
 export function errorToFormattedStacktrace(error: Error) {
     if (!hasStack(error)) {
         throwError('No error stack was found, not reporting the error.');
@@ -72,7 +74,7 @@ export function flatJsonStringify(json: Object) {
 }
 
 export function throwError(errorMessage: string) {
-    throw new Error(`Flare JS Client V${VERSION}: ${errorMessage}`);
+    console.error(`Flare JS Client V${clientVersion}: ${errorMessage}`);
 }
 
 function hasStack(err: any) {

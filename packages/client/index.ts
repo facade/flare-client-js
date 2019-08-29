@@ -25,6 +25,8 @@ interface Context {
 
 declare const VERSION: string;
 
+const clientVersion = typeof VERSION === 'undefined' ? '?' : VERSION;
+
 type BeforeSubmit = (context: Context) => Context;
 
 export default new (class FlareClient {
@@ -106,7 +108,7 @@ export default new (class FlareClient {
 
         const body = {
             key: this.key,
-            notifier: 'Flare JavaScript Client V' + VERSION,
+            notifier: 'Flare JavaScript Client V' + clientVersion,
             exceptionClass: error.constructor ? error.constructor.name : undefined,
             seenAt: getCurrentTime(),
             message: error.message,
