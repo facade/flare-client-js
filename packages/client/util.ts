@@ -21,10 +21,11 @@ export function errorToFormattedStacktrace(error: Error) {
     }
 
     return ErrorStackParser.parse(error).map(frame => ({
-        lineNumber: frame.lineNumber || 1,
-        columnNumber: frame.columnNumber || 1,
+        line_number: frame.lineNumber || 1,
+        column_number: frame.columnNumber || 1,
         method: frame.functionName || 'Anonymous or unknown function',
         file: frame.fileName || 'Unknown file',
+        code_snippet: [],
     }));
 }
 
