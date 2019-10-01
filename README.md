@@ -6,7 +6,7 @@ Comes with Vue and React integrations.
 
 ### Important notes
  - None of the integrations will work before running the setup of the client. Make sure to import the `flare-client` before importing any integrations.
- 
+
  - The client will only automatically report **uncaught** errors. Error boundaries (like `try…catch` or React error boundaries) will need to implement a custom method of reporting errors to the platform, as described elsewhere in the docs.
 
 ### Setup
@@ -50,7 +50,7 @@ Vue.use(flareVue);
 
 - While in development mode, React will throw errors up to the window, possibly causing errors to be caught twice. Make sure to only initialize the Flare JavaScript error reporter in production builds. Read this issue for more information: https://github.com/facebook/react/issues/10474
 
-- Due to limitations in the architecture of React error boundaries, the Flare React error reporter may not handle all possible React errors. Read This page for more information: https://reactjs.org/docs/error-boundaries.html
+- Due to limitations in the architecture of React error boundaries, the Flare React error reporter will only report errors that occur while rendering. This means that errors that occur in event handlers will not be reported (eg an `onClick` function). To report these errors, you could also include the window error tracking Flare plugin. Read this page for more information: https://reactjs.org/docs/error-boundaries.html
 
 
 ### Setup
