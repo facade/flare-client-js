@@ -117,6 +117,8 @@ export default new (class FlareClient {
             stacktrace: errorToFormattedStacktrace(error),
         };
 
+        // TODO: send request body through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)
+
         const xhr = new XMLHttpRequest();
         xhr.open('POST', this.reportingUrl);
 
