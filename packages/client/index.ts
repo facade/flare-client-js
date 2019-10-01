@@ -45,8 +45,8 @@ export default new (class FlareClient {
         this.reportedErrorsTimestamps = [];
 
         this.config = {
-            maxGlows: 10,
-            maxReportsPerMinute: 10,
+            maxGlows: 30,
+            maxReportsPerMinute: 500,
         };
     }
 
@@ -57,7 +57,6 @@ export default new (class FlareClient {
     }
 
     public setConfig(newConfig: Config) {
-        // TODO: Figure out a clean way to set a min & max for each option, eg https://github.com/bugsnag/bugsnag-js/blob/master/packages/core/config.js
         this.config = { ...this.config, ...newConfig };
     }
 
