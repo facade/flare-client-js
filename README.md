@@ -52,6 +52,8 @@ Vue.use(flareVue);
 
 - Due to limitations in the architecture of React error boundaries, the Flare React error reporter will only report errors that occur while rendering. This means that errors that occur in event handlers will not be reported (eg an `onClick` function). To report these errors, you could also include the window error tracking Flare plugin. Read this page for more information: https://reactjs.org/docs/error-boundaries.html
 
+Note to self: read through https://github.com/facebook/react/issues/11409 to figure out why event listeners are not caught by errorboundaries. Maybe there is a way to get this working after all, without also having to use the window client.
+
 
 ### Setup
 
