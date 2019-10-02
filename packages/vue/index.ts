@@ -43,6 +43,11 @@ export default function install(Vue: Vue) {
             componentName = kebabToPascal(vm.$options._componentTag);
         }
 
+        // TODO: optional chaining (SOON!) https://github.com/prettier/prettier-vscode/issues/977
+        /* if (vm?.$options?._componentTag) {
+            componentName = kebabToPascal(vm.$options._componentTag);
+        } */
+
         const context: Context = {
             vue: {
                 info,
