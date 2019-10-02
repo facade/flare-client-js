@@ -1,10 +1,6 @@
 import React from 'react';
 import flareClient from 'flare-client';
 
-interface ReactErrorInfo {
-    componentStack: String;
-}
-
 interface Context {
     react: {
         componentStack: Array<String>;
@@ -27,16 +23,8 @@ export default class ErrorBoundary extends React.Component {
         }
     }
 
-    componentDidCatch(error: Error, info: ReactErrorInfo) {
-        if (flareClient) {
-            const context: Context = {
-                react: {
-                    componentStack: formatReactComponentStack(info.componentStack),
-                },
-            };
-
-            flareClient.reportError(error, context);
-        }
+    componentDidCatch(error: Error, reactErrorInfo: React.ErrorInfo) {
+        reportReactError(error, reactErrorInfo);
     }
 
     render() {
@@ -46,4 +34,16 @@ export default class ErrorBoundary extends React.Component {
 
 function formatReactComponentStack(stack: String) {
     return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
+}
+
+export function reportReactError(error: Error, reactErrorInfo: React.ErrorInfo) {
+    if (flareClient) {
+        const context: Context = {
+            react: {
+                componentStack: formatReactComponentStack(reactErrorInfo.componentStack),
+            },
+        };
+
+        flareClient.reportError(error, context);
+    }
 }
