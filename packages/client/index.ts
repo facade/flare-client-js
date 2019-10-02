@@ -12,7 +12,7 @@ interface Config {
     maxReportsPerMinute: number;
 }
 
-interface Context {
+export interface Context {
     request?: {
         url?: String;
         useragent?: String;
@@ -38,33 +38,25 @@ declare const VERSION: string;
 
 const clientVersion = typeof VERSION === 'undefined' ? '?' : VERSION;
 
-type BeforeSubmit = (context: Context) => Context;
-
 export default new (class FlareClient {
     key: string;
     reportingUrl: string;
     glows: Array<Glow>;
     config: Config;
-    beforeSubmit: BeforeSubmit;
     reportedErrorsTimestamps: Array<number>;
+    customContext: { [key: string]: any };
 
     constructor() {
         this.key = '';
         this.reportingUrl = '';
         this.glows = [];
-        this.beforeSubmit = (context: Context) => context;
         this.reportedErrorsTimestamps = [];
+        this.customContext = { context: {} };
 
         this.config = {
             maxGlows: 30,
             maxReportsPerMinute: 500,
         };
-    }
-
-    public setBeforeSubmit(newBeforeSubmit: BeforeSubmit) {
-        if (typeof newBeforeSubmit === 'function') {
-            this.beforeSubmit = newBeforeSubmit;
-        }
     }
 
     public setConfig(newConfig: Config) {
@@ -92,7 +84,15 @@ export default new (class FlareClient {
         }
     }
 
-    public reportError(error: Error, context = {}) {
+    public addContext(name: string, value: any) {
+        this.customContext.context[name] = value; // genericContext is probably not the correct key, figure out what is (the one that Flare::context('Tenant', 'My-Tenant-Identifier'); uses)
+    }
+
+    public addContextGroup(groupName: string, value: { [key: string]: any }) {
+        this.customContext[groupName] = value;
+    }
+
+    public reportError(error: Error, context: Context = {}) {
         if (!this.key || !this.reportingUrl) {
             throwError(
                 `The client was not yet initialised with an API key.
@@ -124,7 +124,7 @@ export default new (class FlareClient {
             message: error.message,
             language: 'javascript',
             glows: this.glows,
-            context: this.beforeSubmit(getExtraContext(context)),
+            context: getExtraContext({ ...context, ...this.customContext }),
             stacktrace: errorToFormattedStacktrace(error),
         };
 

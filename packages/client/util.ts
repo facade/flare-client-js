@@ -1,15 +1,5 @@
 import ErrorStackParser from 'error-stack-parser';
-
-interface Context {
-    request?: {
-        url?: String;
-        useragent?: String;
-        referrer?: String;
-        readyState?: String;
-    };
-    cookies?: { [key: string]: string };
-    [key: string]: any;
-}
+import { Context } from '.';
 
 declare const VERSION: string;
 
