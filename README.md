@@ -72,3 +72,24 @@ render(
     document.getElementById('app')
 )
 ```
+
+You should use a combination of this and your own error boundaries, continue reading to find out how to report errors to Flare in your own error boundary components.
+
+
+### Reporting React errors in your own error boundaries
+
+If you have your own error boundary components, e.g. for displaying a fallback component when something goes wrong, the error won't bubble up to the error boundary exported by `flare-react` and we won't be able to report it to the Flare app.
+
+If you still want to know about these errors, you can easily report the error manually like so:
+
+```js
+import { reportReactError } from 'flare-react'
+
+componentDidCatch(error: Error, info: React.ErrorInfo) {
+    reportReactError(error, info);
+}
+
+getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI.
+}
+```
