@@ -14,7 +14,10 @@ Comes with Vue and React integrations.
 ```js
 import flareClient from 'flare-client';
 
-flareClient.light('your-api-key', 'http://flareapp.iotest/api/reports');
+// only launch in production, we don't want to waste quota while developing.
+if (process.env.NODE_ENV === 'production') {
+    flareClient.light('your-api-key', 'http://flareapp.iotest/api/reports');
+}
 
 /* TODO: remove the reporting URL in the production client.
 Maybe let it default to https://flareapp.io/api/reports,
