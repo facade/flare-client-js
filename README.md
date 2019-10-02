@@ -79,33 +79,14 @@ You should use a combination of Flare's and your own error boundaries, continue 
 
 If you have your own error boundary components, e.g. for displaying a fallback component when something goes wrong, the error won't bubble up to the error boundary exported by `flare-react` and we won't be able to report it to the Flare app.
 
-If you still want to know about these errors, you can easily report the error manually by using the `reportReactError` function exported from the `flare-react` library.
-
-An example of a very simple but effective error boundary:
+If you still want to know about these errors, you can easily report the error manually by using the `reportReactError` function exported from the `flare-react` library:
 
 ```js
-import React from "react";
 import { reportReactError } from "flare-react";
 
 export default class ErrorBoundary extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { hasError: false };
-    }
-
-    static getDerivedStateFromError() {
-        return { hasError: true };
-    }
-
     componentDidCatch(error, info) {
         reportReactError(error, info);
     }
-
-    render() {
-        if (this.state.hasError) {
-            return <h1>Something went wrong.</h1>;
-        }
-
-        return this.props.children;
-    }
+}
 ```
