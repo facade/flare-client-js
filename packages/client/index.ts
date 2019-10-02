@@ -2,9 +2,10 @@ import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonSt
 
 interface Glow {
     time: Number;
+    microtime: Number;
     name: String;
-    messageLevel: 'info' | 'debug' | 'warning' | 'error' | 'critical';
-    metaData: Array<Object>;
+    message_level: 'info' | 'debug' | 'warning' | 'error' | 'critical';
+    meta_data: Array<Object>;
 }
 
 interface Config {
@@ -76,8 +77,18 @@ export default new (class FlareClient {
         this.reportingUrl = reportingUrl;
     }
 
-    public glow({ name, messageLevel = 'info', metaData = [], time = getCurrentTime() }: Glow) {
-        this.glows.push({ time, name, messageLevel, metaData });
+    public glow({
+        name,
+        messageLevel = 'info',
+        metaData = [],
+        time = Math.round(Date.now() / 1000),
+    }: {
+        name: Glow['name'];
+        messageLevel?: Glow['message_level'];
+        metaData?: Glow['meta_data'];
+        time?: Glow['time'];
+    }) {
+        this.glows.push({ microtime: time, time, name, message_level: messageLevel, meta_data: metaData });
 
         if (this.glows.length > this.config.maxGlows) {
             this.glows = this.glows.slice(this.glows.length - this.config.maxGlows);
