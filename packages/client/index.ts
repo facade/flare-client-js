@@ -1,8 +1,8 @@
 import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify, throwError } from './util';
 
 interface Glow {
-    time: Number;
-    microtime: Number;
+    time: number;
+    microtime: number;
     name: String;
     message_level: 'info' | 'debug' | 'warning' | 'error' | 'critical';
     meta_data: Array<Object>;
@@ -127,30 +127,36 @@ export default new (class FlareClient {
             }
         }
 
-        const body = {
-            key: this.key,
-            notifier: 'Flare JavaScript Client V' + clientVersion,
-            exception_class: error.constructor ? error.constructor.name : undefined,
-            seen_at: getCurrentTime(),
-            message: error.message,
-            language: 'javascript',
-            glows: this.glows,
-            context: getExtraContext({ ...context, ...this.customContext }),
-            stacktrace: errorToFormattedStacktrace(error),
-        };
+        errorToFormattedStacktrace(error).then(stacktrace => {
+            if (!stacktrace) {
+                throwError('No error stack was found, not reporting the error.');
+            }
 
-        // TODO: send request body through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)
+            const body = {
+                key: this.key,
+                notifier: 'Flare JavaScript Client V' + clientVersion,
+                exception_class: error.constructor ? error.constructor.name : undefined,
+                seen_at: getCurrentTime(),
+                message: error.message,
+                language: 'javascript',
+                glows: this.glows,
+                context: getExtraContext({ ...context, ...this.customContext }),
+                stacktrace,
+            };
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', this.reportingUrl);
+            // TODO: send request body through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)
 
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('x-api-key', this.key);
-        xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', this.reportingUrl);
 
-        xhr.send(flatJsonStringify(body));
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('x-api-key', this.key);
+            xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-        this.reportedErrorsTimestamps.push(Date.now());
+            xhr.send(flatJsonStringify(body));
+
+            this.reportedErrorsTimestamps.push(Date.now());
+        });
     }
 })();

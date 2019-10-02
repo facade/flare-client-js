@@ -2,8 +2,8 @@ import flareClient from 'flare-client';
 
 interface Context {
     vue: {
-        info: String;
-        componentName: String;
+        info: string;
+        componentName: string;
     };
 }
 
@@ -36,7 +36,7 @@ export default function install(Vue: Vue) {
 
     const original = Vue.config.errorHandler;
 
-    Vue.config.errorHandler = (error: Error, vm: Vm, info: String) => {
+    Vue.config.errorHandler = (error: Error, vm: Vm, info: string) => {
         let componentName;
 
         if (vm && vm.$options && vm.$options._componentTag) {
@@ -67,7 +67,7 @@ export default function install(Vue: Vue) {
 }
 
 //https://stackoverflow.com/a/44082344/6374824
-function kebabToPascal(str: String) {
+function kebabToPascal(str: string) {
     str += '';
     const splitStr = str.split('-');
     for (let i = 0; i < splitStr.length; i++) {
