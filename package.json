@@ -3,6 +3,7 @@
     "name": "flare-client-js",
     "license": "ISC",
     "scripts": {
+        "tswatch": "tsc --watch --noEmit",
         "prettier": "prettier --write '*.{js,ts,json}' 'packages/**/*.{js,ts,json}'",
         "eslint": "eslint packages --fix --ext ts",
         "format": "$npm_execpath run eslint && $npm_execpath run prettier",

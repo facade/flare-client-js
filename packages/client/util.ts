@@ -7,7 +7,7 @@ interface Context {
         referrer?: String;
         readyState?: String;
     };
-    cookies?: Array<Object>;
+    cookies?: { [key: string]: string };
     [key: string]: any;
 }
 
@@ -42,10 +42,25 @@ export function getExtraContext(context: Context) {
     };
 
     if (document.cookie) {
-        context.cookies = document.cookie.split('; ').map(cookie => {
-            const splitCookie = cookie.split(/=/);
-            return { [splitCookie[0]]: splitCookie[1] };
+        context.cookies = document.cookie.split('; ').reduce(
+            (cookies, cookie) => {
+                const [cookieName, cookieValue] = cookie.split(/=/);
+                cookies[cookieName] = cookieValue;
+
+                return cookies;
+            },
+            {} as { [key: string]: string }
+        );
+    }
+
+    if (location.search) {
+        const queryString: { [key: string]: string } = {};
+
+        new URLSearchParams(location.search).forEach((value, key) => {
+            queryString[key] = value;
         });
+
+        context.request_data = { queryString };
     }
 
     return context;

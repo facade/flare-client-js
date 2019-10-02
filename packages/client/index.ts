@@ -16,10 +16,21 @@ interface Context {
     request?: {
         url?: String;
         useragent?: String;
-        referrer?: String;
-        readyState?: String;
+        referrer?: String; // TODO: Flare doesn't catch this yet
+        readyState?: String; // TODO: Flare doesn't catch this yet
     };
-    cookies?: Array<Object>;
+    request_data?: {
+        queryString: { [key: string]: string };
+    };
+    git?: {
+        // TODO: do we want the git info for the js client? We'd have to add the commit info to the JS bundle, not sure if users want this?
+        hash: String;
+        message: String;
+        tag: String;
+        remote: String;
+        isDirty: Boolean;
+    };
+    cookies?: { [key: string]: string };
     [key: string]: any;
 }
 
