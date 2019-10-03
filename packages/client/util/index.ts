@@ -10,6 +10,7 @@ type StackFrame = {
     method: string;
     file: string;
     code_snippet: { [key: number]: string };
+    trimmed_column_number: number | null;
     class: string;
 };
 
@@ -31,7 +32,8 @@ export function errorToFormattedStacktrace(error: Error): Promise<Array<StackFra
                             column_number: frame.columnNumber || 1,
                             method: frame.functionName || 'Anonymous or unknown function',
                             file: frame.fileName || 'Unknown file',
-                            code_snippet: snippet,
+                            code_snippet: snippet.codeSnippet,
+                            trimmed_column_number: snippet.trimmedColumnNumber,
                             class: '',
                         });
                     });
