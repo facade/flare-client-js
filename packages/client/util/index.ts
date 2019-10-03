@@ -1,5 +1,6 @@
 import ErrorStackParser from 'error-stack-parser';
-import { Context } from '.';
+import { Context } from '../';
+import { getCodeSnippet } from './fileReader';
 
 declare const VERSION: string;
 
@@ -24,7 +25,7 @@ export function errorToFormattedStacktrace(error: Error): Promise<Array<StackFra
         Promise.all(
             ErrorStackParser.parse(error).map(frame => {
                 return new Promise<StackFrame>(resolve => {
-                    getCodeSnippet(frame.fileName, frame.lineNumber).then(snippet => {
+                    getCodeSnippet(frame.fileName, frame.lineNumber, frame.columnNumber).then(snippet => {
                         resolve({
                             line_number: frame.lineNumber || 1,
                             column_number: frame.columnNumber || 1,
@@ -111,39 +112,4 @@ function hasStack(err: any) {
         typeof (err.stack || err.stacktrace || err['opera#sourceloc']) === 'string' &&
         err.stack !== `${err.name}: ${err.message}`
     );
-}
-
-export function getCodeSnippet(url?: string, lineNumber?: number): Promise<{ [key: number]: string }> {
-    return new Promise(resolve => {
-        if (!url || !lineNumber) {
-            resolve('Could not read file');
-            return;
-        }
-
-        const rawFile = new XMLHttpRequest();
-
-        // TODO: maybe cache files that we already read, so we don't have to do an extra xhrrequest for those
-        rawFile.open('GET', url, false);
-        rawFile.onreadystatechange = () => {
-            if (rawFile.readyState === 4) {
-                if (rawFile.status === 200 || rawFile.status == 0) {
-                    // TODO: see if we can beautify the code a little bit?
-                    // TODO: read only necessary lines from file: https://github.com/anpur/line-navigator/blob/master/line-navigator.js
-
-                    resolve({
-                        85018: 'kek',
-                        85019: 'lol',
-                        85020: 'hm',
-                    });
-
-                    /* resolve(rawFile.responseText); */
-                    return;
-                }
-            }
-
-            resolve('Could not read file');
-        };
-
-        rawFile.send(null);
-    });
 }
