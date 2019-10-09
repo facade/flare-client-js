@@ -33,8 +33,6 @@ export default class ErrorBoundary extends React.Component {
 }
 
 function formatReactComponentStack(stack: String) {
-    console.log(stack);
-    console.log(stack.split(/\s*\n\s*/g).filter(line => line.length > 0));
     return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
 }
 
