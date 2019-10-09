@@ -1,22 +1,8 @@
 import ErrorStackParser from 'error-stack-parser';
-import { Context } from '../';
 import { getCodeSnippet } from './fileReader';
+import { clientVersion, flareGitInfo } from './globals';
 
-declare const VERSION: string;
-
-type StackFrame = {
-    line_number: number;
-    column_number: number;
-    method: string;
-    file: string;
-    code_snippet: { [key: number]: string };
-    trimmed_column_number: number | null;
-    class: string;
-};
-
-const clientVersion = typeof VERSION === 'undefined' ? '?' : VERSION;
-
-export function errorToFormattedStacktrace(error: Error): Promise<Array<StackFrame>> {
+export function errorToFormattedStacktrace(error: Error): Promise<Array<Flare.StackFrame>> {
     return new Promise((resolve, reject) => {
         if (!hasStack(error)) {
             reject(undefined);
@@ -25,7 +11,7 @@ export function errorToFormattedStacktrace(error: Error): Promise<Array<StackFra
 
         Promise.all(
             ErrorStackParser.parse(error).map(frame => {
-                return new Promise<StackFrame>(resolve => {
+                return new Promise<Flare.StackFrame>(resolve => {
                     getCodeSnippet(frame.fileName, frame.lineNumber, frame.columnNumber).then(snippet => {
                         resolve({
                             line_number: frame.lineNumber || 1,
@@ -47,7 +33,7 @@ export function getCurrentTime() {
     return Math.round(Date.now() / 1000);
 }
 
-export function getExtraContext(context: Context) {
+export function getExtraContext(context: Flare.Context): Flare.Context {
     context.request = {
         url: document.location.href,
         useragent: navigator.userAgent,
@@ -76,6 +62,8 @@ export function getExtraContext(context: Context) {
 
         context.request_data = { queryString };
     }
+
+    context.git = flareGitInfo;
 
     return context;
 }

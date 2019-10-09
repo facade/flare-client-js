@@ -13,5 +13,5 @@
         "no-console": 0
     },
     "parser": "@typescript-eslint/parser",
-    "globals": { "VERSION": true }
+    "globals": { "FLARE_JS_CLIENT_VERSION": true }
 }

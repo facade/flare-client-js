@@ -12,7 +12,7 @@ module.exports = merge(baseConfig, {
 
     plugins: [
         new webpack.DefinePlugin({
-            VERSION: JSON.stringify(require('./package.json').version),
+            FLARE_JS_CLIENT_VERSION: JSON.stringify(require('./package.json').version),
         }),
     ],
 });

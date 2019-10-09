@@ -1,49 +1,11 @@
 import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify, throwError } from './util';
-
-interface Glow {
-    time: number;
-    microtime: number;
-    name: String;
-    message_level: 'info' | 'debug' | 'warning' | 'error' | 'critical';
-    meta_data: Array<Object>;
-}
-
-interface Config {
-    maxGlows: number;
-    maxReportsPerMinute: number;
-}
-
-export interface Context {
-    request?: {
-        url?: String;
-        useragent?: String;
-        referrer?: String; // TODO: Flare doesn't catch this yet
-        readyState?: String; // TODO: Flare doesn't catch this yet
-    };
-    request_data?: {
-        queryString: { [key: string]: string };
-    };
-    git?: {
-        // TODO: do we want the git info for the js client? We'd have to add the commit info to the JS bundle, not sure if users want this?
-        hash: String;
-        message: String;
-        tag: String;
-        remote: String;
-        isDirty: Boolean;
-    };
-    cookies?: { [key: string]: string };
-    [key: string]: any;
-}
-
-declare const VERSION: string;
-
-const clientVersion = typeof VERSION === 'undefined' ? '?' : VERSION;
+import { clientVersion, flareSourcemapVersion } from './util/globals';
 
 export default new (class FlareClient {
     key: string;
     reportingUrl: string;
-    glows: Array<Glow>;
-    config: Config;
+    glows: Array<Flare.Glow>;
+    config: Flare.ClientConfig;
     reportedErrorsTimestamps: Array<number>;
     customContext: { [key: string]: any };
 
@@ -60,7 +22,7 @@ export default new (class FlareClient {
         };
     }
 
-    public setConfig(newConfig: Config) {
+    public setConfig(newConfig: Flare.ClientConfig) {
         this.config = { ...this.config, ...newConfig };
     }
 
@@ -83,10 +45,10 @@ export default new (class FlareClient {
         metaData = [],
         time = Math.round(Date.now() / 1000),
     }: {
-        name: Glow['name'];
-        messageLevel?: Glow['message_level'];
-        metaData?: Glow['meta_data'];
-        time?: Glow['time'];
+        name: Flare.Glow['name'];
+        messageLevel?: Flare.Glow['message_level'];
+        metaData?: Flare.Glow['meta_data'];
+        time?: Flare.Glow['time'];
     }) {
         this.glows.push({ microtime: time, time, name, message_level: messageLevel, meta_data: metaData });
 
@@ -96,14 +58,14 @@ export default new (class FlareClient {
     }
 
     public addContext(name: string, value: any) {
-        this.customContext.context[name] = value; // genericContext is probably not the correct key, figure out what is (the one that Flare::context('Tenant', 'My-Tenant-Identifier'); uses)
+        this.customContext.context[name] = value;
     }
 
     public addContextGroup(groupName: string, value: { [key: string]: any }) {
         this.customContext[groupName] = value;
     }
 
-    public reportError(error: Error, context: Context = {}) {
+    public reportError(error: Error, context: Flare.Context = {}) {
         if (!this.key || !this.reportingUrl) {
             throwError(
                 `The client was not yet initialised with an API key.
@@ -142,6 +104,7 @@ export default new (class FlareClient {
                 glows: this.glows,
                 context: getExtraContext({ ...context, ...this.customContext }),
                 stacktrace,
+                sourcemap_version_id: flareSourcemapVersion,
             };
 
             // TODO: send request body through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)
