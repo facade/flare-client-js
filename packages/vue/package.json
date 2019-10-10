@@ -22,5 +22,9 @@
     "license": "ISC",
     "peerDependencies": {
         "flare-client": "*"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "vue": "^2.6.10"
     }
 }

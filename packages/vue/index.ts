@@ -1,4 +1,5 @@
 import flareClient from 'flare-client';
+import Vue from 'Vue/types/index';
 
 interface Context {
     vue: {
@@ -7,19 +8,7 @@ interface Context {
     };
 }
 
-interface Vue {
-    config: {
-        errorHandler: Function;
-    };
-}
-
-interface Vm {
-    $options: {
-        _componentTag?: string;
-    };
-}
-
-export default function install(Vue: Vue) {
+export default function install(Vue: Vue.VueConstructor) {
     if (!flareClient) {
         console.error(
             `Flare Vue Plugin: the Flare Client could not be found.
@@ -36,17 +25,12 @@ export default function install(Vue: Vue) {
 
     const original = Vue.config.errorHandler;
 
-    Vue.config.errorHandler = (error: Error, vm: Vm, info: string) => {
+    Vue.config.errorHandler = (error: Error, vm: Vue, info: string) => {
         let componentName;
 
-        if (vm && vm.$options && vm.$options._componentTag) {
-            componentName = kebabToPascal(vm.$options._componentTag);
+        if (vm && vm.$options && vm.$options.name) {
+            componentName = vm.$options.name;
         }
-
-        // TODO: optional chaining (SOON!) https://github.com/prettier/prettier-vscode/issues/977
-        /* if (vm?.$options?._componentTag) {
-            componentName = kebabToPascal(vm.$options._componentTag);
-        } */
 
         const context: Context = {
             vue: {
@@ -64,14 +48,4 @@ export default function install(Vue: Vue) {
 
         throw error;
     };
-}
-
-//https://stackoverflow.com/a/44082344/6374824
-function kebabToPascal(str: string) {
-    str += '';
-    const splitStr = str.split('-');
-    for (let i = 0; i < splitStr.length; i++) {
-        splitStr[i] = splitStr[i].slice(0, 1).toUpperCase() + splitStr[i].slice(1, splitStr[i].length);
-    }
-    return splitStr.join('');
 }
