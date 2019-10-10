@@ -5,8 +5,7 @@ import { clientVersion, flareGitInfo } from './globals';
 export function errorToFormattedStacktrace(error: Error): Promise<Array<Flare.StackFrame>> {
     return new Promise((resolve, reject) => {
         if (!hasStack(error)) {
-            reject(undefined);
-            return;
+            return reject(undefined);
         }
 
         Promise.all(
@@ -29,7 +28,7 @@ export function errorToFormattedStacktrace(error: Error): Promise<Array<Flare.St
     });
 }
 
-export function getCurrentTime() {
+export function getCurrentTime(): number {
     return Math.round(Date.now() / 1000);
 }
 
@@ -69,7 +68,7 @@ export function getExtraContext(context: Flare.Context): Flare.Context {
 }
 
 // https://stackoverflow.com/a/11616993/6374824
-export function flatJsonStringify(json: Object) {
+export function flatJsonStringify(json: Object): string {
     let cache: any = [];
 
     const flattenedStringifiedJson = JSON.stringify(json, function(_, value) {
@@ -91,15 +90,19 @@ export function flatJsonStringify(json: Object) {
     return flattenedStringifiedJson;
 }
 
-export function throwError(errorMessage: string) {
+export function flareLog(errorMessage: string): void {
     console.error(`Flare JS Client V${clientVersion}: ${errorMessage}`);
 }
 
-function hasStack(err: any) {
+function hasStack(err: any): boolean {
     return (
         !!err &&
         (!!err.stack || !!err.stacktrace || !!err['opera#sourceloc']) &&
         typeof (err.stack || err.stacktrace || err['opera#sourceloc']) === 'string' &&
         err.stack !== `${err.name}: ${err.message}`
     );
+}
+
+export function flatMap<T, U>(array: T[], callbackfn: (value: T, index: number, array: T[]) => U[]): U[] {
+    return Array.prototype.concat(...array.map(callbackfn));
 }

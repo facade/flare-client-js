@@ -1,4 +1,11 @@
-import { getExtraContext, errorToFormattedStacktrace, getCurrentTime, flatJsonStringify, throwError } from './util';
+import {
+    getExtraContext,
+    errorToFormattedStacktrace,
+    getCurrentTime,
+    flatJsonStringify,
+    flareLog,
+    flatMap,
+} from './util';
 import { clientVersion, flareSourcemapVersion } from './util/globals';
 
 export default new (class FlareClient {
@@ -9,6 +16,7 @@ export default new (class FlareClient {
     reportedErrorsTimestamps: Array<number>;
     customContext: { [key: string]: any };
     beforeSubmit?: (report: Flare.ErrorReport) => Flare.ErrorReport | false;
+    solutionProviders: Array<Flare.SolutionProvider>;
 
     constructor() {
         this.key = '';
@@ -17,6 +25,7 @@ export default new (class FlareClient {
         this.reportedErrorsTimestamps = [];
         this.customContext = { context: {} };
         this.beforeSubmit = undefined;
+        this.solutionProviders = [];
 
         this.throttleConfig = {
             maxGlows: 30,
@@ -24,21 +33,21 @@ export default new (class FlareClient {
         };
     }
 
-    public setConfig(newConfig: Flare.ThrottleConfig) {
+    public setConfig(newConfig: Flare.ThrottleConfig): void {
         this.throttleConfig = { ...this.throttleConfig, ...newConfig };
     }
 
-    public light(key: string, reportingUrl: string) {
+    public light(key: string, reportingUrl: string): void {
         if (!key) {
-            throwError('No Flare key was passed, shutting down.');
+            flareLog('No Flare key was passed, shutting down.');
         }
 
         if (!reportingUrl) {
-            throwError('No reportingUrl was passed, shutting down.');
+            flareLog('No reportingUrl was passed, shutting down.');
         }
 
         if (!Promise) {
-            throwError('ES6 Promises are not supported in this environment, shutting down.');
+            flareLog('ES6 Promises are not supported in this environment, shutting down.');
         }
 
         this.key = key;
@@ -55,7 +64,7 @@ export default new (class FlareClient {
         messageLevel?: Flare.Glow['message_level'];
         metaData?: Flare.Glow['meta_data'];
         time?: Flare.Glow['time'];
-    }) {
+    }): void {
         this.glows.push({ microtime: time, time, name, message_level: messageLevel, meta_data: metaData });
 
         if (this.glows.length > this.throttleConfig.maxGlows) {
@@ -63,17 +72,25 @@ export default new (class FlareClient {
         }
     }
 
-    public addContext(name: string, value: any) {
+    public addContext(name: string, value: any): void {
         this.customContext.context[name] = value;
     }
 
-    public addContextGroup(groupName: string, value: { [key: string]: any }) {
+    public addContextGroup(groupName: string, value: { [key: string]: any }): void {
         this.customContext[groupName] = value;
     }
 
-    public reportError(error: Error, context: Flare.Context = {}) {
+    public registerSolutionProvider(solutionProvider: Flare.SolutionProvider): void {
+        if (!solutionProvider.canSolve || !solutionProvider.getSolutions) {
+            return flareLog('A solution provider without a "canSolve" or "getSolutions" property was added.');
+        }
+
+        this.solutionProviders.push(solutionProvider);
+    }
+
+    public reportError(error: Error, context: Flare.Context = {}): void {
         if (!this.key || !this.reportingUrl) {
-            throwError(
+            flareLog(
                 `The client was not yet initialised with an API key.
                 Run client.light('api-token-goes-here') when you initialise your app.
                 If you are running in dev mode and didn't run the light command on purpose, you can ignore this error.`
@@ -81,7 +98,7 @@ export default new (class FlareClient {
         }
 
         if (!error) {
-            throwError('No error was provided, not reporting.');
+            flareLog('No error was provided, not reporting.');
         }
 
         if (this.reportedErrorsTimestamps.length >= this.throttleConfig.maxReportsPerMinute) {
@@ -97,7 +114,7 @@ export default new (class FlareClient {
 
         errorToFormattedStacktrace(error).then(stacktrace => {
             if (!stacktrace) {
-                throwError('No error stack was found, not reporting the error.');
+                flareLog('No error stack was found, not reporting the error.');
             }
 
             let report: Flare.ErrorReport = {
@@ -112,7 +129,9 @@ export default new (class FlareClient {
                 context: getExtraContext({ ...context, ...this.customContext }),
                 stacktrace,
                 sourcemap_version_id: flareSourcemapVersion,
-                solutions: [],
+                solutions: flatMap(this.solutionProviders, provider =>
+                    provider.canSolve(error) ? provider.getSolutions(error) : []
+                ),
             };
 
             if (this.beforeSubmit) {

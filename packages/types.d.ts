@@ -18,6 +18,11 @@ namespace Flare {
         solutions: Array<Flare.Solution>;
     };
 
+    type SolutionProvider = {
+        canSolve: (error: Error) => boolean;
+        getSolutions: (error: Error) => Array<Flare.Solution>;
+    };
+
     type Solution = {
         class: string;
         title: string;
