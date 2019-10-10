@@ -8,6 +8,7 @@ export default new (class FlareClient {
     throttleConfig: Flare.ThrottleConfig;
     reportedErrorsTimestamps: Array<number>;
     customContext: { [key: string]: any };
+    beforeSubmit?: (report: Flare.ErrorReport) => Flare.ErrorReport | false;
 
     constructor() {
         this.key = '';
@@ -15,6 +16,7 @@ export default new (class FlareClient {
         this.glows = [];
         this.reportedErrorsTimestamps = [];
         this.customContext = { context: {} };
+        this.beforeSubmit = undefined;
 
         this.throttleConfig = {
             maxGlows: 30,
@@ -98,7 +100,7 @@ export default new (class FlareClient {
                 throwError('No error stack was found, not reporting the error.');
             }
 
-            const body: Flare.ErrorReport = {
+            let report: Flare.ErrorReport = {
                 key: this.key,
                 notifier: 'Flare JavaScript Client V' + clientVersion,
                 exception_class:
@@ -113,7 +115,17 @@ export default new (class FlareClient {
                 solutions: [],
             };
 
-            // TODO: send request body through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)
+            if (this.beforeSubmit) {
+                const newReport = this.beforeSubmit(report);
+
+                if (!newReport) {
+                    return;
+                }
+
+                report = newReport;
+            }
+
+            // TODO: send report through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)
 
             const xhr = new XMLHttpRequest();
             xhr.open('POST', this.reportingUrl);
@@ -123,7 +135,7 @@ export default new (class FlareClient {
             xhr.setRequestHeader('x-api-key', this.key);
             xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-            xhr.send(flatJsonStringify(body));
+            xhr.send(flatJsonStringify(report));
 
             this.reportedErrorsTimestamps.push(Date.now());
         });
