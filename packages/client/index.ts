@@ -35,6 +35,10 @@ export default new (class FlareClient {
             throwError('No reportingUrl was passed, shutting down.');
         }
 
+        if (!Promise) {
+            throwError('ES6 Promises are not supported in this environment, shutting down.');
+        }
+
         this.key = key;
         this.reportingUrl = reportingUrl;
     }
