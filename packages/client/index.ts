@@ -5,7 +5,7 @@ export default new (class FlareClient {
     key: string;
     reportingUrl: string;
     glows: Array<Flare.Glow>;
-    config: Flare.ClientConfig;
+    throttleConfig: Flare.ThrottleConfig;
     reportedErrorsTimestamps: Array<number>;
     customContext: { [key: string]: any };
 
@@ -16,14 +16,14 @@ export default new (class FlareClient {
         this.reportedErrorsTimestamps = [];
         this.customContext = { context: {} };
 
-        this.config = {
+        this.throttleConfig = {
             maxGlows: 30,
             maxReportsPerMinute: 500,
         };
     }
 
-    public setConfig(newConfig: Flare.ClientConfig) {
-        this.config = { ...this.config, ...newConfig };
+    public setConfig(newConfig: Flare.ThrottleConfig) {
+        this.throttleConfig = { ...this.throttleConfig, ...newConfig };
     }
 
     public light(key: string, reportingUrl: string) {
@@ -56,8 +56,8 @@ export default new (class FlareClient {
     }) {
         this.glows.push({ microtime: time, time, name, message_level: messageLevel, meta_data: metaData });
 
-        if (this.glows.length > this.config.maxGlows) {
-            this.glows = this.glows.slice(this.glows.length - this.config.maxGlows);
+        if (this.glows.length > this.throttleConfig.maxGlows) {
+            this.glows = this.glows.slice(this.glows.length - this.throttleConfig.maxGlows);
         }
     }
 
@@ -82,9 +82,9 @@ export default new (class FlareClient {
             throwError('No error was provided, not reporting.');
         }
 
-        if (this.reportedErrorsTimestamps.length >= this.config.maxReportsPerMinute) {
+        if (this.reportedErrorsTimestamps.length >= this.throttleConfig.maxReportsPerMinute) {
             const nErrorsBack = this.reportedErrorsTimestamps[
-                this.reportedErrorsTimestamps.length - this.config.maxReportsPerMinute
+                this.reportedErrorsTimestamps.length - this.throttleConfig.maxReportsPerMinute
             ];
 
             if (nErrorsBack > Date.now() - 60 * 1000) {
@@ -98,7 +98,7 @@ export default new (class FlareClient {
                 throwError('No error stack was found, not reporting the error.');
             }
 
-            const body = {
+            const body: Flare.ErrorReport = {
                 key: this.key,
                 notifier: 'Flare JavaScript Client V' + clientVersion,
                 exception_class:
@@ -110,6 +110,7 @@ export default new (class FlareClient {
                 context: getExtraContext({ ...context, ...this.customContext }),
                 stacktrace,
                 sourcemap_version_id: flareSourcemapVersion,
+                solutions: [],
             };
 
             // TODO: send request body through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)

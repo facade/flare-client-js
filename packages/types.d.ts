@@ -1,7 +1,30 @@
 namespace Flare {
-    type ClientConfig = {
+    type ThrottleConfig = {
         maxGlows: number;
         maxReportsPerMinute: number;
+    };
+
+    type ErrorReport = {
+        key: string;
+        notifier: string;
+        exception_class: string;
+        seen_at: number;
+        message: string;
+        language: 'javascript';
+        glows: Array<Flare.Glow>;
+        context: Flare.Context;
+        stacktrace: Array<Flare.StackFrame>;
+        sourcemap_version_id: string;
+        solutions: Array<Flare.Solution>;
+    };
+
+    type Solution = {
+        class: string;
+        title: string;
+        description: string;
+        links: { [label: string]: string };
+        action_description: string;
+        is_runnable: boolean;
     };
 
     type Context = {
