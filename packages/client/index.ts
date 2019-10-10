@@ -97,7 +97,8 @@ export default new (class FlareClient {
             const body = {
                 key: this.key,
                 notifier: 'Flare JavaScript Client V' + clientVersion,
-                exception_class: error.constructor ? error.constructor.name : undefined,
+                exception_class:
+                    error.constructor && error.constructor.name ? error.constructor.name : 'undefined exception class',
                 seen_at: getCurrentTime(),
                 message: error.message,
                 language: 'javascript',
