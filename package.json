@@ -53,5 +53,7 @@
             "**/dist/**"
         ]
     },
-    "dependencies": {}
+    "dependencies": {
+        "@types/vue": "^2.0.0"
+    }
 }

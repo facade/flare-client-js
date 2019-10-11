@@ -88,7 +88,11 @@ export default new (class FlareClient {
         this.solutionProviders.push(solutionProvider);
     }
 
-    public reportError(error: Error, context: Flare.Context = {}): void {
+    public reportError(
+        error: Error,
+        context: Flare.Context = {},
+        extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
+    ): void {
         if (!this.key || !this.reportingUrl) {
             flareLog(
                 `The client was not yet initialised with an API key.
@@ -130,7 +134,9 @@ export default new (class FlareClient {
                 stacktrace,
                 sourcemap_version_id: flareSourcemapVersion,
                 solutions: flatMap(this.solutionProviders, provider =>
-                    provider.canSolve(error) ? provider.getSolutions(error) : []
+                    provider.canSolve(error, extraSolutionParameters)
+                        ? provider.getSolutions(error, extraSolutionParameters)
+                        : []
                 ),
             };
 

@@ -18,9 +18,14 @@ namespace Flare {
         solutions: Array<Flare.Solution>;
     };
 
+    type SolutionProviderExtraParameters = {
+        react?: { errorInfo: React.ErrorInfo };
+        vue?: { vm: import('Vue/types/index').default; info: string };
+    };
+
     type SolutionProvider = {
-        canSolve: (error: Error) => boolean;
-        getSolutions: (error: Error) => Array<Flare.Solution>;
+        canSolve: (error: Error, extraParameters?: SolutionProviderExtraParameters) => boolean;
+        getSolutions: (error: Error, extraParameters?: SolutionProviderExtraParameters) => Array<Flare.Solution>;
     };
 
     type Solution = {

@@ -39,7 +39,7 @@ export default function install(Vue: Vue.VueConstructor) {
             },
         };
 
-        flareClient.reportError(error, context);
+        flareClient.reportError(error, context, { vue: { vm, info } });
 
         if (typeof original === 'function') {
             original(error, vm, info);

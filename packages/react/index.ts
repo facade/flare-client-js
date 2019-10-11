@@ -44,6 +44,6 @@ export function reportReactError(error: Error, reactErrorInfo: React.ErrorInfo) 
             },
         };
 
-        flareClient.reportError(error, context);
+        flareClient.reportError(error, context, { react: { errorInfo: reactErrorInfo } });
     }
 }
