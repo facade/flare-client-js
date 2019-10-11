@@ -11,6 +11,7 @@
         }
     ],
     "scripts": {
+        "dev": "../../node_modules/webpack/bin/webpack.js --mode=development",
         "build": "../../node_modules/webpack/bin/webpack.js --mode=production && $npm_execpath run bundlesize",
         "bundlesize": "../../node_modules/bundlesize/index.js",
         "run-link": "yarn link",

@@ -7,6 +7,7 @@ import {
     flatMap,
 } from './util';
 import { clientVersion, flareSourcemapVersion } from './util/globals';
+import launchIgnition from './util/ignition';
 
 export default new (class FlareClient {
     key: string;
@@ -17,6 +18,7 @@ export default new (class FlareClient {
     customContext: { [key: string]: any };
     beforeSubmit?: (report: Flare.ErrorReport) => Flare.ErrorReport | false;
     solutionProviders: Array<Flare.SolutionProvider>;
+    ignition?: any;
 
     constructor() {
         this.key = '';
@@ -26,6 +28,7 @@ export default new (class FlareClient {
         this.customContext = { context: {} };
         this.beforeSubmit = undefined;
         this.solutionProviders = [];
+        this.ignition = undefined;
 
         this.throttleConfig = {
             maxGlows: 30,
@@ -88,12 +91,13 @@ export default new (class FlareClient {
         this.solutionProviders.push(solutionProvider);
     }
 
+    // TODO: Method will likely need a different name if we're also showing the ignition page here
     public reportError(
         error: Error,
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
     ): void {
-        if (!this.key || !this.reportingUrl) {
+        if (!this.reportingUrl) {
             flareLog(
                 `The client was not yet initialised with an API key.
                 Run client.light('api-token-goes-here') when you initialise your app.
@@ -148,6 +152,10 @@ export default new (class FlareClient {
                 }
 
                 report = newReport;
+            }
+
+            if (this.ignition) {
+                return launchIgnition(this.ignition, report);
             }
 
             // TODO: send report through trimming strategy (will probably have to flatten the JSON here, and stringify it later, before sending)

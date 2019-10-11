@@ -9,6 +9,7 @@
         "format": "$npm_execpath run eslint && $npm_execpath run prettier",
         "upgrade-all": "yarn upgrade && lerna run upgrade-deps",
         "install-deps": "yarn && lerna run install-deps",
+        "dev": "lerna run dev",
         "build": "lerna run build",
         "link-all": "lerna run run-link",
         "link-client": "lerna run link-client",
