@@ -1,11 +1,14 @@
 namespace Flare {
-    type ThrottleConfig = {
-        maxGlows: number;
+    type BeforeSubmit = (report: ErrorReport) => ErrorReport | false;
+
+    type Config = {
+        key: string;
+        reportingUrl: string;
+        maxGlowsPerReport: number;
         maxReportsPerMinute: number;
     };
 
     type ErrorReport = {
-        key: string;
         notifier: string;
         exception_class: string;
         seen_at: number;
@@ -72,7 +75,9 @@ namespace Flare {
         time: number;
         microtime: number;
         name: String;
-        message_level: 'info' | 'debug' | 'warning' | 'error' | 'critical';
+        message_level: MessageLevel;
         meta_data: Array<Object>;
     };
+
+    type MessageLevel = 'info' | 'debug' | 'warning' | 'error' | 'critical';
 }

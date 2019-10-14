@@ -1,4 +1,4 @@
-import flareClient from 'flare-client';
+import flare from 'flare-client';
 import Vue from 'Vue/types';
 
 interface Context {
@@ -9,7 +9,7 @@ interface Context {
 }
 
 export default function install(Vue: Vue.VueConstructor) {
-    if (!flareClient) {
+    if (!flare) {
         console.error(
             'Flare Vue Plugin: the Flare Client could not be found. ' +
                 'Errors in your Vue components will not be reported.'
@@ -33,7 +33,7 @@ export default function install(Vue: Vue.VueConstructor) {
             },
         };
 
-        flareClient.reportError(error, context, { vue: { vm, info } });
+        flare.report(error, context, { vue: { vm, info } });
 
         if (typeof initialErrorHandler === 'function') {
             initialErrorHandler(error, vm, info);
