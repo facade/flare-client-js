@@ -11,15 +11,15 @@ interface Context {
 export default function install(Vue: Vue.VueConstructor) {
     if (!flareClient) {
         console.error(
-            `Flare Vue Plugin: the Flare Client could not be found.
-            Errors in your Vue components will not be reported.`
+            'Flare Vue Plugin: the Flare Client could not be found. ' +
+                'Errors in your Vue components will not be reported.'
         );
     }
 
     if (!Vue || !Vue.config) {
         console.error(
-            `Flare Vue Plugin: The Vue errorHandler could not be found.
-            Errors in your Vue components will not be reported.`
+            'Flare Vue Plugin: The Vue errorHandler could not be found. ' +
+                'Errors in your Vue components will not be reported.'
         );
     }
 
