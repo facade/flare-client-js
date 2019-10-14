@@ -1,6 +1,6 @@
 import ErrorStackParser from 'error-stack-parser';
 import { getCodeSnippet } from './fileReader';
-import { clientVersion, flareGitInfo } from './globals';
+import { clientVersion, flareGitInfo, flareSourcemapVersion } from './globals';
 
 export function errorToFormattedStacktrace(error: Error): Promise<Array<Flare.StackFrame>> {
     return new Promise((resolve, reject) => {
@@ -106,3 +106,7 @@ function hasStack(err: any): boolean {
 export function flatMap<T, U>(array: T[], callbackfn: (value: T, index: number, array: T[]) => U[]): U[] {
     return Array.prototype.concat(...array.map(callbackfn));
 }
+
+export { clientVersion, flareGitInfo, flareSourcemapVersion };
+
+export { default as launchIgnition } from './ignition';

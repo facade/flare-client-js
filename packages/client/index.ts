@@ -5,9 +5,10 @@ import {
     flatJsonStringify,
     flareLog,
     flatMap,
+    clientVersion,
+    flareSourcemapVersion,
+    launchIgnition,
 } from './util';
-import { clientVersion, flareSourcemapVersion } from './util/globals';
-import launchIgnition from './util/ignition';
 
 export default new (class FlareClient {
     key: string;
