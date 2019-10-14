@@ -7,7 +7,7 @@ Comes with Vue and React integrations.
 ### Important notes
  - None of the integrations will work before running the setup of the client. Make sure to import the `flare-client` before importing any integrations.
 
- - The client will only automatically report **uncaught** errors. Error boundaries (like `try…catch` or React error boundaries) will need to implement a custom method of reporting errors to the platform, as described elsewhere in the docs.
+ - The client will only automatically report **uncaught** errors or errors that you manually report. Error boundaries (like `try…catch` or React error boundaries) will need to implement a custom method of reporting errors to the platform, as described elsewhere in the docs.
 
 ### Setup
 
