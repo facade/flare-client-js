@@ -20,7 +20,7 @@ namespace Flare {
 
     type SolutionProviderExtraParameters = {
         react?: { errorInfo: React.ErrorInfo };
-        vue?: { vm: import('Vue/types/index').default; info: string };
+        vue?: { vm: import('./vue/node_modules/Vue/types/index').default; info: string };
     };
 
     type SolutionProvider = {
