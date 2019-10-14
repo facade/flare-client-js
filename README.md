@@ -51,16 +51,16 @@ Vue.use(flareVue);
 
 ### Important notes
 
-- While in development mode, React will throw errors up to the window, possibly causing errors to be caught twice. Make sure to only initialize the Flare JavaScript error reporter in production builds. Read this issue for more information: https://github.com/facebook/react/issues/10474
-
 - Due to limitations in the architecture of React error boundaries, the Flare React error reporter will only report errors that occur while rendering. This means that errors that occur in event handlers will not be reported (eg an `onClick` function). To report these errors, you could also include the window error tracking Flare plugin. Read this page for more information: https://reactjs.org/docs/error-boundaries.html
 
-Note to self: read through https://github.com/facebook/react/issues/11409 to figure out why event listeners are not caught by errorboundaries. Maybe there is a way to get this working after all, without also having to use the window client.
+*Note to self*: read through https://github.com/facebook/react/issues/11409 to figure out why event listeners are not caught by errorboundaries. Maybe there is a way to get this working after all, without also having to use the window client.
+
+- If you bundle React for development, you will see that many issues are reported twice. This is expected behaviour and will not occur in a production bundle (read more: https://github.com/facebook/react/issues/10474).
 
 
 ### Setup
 
-In your app's root (usually `app.js`), wrap your entire application in the provided `FlareErrorBoundary` component:
+In your app's root file (`/src/App.js` for `creact-react-app`), wrap your entire component tree in the provided `FlareErrorBoundary` component:
 
 ```js
 import FlareErrorBoundary from 'flare-react';
