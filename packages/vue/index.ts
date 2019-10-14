@@ -26,16 +26,10 @@ export default function install(Vue: Vue.VueConstructor) {
     const initialErrorHandler = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm: Vue, info: string) => {
-        let componentName;
-
-        if (vm && vm.$options && vm.$options.name) {
-            componentName = vm.$options.name;
-        }
-
         const context: Context = {
             vue: {
                 info,
-                componentName: componentName || 'Anonymous Component',
+                componentName: vm.$options.name || 'AnonymousComponent',
             },
         };
 
