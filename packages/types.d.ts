@@ -57,7 +57,7 @@ declare namespace Flare {
 
     type StackFrame = {
         line_number: number;
-        column_number: number;
+        column_number: number; // TODO: Flare doesn't catch this yet
         method: string;
         file: string;
         code_snippet: { [key: number]: string };
