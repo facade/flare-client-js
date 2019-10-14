@@ -1,5 +1,5 @@
 import flareClient from 'flare-client';
-import Vue from 'Vue/types/index';
+import Vue from 'Vue/types';
 
 interface Context {
     vue: {
