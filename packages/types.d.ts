@@ -1,4 +1,4 @@
-namespace Flare {
+declare namespace Flare {
     type ThrottleConfig = {
         maxGlows: number;
         maxReportsPerMinute: number;
@@ -18,10 +18,7 @@ namespace Flare {
         solutions: Array<Flare.Solution>;
     };
 
-    type SolutionProviderExtraParameters = {
-        react?: { errorInfo: React.ErrorInfo };
-        vue?: { vm: import('./vue/node_modules/Vue/types/index').default; info: string };
-    };
+    interface SolutionProviderExtraParameters {}
 
     type SolutionProvider = {
         canSolve: (error: Error, extraParameters?: SolutionProviderExtraParameters) => boolean;
