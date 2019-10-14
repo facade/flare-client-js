@@ -23,7 +23,7 @@ export default function install(Vue: Vue.VueConstructor) {
         );
     }
 
-    const original = Vue.config.errorHandler;
+    const initialErrorHandler = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm: Vue, info: string) => {
         let componentName;
@@ -41,8 +41,9 @@ export default function install(Vue: Vue.VueConstructor) {
 
         flareClient.reportError(error, context, { vue: { vm, info } });
 
-        if (typeof original === 'function') {
-            original(error, vm, info);
+        if (typeof initialErrorHandler === 'function') {
+            initialErrorHandler(error, vm, info);
+
             return;
         }
 
