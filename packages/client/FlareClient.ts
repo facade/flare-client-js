@@ -37,11 +37,11 @@ export default class FlareClient {
         };
     }
 
-    public setConfig(newConfig: Flare.ThrottleConfig): void {
+    setConfig(newConfig: Flare.ThrottleConfig): void {
         this.throttleConfig = { ...this.throttleConfig, ...newConfig };
     }
 
-    public light(key: string, reportingUrl: string): void {
+    light(key: string, reportingUrl: string): void {
         if (!key) {
             flareLog('No Flare key was passed, shutting down.');
         }
@@ -58,7 +58,7 @@ export default class FlareClient {
         this.reportingUrl = reportingUrl;
     }
 
-    public glow({
+    glow({
         name,
         messageLevel = 'info',
         metaData = [],
@@ -76,15 +76,15 @@ export default class FlareClient {
         }
     }
 
-    public addContext(name: string, value: any): void {
+    addContext(name: string, value: any): void {
         this.customContext.context[name] = value;
     }
 
-    public addContextGroup(groupName: string, value: { [key: string]: any }): void {
+    addContextGroup(groupName: string, value: { [key: string]: any }): void {
         this.customContext[groupName] = value;
     }
 
-    public registerSolutionProvider(solutionProvider: Flare.SolutionProvider): void {
+    registerSolutionProvider(solutionProvider: Flare.SolutionProvider): void {
         if (!solutionProvider.canSolve || !solutionProvider.getSolutions) {
             return flareLog('A solution provider without a "canSolve" or "getSolutions" property was added.');
         }
@@ -93,7 +93,7 @@ export default class FlareClient {
     }
 
     // TODO: Method will likely need a different name if we're also showing the ignition page here
-    public reportError(
+    reportError(
         error: Error,
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
