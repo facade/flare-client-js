@@ -21,10 +21,7 @@ namespace Flare {
         solutions: Array<Flare.Solution>;
     };
 
-    type SolutionProviderExtraParameters = {
-        react?: { errorInfo: React.ErrorInfo };
-        vue?: { vm: import('Vue/types/index').default; info: string };
-    };
+    interface SolutionProviderExtraParameters {}
 
     type SolutionProvider = {
         canSolve: (error: Error, extraParameters?: SolutionProviderExtraParameters) => boolean;
@@ -63,7 +60,7 @@ namespace Flare {
 
     type StackFrame = {
         line_number: number;
-        column_number: number;
+        column_number: number; // TODO: Flare doesn't catch this yet
         method: string;
         file: string;
         code_snippet: { [key: number]: string };

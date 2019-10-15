@@ -7,16 +7,16 @@ Comes with Vue and React integrations.
 ### Important notes
  - None of the integrations will work before running the setup of the client. Make sure to import the `flare-client` before importing any integrations.
 
- - The client will only automatically report **uncaught** errors. Error boundaries (like `try…catch` or React error boundaries) will need to implement a custom method of reporting errors to the platform, as described elsewhere in the docs.
+ - The client will only automatically report **uncaught** errors or errors that you manually report. Error boundaries (like `try…catch` or React error boundaries) will need to implement a custom method of reporting errors to the platform, as described elsewhere in the docs.
 
 ### Setup
 
 ```js
 import flareClient from 'flare-client';
 
-// only launch in production, we don't want to waste quota while developing.
+// only launch in production, we don't want to waste Flare quota while developing.
 if (process.env.NODE_ENV === 'production') {
-    flareClient.light('your-api-key', 'http://flareapp.iotest/api/reports');
+    flareClient.light('yOuRpRoJeCtKeY');
 }
 
 /* TODO: remove the reporting URL in the production client.
@@ -51,16 +51,16 @@ Vue.use(flareVue);
 
 ### Important notes
 
-- While in development mode, React will throw errors up to the window, possibly causing errors to be caught twice. Make sure to only initialize the Flare JavaScript error reporter in production builds. Read this issue for more information: https://github.com/facebook/react/issues/10474
-
 - Due to limitations in the architecture of React error boundaries, the Flare React error reporter will only report errors that occur while rendering. This means that errors that occur in event handlers will not be reported (eg an `onClick` function). To report these errors, you could also include the window error tracking Flare plugin. Read this page for more information: https://reactjs.org/docs/error-boundaries.html
 
-Note to self: read through https://github.com/facebook/react/issues/11409 to figure out why event listeners are not caught by errorboundaries. Maybe there is a way to get this working after all, without also having to use the window client.
+*Note to self*: read through https://github.com/facebook/react/issues/11409 to figure out why event listeners are not caught by errorboundaries. Maybe there is a way to get this working after all, without also having to use the window client.
+
+- If you bundle React for development, you will see that many issues are reported twice. This is expected behaviour and will not occur in a production bundle (read more: https://github.com/facebook/react/issues/10474).
 
 
 ### Setup
 
-In your app's root (usually `app.js`), wrap your entire application in the provided `FlareErrorBoundary` component:
+In your app's root file (`/src/App.js` for `creact-react-app`), wrap your entire component tree in the provided `FlareErrorBoundary` component:
 
 ```js
 import FlareErrorBoundary from 'flare-react';
