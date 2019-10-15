@@ -21,8 +21,6 @@ export default class FlareClient {
 
     solutionProviders: Array<Flare.SolutionProvider> = [];
 
-    ignition?: any;
-
     light(key: string): FlareClient {
         assert(key, 'No Flare key was passed, shutting down.');
         assert(Promise, 'ES6 promises are not supported in this environment, shutting down.');
