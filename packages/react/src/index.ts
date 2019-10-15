@@ -1,5 +1,5 @@
 import React from 'react';
-import flareClient from 'flare-client';
+import flare from 'flare-client';
 
 interface Context {
     react: {
@@ -15,7 +15,7 @@ export default class ErrorBoundary extends React.Component {
     constructor(props: Props) {
         super(props);
 
-        if (!flareClient) {
+        if (!flare) {
             console.error(
                 `Flare React Plugin: the Flare Client could not be found.
                 Errors in your React components will not be reported.`
@@ -37,13 +37,13 @@ function formatReactComponentStack(stack: String) {
 }
 
 export function reportReactError(error: Error, reactErrorInfo: React.ErrorInfo) {
-    if (flareClient) {
+    if (flare) {
         const context: Context = {
             react: {
                 componentStack: formatReactComponentStack(reactErrorInfo.componentStack),
             },
         };
 
-        flareClient.reportError(error, context, { react: { errorInfo: reactErrorInfo } });
+        flare.report(error, context, { react: { errorInfo: reactErrorInfo } });
     }
 }
