@@ -86,13 +86,15 @@ export default class FlareClient {
     ): Promise<Flare.ErrorReport> {
         assert(error, 'No error provided.');
 
+        const seenAt = now();
+
         return createStackTrace(error).then(stacktrace => {
             assert(stacktrace, "Couldn't generate stacktrace.");
 
             return {
                 notifier: `Flare JavaScript client v${build.clientVersion}`,
                 exception_class: error.constructor && error.constructor.name ? error.constructor.name : 'undefined',
-                seen_at: now(),
+                seen_at: seenAt,
                 message: error.message,
                 language: 'javascript',
                 glows: this.glows,
