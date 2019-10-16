@@ -25,11 +25,10 @@ export default function install(Vue: Vue.VueConstructor) {
     const initialErrorHandler = Vue.config.errorHandler;
 
     Vue.config.errorHandler = (error: Error, vm: Vue, info: string) => {
+        const componentName = vm && vm.$options && vm.$options.name ? vm.$options.name : 'AnonymousComponent';
+
         const context: Context = {
-            vue: {
-                info,
-                componentName: vm.$options.name || 'AnonymousComponent',
-            },
+            vue: { info, componentName },
         };
 
         flare.report(error, context, { vue: { vm, info } });
