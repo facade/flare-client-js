@@ -23,7 +23,7 @@ The client will automatically catch errors that aren't caught and bubble up to t
 
 You can also report errors in `catch` statements or error boundaries by doing the following:
 
-```
+```JS
 import flareClient from "flare-client";
 
 try {
