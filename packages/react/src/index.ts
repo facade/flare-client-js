@@ -1,5 +1,6 @@
 import React from 'react';
 import flare from 'flare-client';
+import { assert } from 'flare-client/src/util';
 
 interface Context {
     react: {
@@ -15,12 +16,11 @@ export default class ErrorBoundary extends React.Component {
     constructor(props: Props) {
         super(props);
 
-        if (!flare) {
-            console.error(
-                `Flare React Plugin: the Flare Client could not be found.
-                Errors in your React components will not be reported.`
-            );
-        }
+        assert(
+            flare,
+            `Flare React Plugin: the Flare Client could not be found.
+            Errors in your React components will not be reported.`
+        );
     }
 
     componentDidCatch(error: Error, reactErrorInfo: React.ErrorInfo) {

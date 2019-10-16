@@ -1,5 +1,6 @@
 import flare from 'flare-client';
 import Vue from 'Vue/types';
+import { assert } from 'flare-client/src/util';
 
 interface Context {
     vue: {
@@ -9,19 +10,17 @@ interface Context {
 }
 
 export default function install(Vue: Vue.VueConstructor) {
-    if (!flare) {
-        console.error(
-            'Flare Vue Plugin: the Flare Client could not be found. ' +
-                'Errors in your Vue components will not be reported.'
-        );
-    }
+    assert(
+        flare,
+        'Flare Vue Plugin: the Flare Client could not be found. ' +
+            'Errors in your Vue components will not be reported.'
+    );
 
-    if (!Vue || !Vue.config) {
-        console.error(
-            'Flare Vue Plugin: The Vue errorHandler could not be found. ' +
-                'Errors in your Vue components will not be reported.'
-        );
-    }
+    assert(
+        Vue && Vue.config,
+        'Flare Vue Plugin: The Vue errorHandler could not be found. ' +
+            'Errors in your Vue components will not be reported.'
+    );
 
     const initialErrorHandler = Vue.config.errorHandler;
 
