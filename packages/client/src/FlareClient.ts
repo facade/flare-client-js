@@ -30,7 +30,7 @@ export default class FlareClient {
         return this;
     }
 
-    glow(name: string, level: Flare.MessageLevel, metaData: Array<object>): FlareClient {
+    glow(name: string, level: Flare.MessageLevel = 'info', metaData: Array<object> = []): FlareClient {
         const time = now();
 
         this.glows.push({
