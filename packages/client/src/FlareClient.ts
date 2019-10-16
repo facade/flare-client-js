@@ -6,7 +6,7 @@ import build from './build';
 export default class FlareClient {
     config: Flare.Config = {
         key: '',
-        reportingUrl: '',
+        reportingUrl: 'https://flareapp.io/api/reports',
         maxGlowsPerReport: 30,
         maxReportsPerMinute: 500,
     };
@@ -74,7 +74,7 @@ export default class FlareClient {
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
     ): void {
-        this.createReport(error, context, extraSolutionParameters).then(this.sendReport);
+        this.createReport(error, context, extraSolutionParameters).then(report => this.sendReport(report));
     }
 
     createReport(
@@ -134,7 +134,7 @@ export default class FlareClient {
         xhr.setRequestHeader('x-api-key', this.config.key);
         xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-        xhr.send(flatJsonStringify(reportReadyForSubmit));
+        xhr.send(flatJsonStringify({ ...reportReadyForSubmit, key: this.config.key }));
 
         this.reportedErrorsTimestamps.push(Date.now());
     }
@@ -146,10 +146,10 @@ export default class FlareClient {
             ];
 
             if (nErrorsBack > Date.now() - 60 * 1000) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

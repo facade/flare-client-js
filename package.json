@@ -12,7 +12,7 @@
         "build": "lerna run build",
         "link-all": "lerna run run-link",
         "link-client": "lerna run link-client",
-        "setup-all-packages": "$npm_execpath install-deps && $npm_execpath build && $npm_execpath link-all && $npm_execpath link-client",
+        "setup-all-packages": "$npm_execpath install-deps && $npm_execpath link-all && $npm_execpath link-client && $npm_execpath build",
         "type-check": "tsc --noEmit"
     },
     "devDependencies": {
