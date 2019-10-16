@@ -33,8 +33,8 @@ namespace Flare {
         title: string;
         description: string;
         links: { [label: string]: string };
-        action_description: string;
-        is_runnable: boolean;
+        action_description?: string;
+        is_runnable?: boolean;
     };
 
     type Context = {
