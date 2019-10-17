@@ -24,8 +24,11 @@ namespace Flare {
     interface SolutionProviderExtraParameters {}
 
     type SolutionProvider = {
-        canSolve: (error: Error, extraParameters?: SolutionProviderExtraParameters) => boolean;
-        getSolutions: (error: Error, extraParameters?: SolutionProviderExtraParameters) => Array<Flare.Solution>;
+        canSolve: (error: Error, extraParameters?: SolutionProviderExtraParameters) => boolean | Promise<boolean>;
+        getSolutions: (
+            error: Error,
+            extraParameters?: SolutionProviderExtraParameters
+        ) => Array<Flare.Solution> | Promise<Array<Flare.Solution>>;
     };
 
     type Solution = {

@@ -1,7 +1,8 @@
-import { assert, now, flatJsonStringify, flatMap } from './util';
+import { assert, now, flatJsonStringify } from './util';
 import { collectContext } from './context';
 import { createStackTrace } from './stacktrace';
 import build from './build';
+import getSolutions from './solutions';
 
 export default class FlareClient {
     config: Flare.Config = {
@@ -86,7 +87,12 @@ export default class FlareClient {
 
         const seenAt = now();
 
-        return createStackTrace(error).then(stacktrace => {
+        return Promise.all([
+            getSolutions(this.solutionProviders, error, extraSolutionParameters),
+            createStackTrace(error),
+        ]).then(result => {
+            const [solutions, stacktrace] = result;
+
             assert(stacktrace, "Couldn't generate stacktrace.");
 
             return {
@@ -99,11 +105,7 @@ export default class FlareClient {
                 context: collectContext({ ...context, ...this.context }),
                 stacktrace,
                 sourcemap_version_id: build.sourcemapVersion,
-                solutions: flatMap(this.solutionProviders, provider => {
-                    return provider.canSolve(error, extraSolutionParameters)
-                        ? provider.getSolutions(error, extraSolutionParameters)
-                        : [];
-                }),
+                solutions,
             };
         });
     }

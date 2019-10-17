@@ -41,7 +41,7 @@ flareClient.beforeSubmit = report => {
 }
 ```
 
-You can also return a Promise from this function. The report will be sent as soon as you resolve it:
+You can also return a promise from this function:
 
 ```JS
 import flareClient from 'flare-client';

@@ -1,20 +1,23 @@
 # Solution providers
 
-Solutions can help you easily debug common errors. We encourage developers to create their own solution providers and to let us know about them.
+Solutions can help you easily debug and fix common errors and mistakes. Solutions are created by solution providers, we encourage developers to create their own solution providers and to let us know about them.
 
 Solution providers are objects that you register on the Flare client. They have to have at least these 2 properties:
 
--   `canSolve`, a function that receives the original error and returns `true` or `false`.
--   `getSolutions`, a function that the Flare client can call to get an array of solutions for the error. It also receives the original error object.
+-   `canSolve`, a function that receives the original error and returns a boolean or a promise that resolves to a boolean.
+-   `getSolutions`, a function that receives the original error and returns an array of solutions or a promise that resolves to an array of solutions.
 
-Solutions are formatted like this:
+Solutions have to have the following format:
 
 ```JS
 {
     class: "class",
     title: "title",
     description: "description",
-    links: { "Possible solution": "https://stackoverflow.com" },
+    links: {
+        "Possible solution": "https://stackoverflow.com",
+        "Some documentation": "https://reactjs.org/docs/state-and-lifecycle.html",
+    },
 }
 ```
 
@@ -29,15 +32,19 @@ const mySolutionProvider = {
     },
 
     getSolutions(error) {
-        return [
-            {
-                class: "class test",
-                title: "title test",
-                description: "description test",
-                links: { "link test": "https://google.com" },
-            }
-        ];
-    }
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve([
+                    {
+                        class: 'class test',
+                        title: 'title test',
+                        description: 'description test',
+                        links: { 'link test': 'https://google.com' },
+                    },
+                ]);
+            }, 500);
+        });
+    },
 };
 
 flareClient.registerSolutionProvider(mySolutionProvider);

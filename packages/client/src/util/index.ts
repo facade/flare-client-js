@@ -29,10 +29,6 @@ export function flatJsonStringify(json: Object): string {
     return flattenedStringifiedJson;
 }
 
-export function flatMap<T, U>(array: T[], callbackfn: (value: T, index: number, array: T[]) => U[]): U[] {
-    return Array.prototype.concat(...array.map(callbackfn));
-}
-
 export function now(): number {
     return Math.round(Date.now() / 1000);
 }
