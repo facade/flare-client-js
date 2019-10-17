@@ -2,6 +2,19 @@
 
 Solutions can help you easily debug and fix common errors and mistakes. Solutions are created by solution providers, we encourage developers to create their own solution providers and to let us know about them.
 
+## Registering a solution provider
+
+```JS
+import flareClient from 'flare-client';
+import aSolutionProvider from './solutionProvider';
+
+flareClient.light('…');
+
+flareClient.registerSolutionProvider(aSolutionProvider);
+```
+
+## Creating your own solution providers
+
 Solution providers are objects that you register on the Flare client. They have to have at least these 2 properties:
 
 -   `canSolve`, a function that receives the original error and returns a boolean or a promise that resolves to a boolean.
@@ -21,11 +34,9 @@ Solutions have to have the following format:
 }
 ```
 
-This is how you create and register a custom solution provider:
+Here's a simple example of a solution provider. Keep in mind both the `canSolve` and `getSolutions` functions don't have to return promises, but are allowed to:
 
 ```JS
-import flareClient from 'flare-client';
-
 const mySolutionProvider = {
     canSolve(error) {
         return true;
@@ -46,9 +57,9 @@ const mySolutionProvider = {
         });
     },
 };
-
-flareClient.registerSolutionProvider(mySolutionProvider);
 ```
+
+## Extra solution parameters
 
 If you encounter a React or Vue error, the extra information that was collected by the React error boundary or Vue error handler is sent along as an extra parameter:
 
