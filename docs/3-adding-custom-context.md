@@ -31,17 +31,31 @@ Sometimes you want to add in some extra context right as an error report is bein
 ```JS
 import flareClient from 'flare-client';
 
-flareClient.beforeSubmit = function(report) {
+flareClient.beforeSubmit = report => {
     const editedReport = _.deepclone(report);
 
-    // Hide a user's useragent
+    // Hide a client's useragent
     editedReport.context.request.useragent = null;
 
     return editedReport;
 }
 ```
 
-You can also use this method to stop reports from being sent altogether, by simply returning `false`:
+You can also return a Promise from this function. The report will be sent as soon as you resolve it:
+
+```JS
+import flareClient from 'flare-client';
+
+flareClient.beforeSubmit = report => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve({ ...report, message: "Billing: " + message });
+        }, 1000);
+    });
+};
+```
+
+If you want to stop a report from being sent to Flare, simply return `false` from this function:
 
 ```JS
 import flareClient from 'flare-client';

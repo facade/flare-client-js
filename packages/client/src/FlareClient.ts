@@ -120,23 +120,23 @@ export default class FlareClient {
             return;
         }
 
-        const reportReadyForSubmit = this.beforeSubmit(report);
+        Promise.resolve(this.beforeSubmit(report)).then(reportReadyForSubmit => {
+            if (!reportReadyForSubmit) {
+                return;
+            }
 
-        if (!reportReadyForSubmit) {
-            return;
-        }
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', this.config.reportingUrl);
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', this.config.reportingUrl);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('x-api-key', this.config.key);
+            xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.setRequestHeader('x-api-key', this.config.key);
-        xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            xhr.send(flatJsonStringify({ ...reportReadyForSubmit, key: this.config.key }));
 
-        xhr.send(flatJsonStringify({ ...reportReadyForSubmit, key: this.config.key }));
-
-        this.reportedErrorsTimestamps.push(Date.now());
+            this.reportedErrorsTimestamps.push(Date.now());
+        });
     }
 
     maxReportsPerMinuteReached(): boolean {

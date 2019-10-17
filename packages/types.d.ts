@@ -1,5 +1,5 @@
 namespace Flare {
-    type BeforeSubmit = (report: ErrorReport) => ErrorReport | false;
+    type BeforeSubmit = (report: ErrorReport) => ErrorReport | false | Promise<ErrorReport | false>;
 
     type Config = {
         key: string;
