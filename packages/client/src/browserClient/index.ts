@@ -1,4 +1,4 @@
-import FlareClient from '../../index';
+import FlareClient from '../index';
 
 export default function catchWindowErrors() {
     if (!window) {
