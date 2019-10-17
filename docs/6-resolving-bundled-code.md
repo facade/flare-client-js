@@ -16,7 +16,7 @@ yarn add flare-webpack-plugin-sourcemap --dev
 
 Then, add the plugin to your webpack configuration and make sure your app is creating a sourcemap by including the `devtool: "source-map"` line.
 
-**Laravel Mix**
+### Laravel Mix
 
 `webpack.mix.js`
 
@@ -29,7 +29,7 @@ mix.…
     });
 ```
 
-**Webpack**
+### Webpack
 
 `webpack.config.js`
 
@@ -58,18 +58,22 @@ Send a POST request to http://flareapp.io/api/sourcemaps with this JSON payload 
 }
 ```
 
-**key**
+### key
+
 The API key of your project in Flare.
 
-**version_id**
+### version_id
+
 This has to be a project-unique string that is also included in your bundled code as a global environment variable `FLARE_SOURCEMAP_VERSION`. Alternatively, you can set the `sourcemapVersion` property of the Flare client instance.
 
 In the webpack plugin, we use the uuid4 spec to generate a unique string for each build.
 
-**relative_filename**
+### relative_filename
+
 The [relative path](<https://en.wikipedia.org/wiki/Path_(computing)#Absolute_and_relative_paths>) to the file this sourcemap belongs to, starting from the root of your domain.
 
-**sourcemap**
+### sourcemap
+
 A base64 string of your gzipped sourcemap. Here's how you could generate it using the built-in [Zlib](https://nodejs.org/api/zlib.html) library for Node.js, but the commandline `gzip` tool should work just as well:
 
 ```JS
