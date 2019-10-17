@@ -35,4 +35,8 @@ try {
 }
 ```
 
-Some frameworks like React and Vue have their own way of handling errors and require some extra steps to get running. You can easily hook into these by using one of the plugins we provide: `link to framework-integrations page`.
+## Important notes
+
+- Some frameworks like React and Vue have their own way of handling errors and require some extra steps to get running. You can easily hook into these by using one of the plugins we provide: `link to framework-integrations page`.
+
+- If you want the client to work on older browsers (<=IE11), you have to provide a polyfill for the Promise library yourself. The client might not work on browsers older than IE9 at all.
