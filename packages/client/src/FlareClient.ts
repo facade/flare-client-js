@@ -22,6 +22,8 @@ export default class FlareClient {
 
     solutionProviders: Array<Flare.SolutionProvider> = [];
 
+    sourcemapVersion: string = build.sourcemapVersion;
+
     light(key: string): FlareClient {
         assert(key, 'No Flare key was passed, shutting down.');
         assert(Promise, 'ES6 promises are not supported in this environment, shutting down.');
@@ -104,7 +106,7 @@ export default class FlareClient {
                 glows: this.glows,
                 context: collectContext({ ...context, ...this.context }),
                 stacktrace,
-                sourcemap_version_id: build.sourcemapVersion,
+                sourcemap_version_id: this.sourcemapVersion,
                 solutions,
             };
         });

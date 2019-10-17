@@ -37,6 +37,8 @@ try {
 
 ## Important notes
 
-- Some frameworks like React and Vue have their own way of handling errors and require some extra steps to get running. You can easily hook into these by using one of the plugins we provide: `link to framework-integrations page`.
+- Some frameworks like React and Vue have their own way of handling errors and require some extra steps to get running. You can easily hook into these by using one of the plugins we provide: `<link to framework-integrations page>`.
+
+- When you bundle your frontend code for production (using webpack, gulp, babel…), it won't look like the original code any longer and reported errors won't be very readable either. The solution for this is sourcemaps, read more about this on `<link to resolving-bundled-code>`.
 
 - If you want the client to work on older browsers (<=IE11), you have to provide a polyfill for the Promise library yourself. The client might not work on browsers older than IE9 at all.
