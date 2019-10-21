@@ -4,6 +4,10 @@ If a framework you use is not yet supported, feel free to let us know, or write 
 
 ## React
 
+```
+yarn add flare-react
+```
+
 React's error handling works similarly to how it works in vanilla JavaScript. You can wrap parts of your component tree in error boundary components, which can stop the error from bubbling further up the tree and crashing your entire application.
 
 In your app's root file (`/src/App.js` for `creact-react-app`), wrap your entire component tree in the provided FlareErrorBoundary component:
@@ -40,6 +44,10 @@ export default class ErrorBoundary extends React.Component {
 ```
 
 ## Vue
+
+```
+yarn add flare-vue
+```
 
 Vue uses a global error handler that we can easily plug into. Simply register the extension as a Vue plugin, in the same place where you created your Vue instance:
 
