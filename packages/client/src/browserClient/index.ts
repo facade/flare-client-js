@@ -1,7 +1,7 @@
-const flare = window.flare;
-
 export default function catchWindowErrors() {
-    if (!window) {
+    const flare = window.flare;
+
+    if (!window || !flare) {
         return;
     }
 
