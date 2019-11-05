@@ -16,7 +16,7 @@
         "run-link": "yarn link",
         "upgrade-deps": "yarn upgrade",
         "install-deps": "yarn install",
-        "link-client": "yarn link flare-client"
+        "link-client": "yarn link @flareapp/flare-client"
     },
     "author": "adriaan@spatie.be",
     "license": "ISC",
@@ -25,7 +25,7 @@
         "react": "^16.8.6"
     },
     "peerDependencies": {
-        "flare-client": "*",
+        "@flareapp/flare-client": "*",
         "react": "^16.8.6"
     },
     "gitHead": "06a5f5868cd22cb13780de27c6f655516c7cb3b5",

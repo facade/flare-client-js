@@ -1,5 +1,5 @@
 import React from 'react';
-import { assert } from 'flare-client/src/util';
+import { assert } from '@flareapp/flare-client/src/util';
 
 interface Context {
     react: {

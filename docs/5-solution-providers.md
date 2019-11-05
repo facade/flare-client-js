@@ -5,12 +5,12 @@ Solutions can help you easily debug and fix common errors and mistakes. Solution
 ## Registering a solution provider
 
 ```JS
-import flareClient from 'flare-client';
+import { flare } from '@flareapp/flare-client';
 import aSolutionProvider from './solutionProvider';
 
-flareClient.light('…');
+flare.light('project-key');
 
-flareClient.registerSolutionProvider(aSolutionProvider);
+flare.registerSolutionProvider(aSolutionProvider);
 ```
 
 ## Creating your own solution providers

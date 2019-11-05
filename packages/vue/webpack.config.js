@@ -5,11 +5,11 @@ const baseConfig = require('../../webpack.config');
 
 module.exports = merge(baseConfig, {
     output: {
-        library: 'flare-vue',
+        library: '@flareapp/flare-vue',
         path: path.resolve(__dirname, 'dist'),
     },
 
     externals: {
-        'flare-client': 'flare-client',
+        '@flareapp/flare-client': '@flareapp/flare-client',
     },
 });

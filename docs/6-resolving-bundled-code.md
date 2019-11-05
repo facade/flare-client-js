@@ -11,7 +11,7 @@ If you're using Laravel Mix or Webpack, you can use our Webpack plugin: `<link t
 To start the installation, run this in your project:
 
 ```
-yarn add flare-webpack-plugin-sourcemap --dev
+yarn add @flareapp/flare-webpack-plugin-sourcemap --dev
 ```
 
 Then, add the plugin to your webpack configuration and make sure your app is creating a sourcemap by including the `devtool: "source-map"` line.
@@ -21,6 +21,8 @@ Then, add the plugin to your webpack configuration and make sure your app is cre
 `webpack.mix.js`
 
 ```JS
+const FlareWebpackPluginSourcemap = require("@flareapp/flare-webpack-plugin-sourcemap");
+
 mix.…
     .webpackConfig({
         plugins: [ new FlareWebpackPluginSourcemap({ key: "your-project-key" }) ],
@@ -34,6 +36,8 @@ mix.…
 `webpack.config.js`
 
 ```JS
+const FlareWebpackPluginSourcemap = require("@flareapp/flare-webpack-plugin-sourcemap");
+
 module.exports = {
     …
     plugins: [ new FlareWebpackPluginSourcemap({ key: "your-project-key" }) ],

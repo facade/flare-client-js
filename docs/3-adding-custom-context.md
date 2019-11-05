@@ -3,11 +3,11 @@
 We already collect a lot of context about the environment to help you debug bugs, but if you feel like we're missing something or you can add some application-specific information, you can add some context of your own like this:
 
 ```JS
-import flareClient from 'flare-client';
+import { flare } from '@flareapp/flare-client';
 
-flareClient.addContext('version', '2.1.2');
+flare.addContext('version', '2.1.2');
 
-flareClient.addContext("vuex store content", {
+flare.addContext("vuex store content", {
     user: { name: "Adrian", role: "admin" }
 });
 ```
@@ -17,7 +17,7 @@ These will show up in the `Generic context` group in a report's _Context_ tab.
 You can also add custom context groups:
 
 ```JS
-flareClient.addContextGroup("custom context group", {
+flare.addContextGroup("custom context group", {
     key: 0,
     anotherKey: 'another value:',
 });
@@ -29,9 +29,9 @@ flareClient.addContextGroup("custom context group", {
 Sometimes you want to add in some extra context right as an error report is being created, or you might want to do the opposite and strip some context to protect your users' privacy even more. You can do this by using the `beforeSubmit` method of the client:
 
 ```JS
-import flareClient from 'flare-client';
+import { flare } from '@flareapp/flare-client';
 
-flareClient.beforeSubmit = report => {
+flare.beforeSubmit = report => {
     const editedReport = _.deepclone(report);
 
     // Hide a client's useragent
@@ -44,9 +44,9 @@ flareClient.beforeSubmit = report => {
 You can also return a promise from this function:
 
 ```JS
-import flareClient from 'flare-client';
+import { flare } from '@flareapp/flare-client';
 
-flareClient.beforeSubmit = report => {
+flare.beforeSubmit = report => {
     return new Promise(resolve => {
         setTimeout(() => {
             resolve({ ...report, message: "Billing: " + message });
@@ -58,9 +58,9 @@ flareClient.beforeSubmit = report => {
 If you want to stop a report from being sent to Flare, simply return `false` from this function:
 
 ```JS
-import flareClient from 'flare-client';
+import { flare } from '@flareapp/flare-client';
 
-flareClient.beforeSubmit = function(report) {
+flare.beforeSubmit = function(report) {
     // Some checks you want to do before sending a report, for example if a user is on IE
     const passedChecks = …;
 

@@ -5,7 +5,7 @@ If a framework you use is not yet supported, feel free to let us know, or write 
 ## React
 
 ```
-yarn add flare-react
+yarn add @flareapp/flare-react
 ```
 
 React's error handling works similarly to how it works in vanilla JavaScript. You can wrap parts of your component tree in error boundary components, which can stop the error from bubbling further up the tree and crashing your entire application.
@@ -13,7 +13,7 @@ React's error handling works similarly to how it works in vanilla JavaScript. Yo
 In your app's root file (`/src/App.js` for `creact-react-app`), wrap your entire component tree in the provided FlareErrorBoundary component:
 
 ```JSX
-import { FlareErrorBoundary } from 'flare-react';
+import { FlareErrorBoundary } from '@flareapp/flare-react';
 
 render(
     <FlareErrorBoundary>
@@ -34,7 +34,7 @@ If you have your own error boundary components, e.g. for displaying a fallback c
 If you still want to know about these errors, you can do this pretty easily:
 
 ```JSX
-import { reportReactError } from "flare-react";
+import { reportReactError } from "@flareapp/flare-react";
 
 export default class ErrorBoundary extends React.Component {
     componentDidCatch(error, info) {
@@ -46,13 +46,13 @@ export default class ErrorBoundary extends React.Component {
 ## Vue
 
 ```
-yarn add flare-vue
+yarn add @flareapp/flare-vue
 ```
 
 Vue uses a global error handler that we can easily plug into. Simply register the extension as a Vue plugin, in the same place where you created your Vue instance:
 
 ```JS
-import { flareVue } from "flare-vue";
+import { flareVue } from "@flareapp/flare-vue";
 import Vue from 'vue';
 
 Vue.use(flareVue);

@@ -6,7 +6,7 @@ const baseConfig = require('../../webpack.config');
 
 module.exports = merge(baseConfig, {
     output: {
-        library: 'flare-client',
+        library: '@flareapp/flare-client',
         path: path.resolve(__dirname, 'dist'),
     },
 

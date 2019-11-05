@@ -1,5 +1,5 @@
 import Vue from 'Vue/types';
-import { assert } from 'flare-client/src/util';
+import { assert } from '@flareapp/flare-client/src/util';
 
 interface Context {
     vue: {

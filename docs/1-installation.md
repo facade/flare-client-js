@@ -3,17 +3,17 @@
 To start catching JavaScript errors in your production environment, install the client in your project:
 
 ```
-yarn add flare-client-js
+yarn add @flareapp/flare-client
 ```
 
 and initialize it as early as possible in your application:
 
 ```JS
-import flareClient from "flare-client";
+import { flare } from "@flareapp/flare-client";
 
 // only launch in production, we don't want to waste your quota while you're developing.
 if (process.env.NODE_ENV === 'production') {
-    flareClient.light('your-project-key');
+    flare.light('your-project-key');
 }
 ```
 
@@ -26,7 +26,7 @@ You can also stop specific reports from being sent to Flare by using the `before
 You can also report errors in `catch` statements or error boundaries by doing the following:
 
 ```JS
-import { flare } from "flare-client";
+import { flare } from "@flareapp/flare-client";
 
 try {
     functionThatMightThrow();

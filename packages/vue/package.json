@@ -16,12 +16,12 @@
         "run-link": "yarn link",
         "upgrade-deps": "yarn upgrade",
         "install-deps": "yarn install",
-        "link-client": "yarn link flare-client"
+        "link-client": "yarn link @flareapp/flare-client"
     },
     "author": "adriaan@spatie.be",
     "license": "ISC",
     "peerDependencies": {
-        "flare-client": "*"
+        "@flareapp/flare-client": "*"
     },
     "devDependencies": {
         "@types/vue": "^2.0.0",
