@@ -1,7 +1,7 @@
 {
     "name": "flare-vue",
     "main": "dist/index.js",
-    "version": "0.1",
+    "version": "0.0.1-alpha.0",
     "description": "",
     "private": true,
     "bundlesize": [
@@ -24,7 +24,6 @@
     "peerDependencies": {
         "flare-client": "*"
     },
-    "dependencies": {},
     "devDependencies": {
         "@types/vue": "^2.0.0",
         "vue": "^2.6.10"
