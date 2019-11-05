@@ -27,5 +27,8 @@
         "@types/vue": "^2.0.0",
         "vue": "^2.6.10"
     },
-    "gitHead": "4d80c067330c940658c28632a3ee265b7f83e698"
+    "gitHead": "06a5f5868cd22cb13780de27c6f655516c7cb3b5",
+    "publishConfig": {
+        "access": "public"
+    }
 }
