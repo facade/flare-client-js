@@ -25,5 +25,5 @@
         "@babel/preset-typescript": "^7.3.3",
         "@types/stacktrace-js": "^0.0.32"
     },
-    "gitHead": "cb2e3506961dd4a388cb3e8135aa21a660058a18"
+    "gitHead": "4d80c067330c940658c28632a3ee265b7f83e698"
 }
