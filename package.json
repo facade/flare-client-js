@@ -52,5 +52,8 @@
         "ignore": [
             "**/dist/**"
         ]
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
