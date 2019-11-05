@@ -1,21 +1,30 @@
-import flareClient from '../src/index';
+import { flare } from '../src/index';
+
+beforeAll(() => {});
 
 it('properly lights', done => {
     const projectKey = 'aprojectkey';
 
-    flareClient.light(projectKey);
+    flare.light(projectKey);
 
-    expect(flareClient.config.key).toBe(projectKey);
+    expect(flare.config.key).toBe(projectKey);
 
     done();
 });
 
 it('can create glows', done => {
-    const projectKey = 'aprojectkey';
+    flare.glow('glowName', undefined, undefined);
 
-    flareClient.light(projectKey);
+    expect(flare.glows.length).toBe(1);
 
-    expect(flareClient.config.key).toBe(projectKey);
+    expect(flare.glows[0]).toMatchObject({
+        name: 'glowName',
+        message_level: 'info',
+        meta_data: [],
+    });
+
+    expect(typeof flare.glows[0].microtime).toBe('number');
+    expect(typeof flare.glows[0].time).toBe('number');
 
     done();
 });

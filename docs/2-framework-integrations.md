@@ -13,7 +13,7 @@ React's error handling works similarly to how it works in vanilla JavaScript. Yo
 In your app's root file (`/src/App.js` for `creact-react-app`), wrap your entire component tree in the provided FlareErrorBoundary component:
 
 ```JSX
-import FlareErrorBoundary from 'flare-react';
+import { FlareErrorBoundary } from 'flare-react';
 
 render(
     <FlareErrorBoundary>
@@ -52,7 +52,7 @@ yarn add flare-vue
 Vue uses a global error handler that we can easily plug into. Simply register the extension as a Vue plugin, in the same place where you created your Vue instance:
 
 ```JS
-import flareVue from "flare-vue";
+import { flareVue } from "flare-vue";
 import Vue from 'vue';
 
 Vue.use(flareVue);

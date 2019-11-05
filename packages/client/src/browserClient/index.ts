@@ -1,4 +1,4 @@
-import FlareClient from '../index';
+const flare = window.flare;
 
 export default function catchWindowErrors() {
     if (!window) {
@@ -9,7 +9,7 @@ export default function catchWindowErrors() {
 
     window.onerror = (_1, _2, _3, _4, error) => {
         if (error) {
-            FlareClient.report(error);
+            flare.report(error);
         }
 
         if (typeof originalOnerrorHandler === 'function') {

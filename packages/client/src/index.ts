@@ -1,6 +1,10 @@
 import FlareClient from './FlareClient';
 import catchWindowErrors from './browserClient';
 
-export default new FlareClient();
+export const flare = new FlareClient();
+
+if (window) {
+    window.flare = flare;
+}
 
 catchWindowErrors();

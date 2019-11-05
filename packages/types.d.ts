@@ -81,3 +81,7 @@ namespace Flare {
 
     type MessageLevel = 'info' | 'debug' | 'warning' | 'error' | 'critical';
 }
+
+interface Window {
+    flare: import('./client/src/FlareClient').default;
+}

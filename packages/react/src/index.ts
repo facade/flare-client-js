@@ -1,5 +1,4 @@
 import React from 'react';
-import flare from 'flare-client';
 import { assert } from 'flare-client/src/util';
 
 interface Context {
@@ -12,7 +11,9 @@ interface Props {
     children: React.ReactNode;
 }
 
-export default class ErrorBoundary extends React.Component {
+const flare = window.flare;
+
+export class FlareErrorBoundary extends React.Component {
     constructor(props: Props) {
         super(props);
 

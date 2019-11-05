@@ -26,12 +26,12 @@ You can also stop specific reports from being sent to Flare by using the `before
 You can also report errors in `catch` statements or error boundaries by doing the following:
 
 ```JS
-import flareClient from "flare-client";
+import { flare } from "flare-client";
 
 try {
     functionThatMightThrow();
 } catch (error) {
-    flareClient.report(error);
+    flare.report(error);
 }
 ```
 

@@ -1,4 +1,3 @@
-import flare from 'flare-client';
 import Vue from 'Vue/types';
 import { assert } from 'flare-client/src/util';
 
@@ -9,7 +8,9 @@ interface Context {
     };
 }
 
-export default function install(Vue: Vue.VueConstructor) {
+const flare = window.flare;
+
+export function flareVue(Vue: Vue.VueConstructor) {
     assert(
         flare,
         'Flare Vue Plugin: the Flare Client could not be found. ' +
