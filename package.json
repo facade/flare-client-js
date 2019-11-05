@@ -1,5 +1,4 @@
 {
-    "name": "flare-client-js",
     "license": "ISC",
     "scripts": {
         "tswatch": "tsc --watch --noEmit",

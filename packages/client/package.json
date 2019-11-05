@@ -1,5 +1,5 @@
 {
-    "name": "flare-client",
+    "name": "@flareapp/flare-client",
     "main": "dist/index.js",
     "version": "0.0.3-alpha.0",
     "description": "",
@@ -24,5 +24,6 @@
     "devDependencies": {
         "@babel/preset-typescript": "^7.3.3",
         "@types/stacktrace-js": "^0.0.32"
-    }
+    },
+    "gitHead": "cb2e3506961dd4a388cb3e8135aa21a660058a18"
 }

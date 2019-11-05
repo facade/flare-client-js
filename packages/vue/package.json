@@ -1,5 +1,5 @@
 {
-    "name": "flare-vue",
+    "name": "@flareapp/flare-vue",
     "main": "dist/index.js",
     "version": "0.0.3-alpha.0",
     "description": "",
@@ -26,5 +26,6 @@
     "devDependencies": {
         "@types/vue": "^2.0.0",
         "vue": "^2.6.10"
-    }
+    },
+    "gitHead": "cb2e3506961dd4a388cb3e8135aa21a660058a18"
 }
