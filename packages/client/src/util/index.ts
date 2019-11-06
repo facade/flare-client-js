@@ -32,3 +32,9 @@ export function flatJsonStringify(json: Object): string {
 export function now(): number {
     return Math.round(Date.now() / 1000);
 }
+
+export function flattenOnce(array: Array<Array<any>>) {
+    return array.reduce((flat, toFlatten) => {
+        return flat.concat(toFlatten);
+    }, []);
+}

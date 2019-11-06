@@ -1,3 +1,5 @@
+import { flattenOnce } from '../util';
+
 export default function getSolutions(
     solutionProviders: Array<Flare.SolutionProvider>,
     error: Error,
@@ -25,7 +27,7 @@ export default function getSolutions(
             });
 
             Promise.all(solutionPromises).then(solutions => {
-                resolve(Array.prototype.concat(solutions));
+                resolve(flattenOnce(solutions));
             });
         });
     });
