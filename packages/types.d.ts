@@ -52,13 +52,6 @@ namespace Flare {
         request_data?: {
             queryString: { [key: string]: string };
         };
-        git?: {
-            hash?: String;
-            message?: String;
-            tag?: String;
-            remote?: String;
-            isDirty?: Boolean;
-        };
         cookies?: { [key: string]: string };
         [key: string]: any;
     };
