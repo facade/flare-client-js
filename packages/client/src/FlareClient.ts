@@ -156,4 +156,10 @@ export default class FlareClient {
 
         return false;
     }
+
+    test(): FlareClient {
+        this.report(new Error('The Flare client is set up correctly!'));
+
+        return this;
+    }
 }
