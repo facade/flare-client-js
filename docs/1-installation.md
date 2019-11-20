@@ -21,7 +21,9 @@ To verify that the Flare JavaScript Client was installed correctly and will repo
 
 The client will automatically catch errors that aren't caught and bubble up to the `window` object. This includes most errors in vanilla JS code that isn't wrapped in a `try…catch` block. Errors that are caught by, for example, Axios' `catch` block, will not be reported automatically. Keep on reading to find out how to send those errors to Flare too.
 
-You can also stop specific reports from being sent to Flare by using the `beforeSent` function. You can read more about this here: `<link to adding-custom-context#customizing-the-report-before-sending>`.
+Creating a report for an error can take a second, and has a chance of slowing down your application (only during that second). If you want to stop some errors from being evaluated, use the `flare.beforeEvaluate(error)` function. If you return (a Promise returning) `false` from that function, Flare won't try to create an error report for that error.
+
+You can also stop a report from being sent to Flare, or edit it just before its sent by using the `flare.beforeSent(report)` function. You can read more about this here: `<link to adding-custom-context#customizing-the-report-before-sending>`.
 
 ## Reporting caught errors
 
