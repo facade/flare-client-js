@@ -17,6 +17,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 
+To verify that the Flare JavaScript Client was installed correctly and will report your frontend errors, run the `flare.test()` command at any point after initializing Flare.
+
 The client will automatically catch errors that aren't caught and bubble up to the `window` object. This includes most errors in vanilla JS code that isn't wrapped in a `try…catch` block. Errors that are caught by, for example, Axios' `catch` block, will not be reported automatically. Keep on reading to find out how to send those errors to Flare too.
 
 You can also stop specific reports from being sent to Flare by using the `beforeSent` function. You can read more about this here: `<link to adding-custom-context#customizing-the-report-before-sending>`.
