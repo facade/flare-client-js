@@ -14,7 +14,7 @@ To start the installation, run this in your project:
 yarn add @flareapp/flare-webpack-plugin-sourcemap --dev
 ```
 
-Then, add the plugin to your webpack configuration and make sure your app is creating a sourcemap by including the `devtool: "source-map"` line.
+Then, add the plugin to your webpack configuration and make sure your app is creating a sourcemap by including the `devtool: "hidden-source-map"` line. This will generate a sourcemap file, but won't add a reference to it in the bundle.
 
 ### Laravel Mix
 
@@ -27,7 +27,7 @@ mix.…
     .webpackConfig({
         plugins: [ new FlareWebpackPluginSourcemap({ key: "your-project-key" }) ],
 
-        devtool: "source-map"
+        devtool: "hidden-source-map"
     });
 ```
 
