@@ -21,7 +21,8 @@
     "author": "adriaan@spatie.be",
     "license": "ISC",
     "peerDependencies": {
-        "@flareapp/flare-client": "*"
+        "@flareapp/flare-client": "*",
+        "vue": "^2.0.0"
     },
     "devDependencies": {
         "@types/vue": "^2.0.0",
