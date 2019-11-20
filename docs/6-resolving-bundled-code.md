@@ -14,6 +14,8 @@ To start the installation, run this in your project:
 yarn add @flareapp/flare-webpack-plugin-sourcemap --dev
 ```
 
+The plugin also passes your Flare API key to the JavaScript client, so you can just run `flare.light()` without your API key!
+
 ### Laravel Mix
 
 `webpack.mix.js`
