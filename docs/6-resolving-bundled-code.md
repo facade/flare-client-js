@@ -6,15 +6,13 @@ You can upload the sourcemaps that your bundler creates to Flare, and we'll make
 
 ## Laravel Mix / Webpack plugin
 
-If you're using Laravel Mix or Webpack (versions 3 or 4), you can use our Webpack plugin: `<link to webpack plugin on npm>`.
+If you're using Laravel Mix or Webpack (versions 3 or 4), you can use our Webpack plugin: `<link to webpack plugin on npm>`. If you're not using a different bundler, continue reading here: `<link to ## Manually uploading your sourcemaps`>.
 
 To start the installation, run this in your project:
 
 ```
 yarn add @flareapp/flare-webpack-plugin-sourcemap --dev
 ```
-
-Then, add the plugin to your webpack configuration and make sure your app is creating a sourcemap by including the `devtool: "hidden-source-map"` line. This will generate a sourcemap file, but won't add a reference to it in the bundle.
 
 ### Laravel Mix
 
@@ -26,9 +24,8 @@ const FlareWebpackPluginSourcemap = require("@flareapp/flare-webpack-plugin-sour
 mix.…
     .webpackConfig({
         plugins: [ new FlareWebpackPluginSourcemap({ key: "your-project-key" }) ],
-
-        devtool: "hidden-source-map"
-    });
+    })
+    .sourceMaps(true, 'hidden-source-map');
 ```
 
 ### Webpack
@@ -42,7 +39,7 @@ module.exports = {
     …
     plugins: [ new FlareWebpackPluginSourcemap({ key: "your-project-key" }) ],
 
-    devtool: "source-map"
+    devtool: "hidden-source-map"
     …
 };
 ```
