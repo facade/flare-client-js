@@ -1,4 +1,6 @@
 namespace Flare {
+    type BeforeEvaluate = (error: Error) => Error | false | Promise<Error | false>;
+
     type BeforeSubmit = (report: ErrorReport) => ErrorReport | false | Promise<ErrorReport | false>;
 
     type Config = {

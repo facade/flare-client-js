@@ -16,6 +16,8 @@ export default class FlareClient {
 
     context: Flare.Context = { context: {} };
 
+    beforeEvaluate: Flare.BeforeEvaluate = error => error;
+
     beforeSubmit: Flare.BeforeSubmit = report => report;
 
     reportedErrorsTimestamps: Array<number> = [];
@@ -77,7 +79,13 @@ export default class FlareClient {
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
     ): void {
-        this.createReport(error, context, extraSolutionParameters).then(report => this.sendReport(report));
+        Promise.resolve(this.beforeEvaluate(error)).then(reportReadyForEvaluation => {
+            if (!reportReadyForEvaluation) {
+                return;
+            }
+
+            this.createReport(error, context, extraSolutionParameters).then(report => this.sendReport(report));
+        });
     }
 
     createReport(
