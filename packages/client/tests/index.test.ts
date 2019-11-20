@@ -28,3 +28,13 @@ it('can create glows', done => {
 
     done();
 });
+
+it.todo('can register solution providers');
+
+it.todo('can use (async) solution providers properly');
+
+it.todo('can build an error report from an error');
+
+it.todo('can create custom context and context groups');
+
+it.todo('can throttle when too many reports are being sent');
