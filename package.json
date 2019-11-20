@@ -13,7 +13,7 @@
         "setup-all-packages": "$npm_execpath install-deps && $npm_execpath link-all && $npm_execpath link-client && $npm_execpath build",
         "type-check": "tsc --noEmit",
         "test": "jest",
-        "publish-all": "lerna publish"
+        "publish-all": "$npm_execpath build && lerna publish"
     },
     "devDependencies": {
         "@babel/core": "^7.6.4",
