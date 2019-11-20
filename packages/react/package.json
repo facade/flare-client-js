@@ -21,12 +21,12 @@
     "author": "adriaan@spatie.be",
     "license": "ISC",
     "devDependencies": {
-        "@types/react": "^16.8.13",
-        "react": "^16.8.6"
+        "@types/react": "^16.0.0",
+        "react": "^16.0.0"
     },
     "peerDependencies": {
         "@flareapp/flare-client": "*",
-        "react": "^16.8.6"
+        "react": "^16.0.0"
     },
     "gitHead": "06a5f5868cd22cb13780de27c6f655516c7cb3b5",
     "publishConfig": {

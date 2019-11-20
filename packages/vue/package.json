@@ -25,7 +25,7 @@
     },
     "devDependencies": {
         "@types/vue": "^2.0.0",
-        "vue": "^2.6.10"
+        "vue": "^2.0.0"
     },
     "gitHead": "06a5f5868cd22cb13780de27c6f655516c7cb3b5",
     "publishConfig": {

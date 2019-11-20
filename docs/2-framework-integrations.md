@@ -2,7 +2,7 @@
 
 If a framework you use is not yet supported, feel free to let us know, or write a custom integration for it yourself (we'll retweet you).
 
-## React
+## React ^16.0.0
 
 ```
 yarn add @flareapp/flare-react
@@ -43,7 +43,7 @@ export default class ErrorBoundary extends React.Component {
 }
 ```
 
-## Vue
+## Vue ^2.0.0
 
 ```
 yarn add @flareapp/flare-vue

@@ -6,7 +6,7 @@ You can upload the sourcemaps that your bundler creates to Flare, and we'll make
 
 ## Laravel Mix / Webpack plugin
 
-If you're using Laravel Mix or Webpack, you can use our Webpack plugin: `<link to webpack plugin on npm>`.
+If you're using Laravel Mix or Webpack (versions 3 or 4), you can use our Webpack plugin: `<link to webpack plugin on npm>`.
 
 To start the installation, run this in your project:
 
