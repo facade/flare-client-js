@@ -27,8 +27,11 @@ export default class FlareClient {
     sourcemapVersion: string = build.sourcemapVersion;
 
     light(key: string = build.flareJsKey): FlareClient {
-        assert(key, 'No Flare key was passed, shutting down.');
-        assert(Promise, 'ES6 promises are not supported in this environment, shutting down.');
+        assert(
+            key,
+            'No Flare key was passed, errors will not be reported. If this is a development environment, this is expected behaviour.'
+        );
+        assert(Promise, 'ES6 promises are not supported in this environment, errors will not be report.');
 
         this.config.key = key;
 
