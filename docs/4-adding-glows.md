@@ -7,5 +7,5 @@ You can think of glows as breadcrumbs that can help you track down which parts o
 You can add glows to your reports like this:
 
 ```JS
-flareClient.glow("This is a message from glow!", "info", ["argument one", "argument two"]);
+flare.glow("This is a message from glow!", "info", ["argument one", "argument two"]);
 ```
