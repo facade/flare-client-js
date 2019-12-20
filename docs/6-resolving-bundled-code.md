@@ -16,6 +16,8 @@ yarn add @flareapp/flare-webpack-plugin-sourcemap --dev
 
 The plugin also passes your Flare API key to the JavaScript client, so you can just run `flare.light()` without your API key!
 
+The plugin will not upload your sourcemaps to Flare when compiling in webpack's development or watch modes.
+
 ### Laravel Mix
 
 `webpack.mix.js`
@@ -46,7 +48,14 @@ module.exports = {
 };
 ```
 
-The plugin will not run when compiling in webpack's development or watch modes.
+### Plugin options
+
+You can pass some options to the plugin, in the same object as the key:
+
+| Option                  | Default | Description                                                                                                                                                                                                            |
+| ----------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `runInDevelopment`      | `false` | Setting this value to `true` will cause the plugin to upload your sourcemaps even when compiling in webpack's `dev` mode. This will still prevent the plugin from uploading sourcemaps when compiling in `watch` mode. |
+| `collectGitInformation` | `true`  | Allow the plugin to upload your git information (commit hash, commit message, tag, and remote) and send it to Flare to be displayed along with your reports.                                                           |
 
 ## Manually uploading your sourcemaps
 
