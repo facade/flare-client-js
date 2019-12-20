@@ -46,6 +46,8 @@ module.exports = {
 };
 ```
 
+The plugin will not run when compiling in webpack's development or watch modes.
+
 ## Manually uploading your sourcemaps
 
 We don't have any UI in the Flare dashboard for uploading your sourcemaps. You can, however, upload it manually or with a script that runs after you've bundled your assets.
