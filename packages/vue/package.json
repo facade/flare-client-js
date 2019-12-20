@@ -1,7 +1,7 @@
 {
     "name": "@flareapp/flare-vue",
     "main": "dist/index.js",
-    "version": "0.0.12-alpha.0",
+    "version": "0.0.15-alpha.0",
     "description": "",
     "bundlesize": [
         {
