@@ -1,0 +1,57 @@
+{
+    "license": "ISC",
+    "scripts": {
+        "tswatch": "tsc --watch --noEmit",
+        "prettier": "prettier --write '*.{js,ts,json}' 'packages/**/*.{js,ts,json}'",
+        "format": "$npm_execpath run prettier",
+        "upgrade-all": "yarn upgrade && lerna run upgrade-deps",
+        "install-deps": "yarn && lerna run install-deps",
+        "dev": "lerna run dev",
+        "build": "lerna run build",
+        "link-all": "lerna run run-link",
+        "link-client": "lerna run link-client",
+        "setup-all-packages": "$npm_execpath install-deps && $npm_execpath link-all && $npm_execpath link-client && $npm_execpath build",
+        "type-check": "tsc --noEmit",
+        "test": "jest",
+        "publish-all": "lerna publish",
+        "prepublishOnly": "lerna run build"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.6.4",
+        "@babel/plugin-proposal-class-properties": "^7.5.5",
+        "@babel/polyfill": "^7.4.0",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/preset-typescript": "^7.6.0",
+        "@babel/runtime": "^7.4.2",
+        "@types/jest": "^24.0.19",
+        "babel-jest": "^24.9.0",
+        "babel-loader": "^8.0.5",
+        "bundlesize": "^0.17.1",
+        "husky": "^3.0.8",
+        "jest": "^24.9.0",
+        "lerna": "^3.13.1",
+        "lint-staged": "^8.1.5",
+        "prettier": "^1.16.4",
+        "size-limit": "^1.0.1",
+        "typescript": "^3.7.0-beta",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.2.3",
+        "webpack-merge": "^4.2.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "linters": {
+            "*.{js,ts,json}": [
+                "prettier --write",
+                "git add"
+            ]
+        },
+        "ignore": [
+            "**/dist/**"
+        ]
+    }
+}
