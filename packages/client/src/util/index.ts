@@ -4,6 +4,8 @@ export function assert(value: any, message: string) {
     if (!value) {
         console.error(`Flare JavaScript client v${build.clientVersion}: ${message}`);
     }
+
+    return !!value;
 }
 
 // https://stackoverflow.com/a/11616993/6374824

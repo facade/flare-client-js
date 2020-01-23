@@ -27,11 +27,17 @@ export default class FlareClient {
     sourcemapVersion: string = build.sourcemapVersion;
 
     light(key: string = build.flareJsKey): FlareClient {
-        assert(
-            key,
-            'No Flare key was passed, errors will not be reported. If this is a development environment, this is expected behaviour.'
-        );
-        assert(Promise, 'ES6 promises are not supported in this environment, errors will not be report.');
+        if (
+            !assert(
+                key,
+                'No Flare key was passed, errors will not be reported. If this is a development environment, this is expected behaviour.'
+            ) ||
+            !assert(Promise, 'ES6 promises are not supported in this environment, errors will not be report.')
+        ) {
+            this.beforeEvaluate = () => false;
+
+            return this;
+        }
 
         this.config.key = key;
 
@@ -69,8 +75,12 @@ export default class FlareClient {
     }
 
     registerSolutionProvider(provider: Flare.SolutionProvider): FlareClient {
-        assert('canSolve' in provider, 'A solution provider without a [canSolve] property was added.');
-        assert('getSolutions' in provider, 'A solution provider without a [getSolutions] property was added.');
+        if (
+            !assert('canSolve' in provider, 'A solution provider without a [canSolve] property was added.') ||
+            !assert('getSolutions' in provider, 'A solution provider without a [getSolutions] property was added.')
+        ) {
+            return this;
+        }
 
         this.solutionProviders.push(provider);
 
@@ -87,7 +97,9 @@ export default class FlareClient {
                 return;
             }
 
-            this.createReport(error, context, extraSolutionParameters).then(report => this.sendReport(report));
+            this.createReport(error, context, extraSolutionParameters).then(report =>
+                report ? this.sendReport(report) : {}
+            );
         });
     }
 
@@ -95,8 +107,10 @@ export default class FlareClient {
         error: Error,
         context: Flare.Context,
         extraSolutionParameters: Flare.SolutionProviderExtraParameters
-    ): Promise<Flare.ErrorReport> {
-        assert(error, 'No error provided.');
+    ): Promise<Flare.ErrorReport | false> {
+        if (!assert(error, 'No error provided.')) {
+            return Promise.resolve(false);
+        }
 
         const seenAt = now();
 
@@ -124,12 +138,16 @@ export default class FlareClient {
     }
 
     sendReport(report: Flare.ErrorReport): void {
-        assert(
-            this.config.key,
-            'The client was not yet initialised with an API key. ' +
-                "Run client.light('<api-token>') when you initialise your app. " +
-                "If you are running in dev mode and didn't run the light command on purpose, you can ignore this error."
-        );
+        if (
+            !assert(
+                this.config.key,
+                'The client was not yet initialised with an API key. ' +
+                    "Run client.light('<api-token>') when you initialise your app. " +
+                    "If you are running in dev mode and didn't run the light command on purpose, you can ignore this error."
+            )
+        ) {
+            return;
+        }
 
         if (this.maxReportsPerMinuteReached()) {
             return;

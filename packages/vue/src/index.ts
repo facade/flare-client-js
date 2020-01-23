@@ -11,17 +11,20 @@ interface Context {
 const flare = window.flare;
 
 export function flareVue(Vue: Vue.VueConstructor) {
-    assert(
-        flare,
-        'Flare Vue Plugin: the Flare Client could not be found. ' +
-            'Errors in your Vue components will not be reported.'
-    );
-
-    assert(
-        Vue && Vue.config,
-        'Flare Vue Plugin: The Vue errorHandler could not be found. ' +
-            'Errors in your Vue components will not be reported.'
-    );
+    if (
+        !assert(
+            flare,
+            'Flare Vue Plugin: the Flare Client could not be found. ' +
+                'Errors in your Vue components will not be reported.'
+        ) ||
+        !assert(
+            Vue && Vue.config,
+            'Flare Vue Plugin: The Vue errorHandler could not be found. ' +
+                'Errors in your Vue components will not be reported.'
+        )
+    ) {
+        return;
+    }
 
     const initialErrorHandler = Vue.config.errorHandler;
 
