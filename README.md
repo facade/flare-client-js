@@ -1,5 +1,3 @@
-The JavaScript client for Flare to catch your frontend errors.
+# The JavaScript client for Flare to catch frontend errors
 
-Comes with Vue and React integrations.
-
-Check the docs for information.
+Check JavaScript error tracking section in [the Flare documentation](https://flareapp.io/docs/javascript-error-tracking/installation) for more information.
