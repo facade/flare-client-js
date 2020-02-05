@@ -16,17 +16,15 @@ const failedResponse = { codeSnippet: { 0: 'Could not read from file' }, trimmed
 export function getCodeSnippet(url?: string, lineNumber?: number, columnNumber?: number): Promise<ReaderResponse> {
     return new Promise(resolve => {
         if (!url || !lineNumber) {
-            resolve(failedResponse);
-            return;
+            return resolve(failedResponse);
         }
 
         readFile(url).then(fileText => {
             if (!fileText) {
-                resolve(failedResponse);
-                return;
+                return resolve(failedResponse);
             }
 
-            resolve(readLinesFromFile(fileText, lineNumber, columnNumber));
+            return resolve(readLinesFromFile(fileText, lineNumber, columnNumber));
         });
     });
 }
@@ -36,8 +34,7 @@ function readFile(url: string): Promise<string | null> {
         const rawFile = new XMLHttpRequest();
 
         if (cachedFiles[url]) {
-            resolve(cachedFiles[url]);
-            return;
+            return resolve(cachedFiles[url]);
         }
 
         rawFile.open('GET', url, false);
@@ -46,16 +43,18 @@ function readFile(url: string): Promise<string | null> {
                 if (rawFile.status === 200 || rawFile.status == 0) {
                     cachedFiles[url] = rawFile.responseText;
 
-                    resolve(rawFile.responseText);
-                    return;
+                    return resolve(rawFile.responseText);
                 }
             }
 
-            resolve(null);
-            return;
+            return resolve(null);
         };
 
-        rawFile.send(null);
+        try {
+            rawFile.send(null);
+        } catch (error) {
+            return resolve(null);
+        }
     });
 }
 
