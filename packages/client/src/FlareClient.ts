@@ -164,7 +164,6 @@ export default class FlareClient {
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('x-api-token', this.config.key);
-            xhr.setRequestHeader('Access-Control-Request-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
             xhr.send(flatJsonStringify({ ...reportReadyForSubmit, key: this.config.key }));
 
