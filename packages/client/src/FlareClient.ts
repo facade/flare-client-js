@@ -105,8 +105,8 @@ export default class FlareClient {
 
     createReport(
         error: Error,
-        context: Flare.Context,
-        extraSolutionParameters: Flare.SolutionProviderExtraParameters
+        context: Flare.Context = {},
+        extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
     ): Promise<Flare.ErrorReport | false> {
         if (!assert(error, 'No error provided.')) {
             return Promise.resolve(false);

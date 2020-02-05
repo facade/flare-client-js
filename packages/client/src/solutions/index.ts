@@ -3,7 +3,7 @@ import { flattenOnce } from '../util';
 export default function getSolutions(
     solutionProviders: Array<Flare.SolutionProvider>,
     error: Error,
-    extraSolutionParameters: Flare.SolutionProviderExtraParameters
+    extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
 ): Promise<Array<Flare.Solution>> {
     return new Promise(resolve => {
         const canSolves = solutionProviders.reduce(
