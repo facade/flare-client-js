@@ -26,6 +26,7 @@ export default function catchWindowErrors() {
         // TODO: Maybe also send errors without stacktrace for unhandled rejections without an Error as reason? (could be a string, …)
 
         if (typeof originalOnunhandledrejectionHandler === 'function') {
+            // @ts-ignore
             originalOnunhandledrejectionHandler(error);
         }
     };
