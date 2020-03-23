@@ -29,11 +29,8 @@ export default class FlareClient {
 
     light(key: string = build.flareJsKey): FlareClient {
         if (
-            !assert(
-                key,
-                'No Flare key was passed, errors will not be reported. If this is a development environment, this is expected behaviour.'
-            ) ||
-            !assert(Promise, 'ES6 promises are not supported in this environment, errors will not be report.')
+            !assert(typeof key === 'string', 'An incorrect Flare key was passed, errors will not be reported.') ||
+            !assert(Promise, 'ES6 promises are not supported in this environment, errors will not be reported.')
         ) {
             this.beforeEvaluate = () => false;
 
