@@ -31,7 +31,8 @@
     },
     "devDependencies": {
         "@babel/preset-typescript": "^7.3.3",
-        "@types/stacktrace-js": "^0.0.32"
+        "@types/stacktrace-js": "^0.0.32",
+        "ts-loader": "^6.2.2"
     },
     "gitHead": "06a5f5868cd22cb13780de27c6f655516c7cb3b5",
     "publishConfig": {

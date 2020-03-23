@@ -1,4 +1,5 @@
 import { flattenOnce } from '../util';
+import { Flare } from '../types';
 
 export default function getSolutions(
     solutionProviders: Array<Flare.SolutionProvider>,

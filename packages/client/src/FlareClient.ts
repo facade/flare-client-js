@@ -3,6 +3,7 @@ import { collectContext } from './context';
 import { createStackTrace } from './stacktrace';
 import build from './build';
 import getSolutions from './solutions';
+import { Flare } from './types';
 
 export default class FlareClient {
     config: Flare.Config = {

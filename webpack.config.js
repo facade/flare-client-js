@@ -13,12 +13,18 @@ module.exports = {
     module: {
         rules: [
             {
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-typescript'],
+                test: /\.ts(x?)$/,
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env', '@babel/preset-typescript'],
+                        },
                     },
-                },
+                    {
+                        loader: 'ts-loader',
+                    },
+                ],
             },
         ],
     },

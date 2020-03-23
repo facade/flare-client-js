@@ -11,6 +11,7 @@
         "removeComments": false,
         "skipLibCheck": true,
         "strict": true,
-        "target": "esnext"
+        "target": "esnext",
+        "declaration": true
     }
 }

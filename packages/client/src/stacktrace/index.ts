@@ -1,5 +1,6 @@
 import ErrorStackParser from 'error-stack-parser';
 import { getCodeSnippet } from './fileReader';
+import { Flare } from '../types';
 
 export function createStackTrace(error: Error): Promise<Array<Flare.StackFrame>> {
     return new Promise((resolve, reject) => {

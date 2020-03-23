@@ -1,4 +1,4 @@
-namespace Flare {
+export namespace Flare {
     type BeforeEvaluate = (error: Error) => Error | false | Promise<Error | false>;
 
     type BeforeSubmit = (report: ErrorReport) => ErrorReport | false | Promise<ErrorReport | false>;
@@ -75,8 +75,4 @@ namespace Flare {
     };
 
     type MessageLevel = 'info' | 'debug' | 'warning' | 'error' | 'critical';
-}
-
-interface Window {
-    flare: import('./client/src/FlareClient').default;
 }
