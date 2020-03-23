@@ -1,7 +1,7 @@
 {
     "name": "@flareapp/flare-react",
     "main": "dist/index.js",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "",
     "homepage": "https://flareapp.io",
     "repository": {
