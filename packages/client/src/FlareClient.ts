@@ -44,8 +44,6 @@ export default class FlareClient {
                 this.debug
             )
         ) {
-            this.beforeEvaluate = () => false;
-
             return this;
         }
 
