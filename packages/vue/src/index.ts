@@ -8,9 +8,9 @@ interface Context {
     };
 }
 
-const flare = window.flare;
-
 export function flareVue(Vue: Vue.VueConstructor) {
+    const flare = window.flare; // TODO: make sure flare-client still properly works with this line moved!
+
     if (
         !assert(
             flare,
