@@ -1,7 +1,7 @@
 {
     "name": "@flareapp/flare-vue",
     "main": "dist/index.js",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "",
     "homepage": "https://flareapp.io",
     "repository": {
