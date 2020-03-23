@@ -20,7 +20,8 @@ export class FlareErrorBoundary extends React.Component {
         assert(
             flare,
             `Flare React Plugin: the Flare Client could not be found.
-            Errors in your React components will not be reported.`
+            Errors in your React components will not be reported.`,
+            flare.debug
         );
     }
 

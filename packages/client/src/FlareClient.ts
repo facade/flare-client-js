@@ -27,10 +27,22 @@ export default class FlareClient {
 
     sourcemapVersion: string = build.sourcemapVersion;
 
-    light(key: string = build.flareJsKey): FlareClient {
+    debug: boolean = false;
+
+    light(key: string = build.flareJsKey, debug = false): FlareClient {
+        this.debug = debug;
+
         if (
-            !assert(typeof key === 'string', 'An incorrect Flare key was passed, errors will not be reported.') ||
-            !assert(Promise, 'ES6 promises are not supported in this environment, errors will not be reported.')
+            !assert(
+                key && typeof key === 'string',
+                'An empty or incorrect Flare key was passed, errors will not be reported.',
+                this.debug
+            ) ||
+            !assert(
+                Promise,
+                'ES6 promises are not supported in this environment, errors will not be reported.',
+                this.debug
+            )
         ) {
             this.beforeEvaluate = () => false;
 
@@ -74,8 +86,16 @@ export default class FlareClient {
 
     registerSolutionProvider(provider: Flare.SolutionProvider): FlareClient {
         if (
-            !assert('canSolve' in provider, 'A solution provider without a [canSolve] property was added.') ||
-            !assert('getSolutions' in provider, 'A solution provider without a [getSolutions] property was added.')
+            !assert(
+                'canSolve' in provider,
+                'A solution provider without a [canSolve] property was added.',
+                this.debug
+            ) ||
+            !assert(
+                'getSolutions' in provider,
+                'A solution provider without a [getSolutions] property was added.',
+                this.debug
+            )
         ) {
             return this;
         }
@@ -106,7 +126,7 @@ export default class FlareClient {
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
     ): Promise<Flare.ErrorReport | false> {
-        if (!assert(error, 'No error provided.')) {
+        if (!assert(error, 'No error provided.', this.debug)) {
             return Promise.resolve(false);
         }
 
@@ -118,7 +138,7 @@ export default class FlareClient {
         ]).then(result => {
             const [solutions, stacktrace] = result;
 
-            assert(stacktrace, "Couldn't generate stacktrace.");
+            assert(stacktrace, "Couldn't generate stacktrace.", this.debug);
 
             return {
                 notifier: `Flare JavaScript client v${build.clientVersion}`,
@@ -140,8 +160,9 @@ export default class FlareClient {
             !assert(
                 this.config.key,
                 'The client was not yet initialised with an API key. ' +
-                    "Run client.light('<api-token>') when you initialise your app. " +
-                    "If you are running in dev mode and didn't run the light command on purpose, you can ignore this error."
+                    "Run client.light('<flare-project-key>') when you initialise your app. " +
+                    "If you are running in dev mode and didn't run the light command on purpose, you can ignore this error.",
+                this.debug
             )
         ) {
             return;

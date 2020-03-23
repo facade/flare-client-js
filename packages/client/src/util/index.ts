@@ -1,7 +1,7 @@
 import build from '../build';
 
-export function assert(value: any, message: string) {
-    if (!value) {
+export function assert(value: any, message: string, debug: boolean) {
+    if (debug && !value) {
         console.error(`Flare JavaScript client v${build.clientVersion}: ${message}`);
     }
 
