@@ -6,30 +6,30 @@ import getSolutions from './solutions';
 import { Flare } from './types';
 
 export default class FlareClient {
-    config: Flare.Config = {
+    public config: Flare.Config = {
         key: '',
         reportingUrl: 'https://flareapp.io/api/reports',
         maxGlowsPerReport: 30,
         maxReportsPerMinute: 500,
     };
 
-    glows: Array<Flare.Glow> = [];
+    private glows: Array<Flare.Glow> = [];
 
-    context: Flare.Context = { context: {} };
+    private context: Flare.Context = { context: {} };
 
-    beforeEvaluate: Flare.BeforeEvaluate = error => error;
+    public beforeEvaluate: Flare.BeforeEvaluate = error => error;
 
-    beforeSubmit: Flare.BeforeSubmit = report => report;
+    public beforeSubmit: Flare.BeforeSubmit = report => report;
 
-    reportedErrorsTimestamps: Array<number> = [];
+    private reportedErrorsTimestamps: Array<number> = [];
 
-    solutionProviders: Array<Flare.SolutionProvider> = [];
+    private solutionProviders: Array<Flare.SolutionProvider> = [];
 
-    sourcemapVersion: string = build.sourcemapVersion;
+    private sourcemapVersion: string = build.sourcemapVersion;
 
-    debug: boolean = false;
+    public debug: boolean = false;
 
-    light(key: string = build.flareJsKey, debug = false): FlareClient {
+    public light(key: string = build.flareJsKey, debug = false): FlareClient {
         this.debug = debug;
 
         if (
@@ -52,7 +52,7 @@ export default class FlareClient {
         return this;
     }
 
-    glow(name: string, level: Flare.MessageLevel = 'info', metaData: Array<object> = []): FlareClient {
+    public glow(name: string, level: Flare.MessageLevel = 'info', metaData: Array<object> = []): FlareClient {
         const time = now();
 
         this.glows.push({
@@ -70,19 +70,19 @@ export default class FlareClient {
         return this;
     }
 
-    addContext(name: string, value: any): FlareClient {
+    public addContext(name: string, value: any): FlareClient {
         this.context.context[name] = value;
 
         return this;
     }
 
-    addContextGroup(groupName: string, value: object): FlareClient {
+    public addContextGroup(groupName: string, value: object): FlareClient {
         this.context[groupName] = value;
 
         return this;
     }
 
-    registerSolutionProvider(provider: Flare.SolutionProvider): FlareClient {
+    public registerSolutionProvider(provider: Flare.SolutionProvider): FlareClient {
         if (
             !assert(
                 'canSolve' in provider,
@@ -103,7 +103,7 @@ export default class FlareClient {
         return this;
     }
 
-    report(
+    public report(
         error: Error,
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
@@ -119,7 +119,7 @@ export default class FlareClient {
         });
     }
 
-    createReport(
+    public createReport(
         error: Error,
         context: Flare.Context = {},
         extraSolutionParameters: Flare.SolutionProviderExtraParameters = {}
@@ -153,7 +153,7 @@ export default class FlareClient {
         });
     }
 
-    sendReport(report: Flare.ErrorReport): void {
+    private sendReport(report: Flare.ErrorReport): void {
         if (
             !assert(
                 this.config.key,
@@ -188,7 +188,7 @@ export default class FlareClient {
         });
     }
 
-    maxReportsPerMinuteReached(): boolean {
+    private maxReportsPerMinuteReached(): boolean {
         if (this.reportedErrorsTimestamps.length >= this.config.maxReportsPerMinute) {
             const nErrorsBack = this.reportedErrorsTimestamps[
                 this.reportedErrorsTimestamps.length - this.config.maxReportsPerMinute
@@ -202,7 +202,7 @@ export default class FlareClient {
         return false;
     }
 
-    test(): FlareClient {
+    public test(): FlareClient {
         this.report(new Error('The Flare client is set up correctly!'));
 
         return this;
