@@ -1,7 +1,5 @@
 const cachedFiles: { [key: string]: string } = {};
 
-const maxSnippetLineLength = 1000;
-
 type CodeSnippet = {
     [key: number]: string;
 };
@@ -58,7 +56,12 @@ function readFile(url: string): Promise<string | null> {
     });
 }
 
-function readLinesFromFile(fileText: string, lineNumber: number, columnNumber?: number): ReaderResponse {
+function readLinesFromFile(
+    fileText: string,
+    lineNumber: number,
+    columnNumber?: number,
+    maxSnippetLineLength = 1000
+): ReaderResponse {
     const codeSnippet: CodeSnippet = {};
     let trimmedColumnNumber = null;
 
