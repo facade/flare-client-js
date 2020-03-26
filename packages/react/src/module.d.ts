@@ -1,3 +1,5 @@
+type Flare = import('@flareapp/flare-client/dist/FlareClient').default;
+
 interface Window {
-    flare: import('@flareapp/flare-client/dist/FlareClient');
+    flare: Flare;
 }
