@@ -56,18 +56,19 @@ function readFile(url: string): Promise<string | null> {
     });
 }
 
-function readLinesFromFile(
+export function readLinesFromFile(
     fileText: string,
     lineNumber: number,
     columnNumber?: number,
-    maxSnippetLineLength = 1000
+    maxSnippetLineLength = 1000,
+    maxSnippetLines = 40
 ): ReaderResponse {
     const codeSnippet: CodeSnippet = {};
     let trimmedColumnNumber = null;
 
     const lines = fileText.split('\n');
 
-    for (let i = -20; i <= 20; i++) {
+    for (let i = -maxSnippetLines / 2; i <= maxSnippetLines / 2; i++) {
         const currentLineIndex = lineNumber + i;
 
         if (currentLineIndex >= 0 && lines[currentLineIndex]) {
