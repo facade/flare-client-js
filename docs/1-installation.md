@@ -27,6 +27,8 @@ if (process.env.NODE_ENV === 'production') {
 
 To verify that the Flare JavaScript Client was installed correctly and will report your frontend errors, run the `flare.test()` command in your browser console. This will generate and report an error that should be visible on your project's dashboard in [Flare](https://flareapp.io/projects).
 
+If something goes wrong during the installation, enable debug mode on the client by setting `true` as the second parameter in your `flare.light` command `flare.light('key', true)`, or by running `flare.debug = true`.
+
 The client will automatically catch errors that aren't caught and bubble up to the `window` object. This includes most errors in vanilla JS code that isn't wrapped in a `try…catch` block. Errors that are caught by, for example, Axios' `catch` block, will not be reported automatically. Keep on reading to find out how to send those errors to Flare too.
 
 Creating a report for an error can take a second, and has a chance of slowing down your application (only during that second). If you want to stop some errors from being evaluated, use the `flare.beforeEvaluate(error)` function. If you return (a Promise returning) `false` from that function, Flare won't try to create an error report for that error.
