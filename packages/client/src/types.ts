@@ -1,16 +1,16 @@
 export namespace Flare {
-    type BeforeEvaluate = (error: Error) => Error | false | Promise<Error | false>;
+    export type BeforeEvaluate = (error: Error) => Error | false | Promise<Error | false>;
 
-    type BeforeSubmit = (report: ErrorReport) => ErrorReport | false | Promise<ErrorReport | false>;
+    export type BeforeSubmit = (report: ErrorReport) => ErrorReport | false | Promise<ErrorReport | false>;
 
-    type Config = {
+    export type Config = {
         key: string;
         reportingUrl: string;
         maxGlowsPerReport: number;
         maxReportsPerMinute: number;
     };
 
-    type ErrorReport = {
+    export type ErrorReport = {
         notifier: string;
         exception_class: string;
         seen_at: number;
@@ -23,9 +23,9 @@ export namespace Flare {
         solutions: Array<Flare.Solution>;
     };
 
-    interface SolutionProviderExtraParameters {}
+    export interface SolutionProviderExtraParameters {}
 
-    type SolutionProvider = {
+    export type SolutionProvider = {
         canSolve: (error: Error, extraParameters?: SolutionProviderExtraParameters) => boolean | Promise<boolean>;
         getSolutions: (
             error: Error,
@@ -33,7 +33,7 @@ export namespace Flare {
         ) => Array<Flare.Solution> | Promise<Array<Flare.Solution>>;
     };
 
-    type Solution = {
+    export type Solution = {
         class: string;
         title: string;
         description: string;
@@ -42,7 +42,7 @@ export namespace Flare {
         is_runnable?: boolean;
     };
 
-    type Context = {
+    export type Context = {
         request?: {
             url?: String;
             useragent?: String;
@@ -56,7 +56,7 @@ export namespace Flare {
         [key: string]: any;
     };
 
-    type StackFrame = {
+    export type StackFrame = {
         line_number: number;
         column_number: number; // TODO: Flare doesn't catch this yet
         method: string;
@@ -66,7 +66,7 @@ export namespace Flare {
         class: string;
     };
 
-    type Glow = {
+    export type Glow = {
         time: number;
         microtime: number;
         name: String;
@@ -74,5 +74,5 @@ export namespace Flare {
         meta_data: Array<Object>;
     };
 
-    type MessageLevel = 'info' | 'debug' | 'warning' | 'error' | 'critical';
+    export type MessageLevel = 'info' | 'debug' | 'warning' | 'error' | 'critical';
 }
