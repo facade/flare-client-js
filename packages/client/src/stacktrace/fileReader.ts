@@ -1,3 +1,5 @@
+import { failedResponse } from '.';
+
 const cachedFiles: { [key: string]: string } = {};
 
 type CodeSnippet = {
@@ -8,8 +10,6 @@ type ReaderResponse = {
     codeSnippet: CodeSnippet;
     trimmedColumnNumber: number | null;
 };
-
-const failedResponse = { codeSnippet: { 0: 'Could not read from file' }, trimmedColumnNumber: null };
 
 export function getCodeSnippet(url?: string, lineNumber?: number, columnNumber?: number): Promise<ReaderResponse> {
     return new Promise(resolve => {

@@ -136,7 +136,7 @@ export default class FlareClient {
         ]).then(result => {
             const [solutions, stacktrace] = result;
 
-            assert(stacktrace, "Couldn't generate stacktrace.", this.debug);
+            assert(stacktrace.length, "Couldn't generate stacktrace of this error: " + error, this.debug);
 
             return {
                 notifier: `Flare JavaScript client v${build.clientVersion}`,

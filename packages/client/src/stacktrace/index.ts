@@ -1,11 +1,31 @@
 import ErrorStackParser from 'error-stack-parser';
 import { getCodeSnippet } from './fileReader';
 import { Flare } from '../types';
+import { flare } from '..';
+import { assert } from '../util';
+
+export const failedResponse = { codeSnippet: { 0: 'Could not read from file' }, trimmedColumnNumber: null };
 
 export function createStackTrace(error: Error): Promise<Array<Flare.StackFrame>> {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         if (!hasStack(error)) {
-            return reject(undefined);
+            assert(false, "Couldn't generate stacktrace of below error:", flare.debug);
+
+            if (flare.debug) {
+                console.error(error);
+            }
+
+            return resolve([
+                {
+                    line_number: 0,
+                    column_number: 0,
+                    method: 'unknown',
+                    file: 'unknown',
+                    code_snippet: failedResponse.codeSnippet,
+                    trimmed_column_number: 0,
+                    class: 'unknown',
+                },
+            ]);
         }
 
         Promise.all(
