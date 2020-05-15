@@ -4,8 +4,6 @@ import { Flare } from '../types';
 import { flare } from '..';
 import { assert } from '../util';
 
-export const failedResponse = { codeSnippet: { 0: 'Could not read from file' }, trimmedColumnNumber: null };
-
 export function createStackTrace(error: Error): Promise<Array<Flare.StackFrame>> {
     return new Promise(resolve => {
         if (!hasStack(error)) {
@@ -21,8 +19,8 @@ export function createStackTrace(error: Error): Promise<Array<Flare.StackFrame>>
                     column_number: 0,
                     method: 'unknown',
                     file: 'unknown',
-                    code_snippet: failedResponse.codeSnippet,
-                    trimmed_column_number: 0,
+                    code_snippet: { 0: 'Could not read from file: stacktrace missing' },
+                    trimmed_column_number: null,
                     class: 'unknown',
                 },
             ]);

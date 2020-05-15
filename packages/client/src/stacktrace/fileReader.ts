@@ -1,5 +1,3 @@
-import { failedResponse } from '.';
-
 const cachedFiles: { [key: string]: string } = {};
 
 type CodeSnippet = {
@@ -14,12 +12,20 @@ type ReaderResponse = {
 export function getCodeSnippet(url?: string, lineNumber?: number, columnNumber?: number): Promise<ReaderResponse> {
     return new Promise(resolve => {
         if (!url || !lineNumber) {
-            return resolve(failedResponse);
+            return resolve({
+                codeSnippet: {
+                    0: `Could not read from file: missing file URL or line number. URL: ${url} lineNumber: ${lineNumber}`,
+                },
+                trimmedColumnNumber: null,
+            });
         }
 
         readFile(url).then(fileText => {
             if (!fileText) {
-                return resolve(failedResponse);
+                return resolve({
+                    codeSnippet: { 0: `Could not read from file: Error while opening file at URL ${url}` },
+                    trimmedColumnNumber: null,
+                });
             }
 
             return resolve(readLinesFromFile(fileText, lineNumber, columnNumber));
