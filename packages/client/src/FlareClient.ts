@@ -123,9 +123,7 @@ export default class FlareClient {
                 solutions: [],
             };
 
-            console.log(report.stacktrace);
-
-            /* this.sendReport(report); */
+            this.sendReport(report);
         });
     }
 
