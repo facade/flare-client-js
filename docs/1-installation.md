@@ -49,6 +49,26 @@ try {
 }
 ```
 
+## Sending logs to Flare
+
+If you don't have an error object, but you just want to send a simple string as a log to Flare, you can use the `reportMessage` method instead:
+
+```JS
+flare.reportMessage('log message');
+```
+
+This method has 2 optional parameters: a Flare context object, and an `exceptionClass` string:
+
+```JS
+flare.reportMessage(
+    'log message',
+    {
+        moreCustomContext: [1, 2, 3],
+    },
+    'CriticalLog',
+);
+```
+
 ## Important notes
 
 -   Errors in a development environment might not always be reported, this is normal. If you want to be sure the Flare client is set up correctly, try it out in a production build on your machine.
