@@ -103,6 +103,32 @@ export default class FlareClient {
         return this;
     }
 
+    public reportMessage(message: string, context: Flare.Context = {}, exceptionClass: string = 'Log'): void {
+        const seenAt = now();
+
+        createStackTrace(Error()).then(stacktrace => {
+            // The first item in the stacktrace is from this file, and irrelevant
+            stacktrace.shift();
+
+            const report: Flare.ErrorReport = {
+                notifier: `Flare JavaScript client v${build.clientVersion}`,
+                exception_class: exceptionClass,
+                seen_at: seenAt,
+                message: message,
+                language: 'javascript',
+                glows: this.glows,
+                context: collectContext({ ...context, ...this.context }),
+                stacktrace,
+                sourcemap_version_id: this.sourcemapVersion,
+                solutions: [],
+            };
+
+            console.log(report.stacktrace);
+
+            /* this.sendReport(report); */
+        });
+    }
+
     public report(
         error: Error,
         context: Flare.Context = {},
