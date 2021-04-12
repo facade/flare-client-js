@@ -1,18 +1,11 @@
 # Framework integrations
 
-If a framework you use is not yet supported, feel free to let us know, or write a custom integration for it yourself (we'll retweet you).
+If a framework you use is not yet supported, feel free to let us know, or write a custom integration for it yourself (we'll help you get it out there!).
 
 ## React ^16.0.0
 
-### Yarn
-
 ```
 yarn add @flareapp/flare-react
-```
-
-### NPM
-
-```
 npm install @flareapp/flare-react
 ```
 
@@ -21,7 +14,12 @@ React's error handling works similarly to how it works in vanilla JavaScript. Yo
 In your app's root file (`/src/App.js` for `creact-react-app`), wrap your entire component tree in the provided FlareErrorBoundary component:
 
 ```JSX
+import * as React from 'react';
+import { render } from 'react-dom';
+import { flare } from "@flareapp/flare-client";
 import { FlareErrorBoundary } from '@flareapp/flare-react';
+
+flare.light('your-project-key');
 
 render(
     <FlareErrorBoundary>
@@ -35,7 +33,7 @@ _Note: If you bundle React for development, you will see that many errors are re
 
 You should use a combination of Flare's and your own error boundaries, continue reading to find out how to report errors to Flare in your own error boundary components.
 
-## Reporting React errors in your own error boundaries
+### Reporting React errors in your own error boundaries
 
 If you have your own error boundary components, e.g. for displaying a fallback component when something goes wrong, the error won't bubble up to Flare's error boundary and the error won't be reported to the Flare app automatically.
 
@@ -51,25 +49,36 @@ export default class ErrorBoundary extends React.Component {
 }
 ```
 
-## Vue ^2.0.0
-
-### Yarn
+## Vue 2 / Vue 3
 
 ```
 yarn add @flareapp/flare-vue
-```
-
-### NPM
-
-```
 npm install @flareapp/flare-vue
 ```
 
-Vue uses a global error handler that we can easily plug into. Simply register the extension as a Vue plugin, in the same place where you created your Vue instance:
+Register the extension as a Vue plugin, you can do this in the same file where you create and mount your Vue instance:
+
+### Vue 3
 
 ```JS
+import { flare } from "@flareapp/flare-client";
+import { flareVue } from "@flareapp/flare-vue";
+
+flare.light('your-project-key');
+
+const app = createApp({ /* … */ });
+app.use(flareVue);
+app.mount('#app');
+```
+
+### Vue 2
+
+```JS
+import { flare } from "@flareapp/flare-client";
 import { flareVue } from "@flareapp/flare-vue";
 import Vue from 'vue';
+
+flare.light('your-project-key');
 
 Vue.use(flareVue);
 

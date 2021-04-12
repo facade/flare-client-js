@@ -2,15 +2,8 @@
 
 To start catching JavaScript errors in your production environment, install the client in your project:
 
-### Yarn
-
 ```
 yarn add @flareapp/flare-client
-```
-
-### NPM
-
-```
 npm install @flareapp/flare-client
 ```
 

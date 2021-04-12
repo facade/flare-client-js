@@ -10,15 +10,8 @@ If you're using Laravel Mix or Webpack (versions 3 or 4), you can use our [Webpa
 
 To start the installation, run this in your project:
 
-### Yarn
-
 ```
 yarn add @flareapp/flare-webpack-plugin-sourcemap --dev
-```
-
-### NPM
-
-```
 npm install @flareapp/flare-webpack-plugin-sourcemap --dev
 ```
 
