@@ -16,7 +16,7 @@ export function flareVue(Vue: Vue.VueConstructor) {
             flare,
             'Flare Vue Plugin: the Flare Client could not be found. ' +
                 'Errors in your Vue components will not be reported.',
-            flare.debug
+            true
         ) ||
         !assert(
             Vue && Vue.config,
