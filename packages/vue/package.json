@@ -30,7 +30,7 @@
     "license": "ISC",
     "peerDependencies": {
         "@flareapp/flare-client": "*",
-        "vue": "^2.0.0"
+        "vue": "^2.0.0 || ^3.0.0"
     },
     "devDependencies": {
         "@types/vue": "^2.0.0",
