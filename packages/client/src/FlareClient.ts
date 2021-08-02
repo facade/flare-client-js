@@ -29,6 +29,8 @@ export default class FlareClient {
 
     public debug: boolean = false;
 
+    public stage: string | undefined = undefined;
+
     public light(key: string = build.flareJsKey, debug = false): FlareClient {
         this.debug = debug;
 
@@ -121,6 +123,7 @@ export default class FlareClient {
                 stacktrace,
                 sourcemap_version_id: this.sourcemapVersion,
                 solutions: [],
+                stage: this.stage,
             };
 
             this.sendReport(report);
@@ -173,6 +176,7 @@ export default class FlareClient {
                 stacktrace,
                 sourcemap_version_id: this.sourcemapVersion,
                 solutions,
+                stage: this.stage,
             };
         });
     }

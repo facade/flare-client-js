@@ -8,6 +8,7 @@ export namespace Flare {
         reportingUrl: string;
         maxGlowsPerReport: number;
         maxReportsPerMinute: number;
+        stage?: string;
     };
 
     export type ErrorReport = {
@@ -21,6 +22,7 @@ export namespace Flare {
         stacktrace: Array<Flare.StackFrame>;
         sourcemap_version_id: string;
         solutions: Array<Flare.Solution>;
+        stage?: string;
     };
 
     export interface SolutionProviderExtraParameters {}
