@@ -1,6 +1,7 @@
 {
     "name": "@flareapp/flare-vue",
     "main": "dist/index.js",
+    "types": "dist/vue/src/index.d.ts",
     "version": "2.0.0",
     "description": "",
     "homepage": "https://flareapp.io",
