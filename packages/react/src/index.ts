@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode, Component } from 'react';
 import { assert } from '@flareapp/flare-client/src/util';
 
 interface Context {
@@ -8,10 +8,10 @@ interface Context {
 }
 
 interface Props {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
-export class FlareErrorBoundary extends React.Component {
+export class FlareErrorBoundary extends Component {
     flare = window.flare;
 
     constructor(props: Props) {
