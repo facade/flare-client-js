@@ -28,7 +28,7 @@
         "link-client": "yarn link @flareapp/flare-client"
     },
     "author": "adriaan@spatie.be",
-    "license": "ISC",
+    "license": "MIT",
     "devDependencies": {
         "@types/react": "^16.0.0",
         "react": "^16.0.0",

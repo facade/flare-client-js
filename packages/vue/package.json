@@ -28,7 +28,7 @@
         "link-client": "yarn link @flareapp/flare-client"
     },
     "author": "adriaan@spatie.be",
-    "license": "ISC",
+    "license": "MIT",
     "peerDependencies": {
         "@flareapp/flare-client": "*",
         "vue": "^2.0.0 || ^3.0.0"

@@ -1,5 +1,5 @@
 {
-    "license": "ISC",
+    "license": "MIT",
     "scripts": {
         "tswatch": "tsc --watch --noEmit",
         "prettier": "prettier --write '*.{js,ts,json}' 'packages/**/*.{js,ts,json}'",

@@ -26,7 +26,7 @@
         "install-deps": "yarn install"
     },
     "author": "adriaan@spatie.be",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
         "error-stack-parser": "^2.0.2"
     },
