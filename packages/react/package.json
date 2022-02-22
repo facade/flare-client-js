@@ -2,7 +2,7 @@
     "name": "@flareapp/flare-react",
     "main": "dist/index.js",
     "types": "dist/react/src/index.d.ts",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "",
     "homepage": "https://flareapp.io",
     "repository": {
