@@ -1,15 +1,11 @@
 module.exports = {
     entry: './src/index.ts',
 
-    experiments: {
-        outputModule: true,
-    },
     output: {
         filename: 'index.js',
         library: {
-            type: 'module',
+            type: 'umd',
         },
-        environment: { module: true },
     },
 
     resolve: {
