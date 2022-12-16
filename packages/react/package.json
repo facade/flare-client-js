@@ -36,7 +36,7 @@
     },
     "peerDependencies": {
         "@flareapp/flare-client": "*",
-        "react": "^16.0.0 || ^17.0.0"
+        "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
     },
     "gitHead": "06a5f5868cd22cb13780de27c6f655516c7cb3b5",
     "publishConfig": {
