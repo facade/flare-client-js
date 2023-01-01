@@ -32,7 +32,7 @@
     "devDependencies": {
         "@types/react": "^16.0.0",
         "react": "^16.0.0",
-        "ts-loader": "^6.2.2"
+        "ts-loader": "^9.4.2"
     },
     "peerDependencies": {
         "@flareapp/flare-client": "*",
