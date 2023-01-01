@@ -35,7 +35,7 @@
     },
     "devDependencies": {
         "@types/vue": "^2.0.0",
-        "ts-loader": "^6.2.2",
+        "ts-loader": "^9.4.2",
         "vue": "^2.0.0"
     },
     "gitHead": "e4aa2379d3117c9be8d803cd37a62ddefb418338",
