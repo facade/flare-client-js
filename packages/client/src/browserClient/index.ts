@@ -1,4 +1,8 @@
 export default function catchWindowErrors() {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
     const flare = window.flare;
 
     if (!window || !flare) {

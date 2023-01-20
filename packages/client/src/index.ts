@@ -4,7 +4,7 @@ export { readLinesFromFile } from './stacktrace/fileReader';
 
 export const flare = new FlareClient();
 
-if (window) {
+if (typeof window !== 'undefined' && window) {
     window.flare = flare;
 }
 
