@@ -38,7 +38,7 @@ function formatReactComponentStack(stack: String) {
     return stack.split(/\s*\n\s*/g).filter(line => line.length > 0);
 }
 
-export function reportReactError(error: Error, reactErrorInfo: React.ErrorInfo, flare: Flare) {
+export function reportReactError(error: Error, reactErrorInfo: React.ErrorInfo, flare: Flare | null) {
     if (flare) {
         const context: Context = {
             react: {

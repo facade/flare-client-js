@@ -22,7 +22,7 @@ export function flareVue(Vue: Vue.VueConstructor) {
             Vue && Vue.config,
             'Flare Vue Plugin: The Vue errorHandler could not be found. ' +
                 'Errors in your Vue components will not be reported.',
-            flare.debug
+            flare ? flare.debug : false
         )
     ) {
         return;
@@ -37,7 +37,7 @@ export function flareVue(Vue: Vue.VueConstructor) {
             vue: { info, componentName },
         };
 
-        flare.report(error, context, { vue: { vm, info } });
+        flare?.report(error, context, { vue: { vm, info } });
 
         if (typeof initialErrorHandler === 'function') {
             initialErrorHandler(error, vm, info);
