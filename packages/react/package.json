@@ -38,7 +38,7 @@
         "@flareapp/flare-client": "*",
         "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
     },
-    "gitHead": "e4aa2379d3117c9be8d803cd37a62ddefb418338",
+    "gitHead": "dbe29a58c68e2ff0075eacb338918bfe5f025176",
     "publishConfig": {
         "access": "public"
     }

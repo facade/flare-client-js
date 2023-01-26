@@ -12,7 +12,7 @@ interface Props {
 }
 
 export class FlareErrorBoundary extends Component {
-    flare = typeof window !== 'undefined' ? window.flare : undefined;
+    flare = typeof window !== 'undefined' ? window.flare : null;
 
     constructor(props: Props) {
         super(props);
