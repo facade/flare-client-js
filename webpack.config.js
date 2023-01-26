@@ -3,6 +3,7 @@ module.exports = {
 
     output: {
         filename: 'index.js',
+        globalObject: 'globalThis',
         library: {
             type: 'umd',
         },
