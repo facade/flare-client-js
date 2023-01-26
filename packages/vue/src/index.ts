@@ -9,7 +9,7 @@ interface Context {
 }
 
 export function flareVue(Vue: Vue.VueConstructor) {
-    const flare = window.flare;
+    const flare = typeof window !== 'undefined' ? window.flare : undefined;
 
     if (
         !assert(
