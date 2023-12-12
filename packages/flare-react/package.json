@@ -1,0 +1,34 @@
+{
+    "name": "@flareapp/flare-react",
+    "version": "4.0.0",
+    "description": "React client for flareapp.io",
+    "homepage": "https://flareapp.io",
+    "bugs": "https://github.com/facade/flare-client-js/issues",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/facade/flare-client-js.git"
+    },
+    "license": "MIT",
+    "author": "adriaan@spatie.be",
+    "main": "dist/index.js",
+    "types": "dist/react/src/index.d.ts",
+    "scripts": {
+        "dev": "npm run build",
+        "build": "npm-run-all --parallel build:*",
+        "esbuild": "esbuild src/index.ts --bundle",
+        "build:main": "npm run esbuild -- --outfile=dist/index.cjs.js --platform=node",
+        "build:minified": "npm run esbuild -- --outfile=dist/index.min.js --platform=browser --minify",
+        "build:module": "npm run esbuild -- --outfile=dist/index.mjs --platform=neutral",
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "react": "^18.0.0"
+    },
+    "peerDependencies": {
+        "@flareapp/flare-client": "*",
+        "react": "^16.0.0|^17.0.0|^18.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    }
+}
