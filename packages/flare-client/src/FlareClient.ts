@@ -6,6 +6,8 @@ import getSolutions from './solutions';
 import { Flare } from './types';
 
 export default class FlareClient {
+    public version: string = build.clientVersion;
+
     public config: Flare.Config = {
         key: '',
         reportingUrl: 'https://flareapp.io/api/reports',

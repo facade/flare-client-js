@@ -8,6 +8,7 @@ interface Context {
 }
 
 interface Props {
+    flare?: typeof FlareClient;
     children: ReactNode;
 }
 

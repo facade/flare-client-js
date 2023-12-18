@@ -1,6 +1,6 @@
 {
     "name": "@flareapp/flare-client",
-    "version": "4.0.0",
+    "version": "4.0.0-beta.0",
     "description": "JavaScript client for flareapp.io",
     "homepage": "https://flareapp.io",
     "bugs": {
@@ -12,16 +12,12 @@
     },
     "license": "MIT",
     "author": "adriaan@spatie.be",
-    "main": "dist/index.cjs.js",
-    "module": "dist/index.mjs",
-    "browser": "dist/index.min.js",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "dev": "npm run build",
-        "build": "npm-run-all --parallel build:*",
-        "esbuild": "esbuild src/index.ts --bundle --define:FLARE_JS_CLIENT_VERSION=\\\"$(node -p \"require('./package.json').version\")\\\"",
-        "build:main": "npm run esbuild -- --outfile=dist/index.cjs.js --platform=node",
-        "build:minified": "npm run esbuild -- --outfile=dist/index.min.js --platform=browser --minify",
-        "build:module": "npm run esbuild -- --outfile=dist/index.mjs --platform=neutral --external:error-stack-parser",
+        "build": "tsup src/index.ts --format cjs,esm --dts --env.FLARE_JS_CLIENT_VERSION=\\\"$(node -p \"require('./package.json').version\")\\\" --clean",
         "test": "vitest",
         "typecheck": "tsc"
     },
@@ -29,8 +25,7 @@
         "error-stack-parser": "^2.0.2"
     },
     "devDependencies": {
-        "esbuild": "^0.19.8",
-        "npm-run-all": "^4.1.5",
+        "tsup": "^8.0.1",
         "vitest": "^1.0.4"
     },
     "publishConfig": {
