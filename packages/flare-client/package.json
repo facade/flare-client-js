@@ -16,8 +16,8 @@
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "dev": "npm run build",
         "build": "tsup src/index.ts --format cjs,esm --dts --env.FLARE_JS_CLIENT_VERSION=\\\"$(node -p \"require('./package.json').version\")\\\" --clean",
+        "dev": "npm run build",
         "test": "vitest",
         "typecheck": "tsc"
     },
@@ -26,6 +26,7 @@
     },
     "devDependencies": {
         "tsup": "^8.0.1",
+        "typescript": "^5.3.3",
         "vitest": "^1.0.4"
     },
     "publishConfig": {

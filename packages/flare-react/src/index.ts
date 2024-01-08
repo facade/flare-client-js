@@ -12,7 +12,7 @@ interface Props {
     children: ReactNode;
 }
 
-export class FlareErrorBoundary extends Component {
+export class FlareErrorBoundary extends Component<Props> {
     flare = typeof window !== 'undefined' ? window.flare : null;
 
     constructor(props: Props) {
@@ -38,7 +38,7 @@ export class FlareErrorBoundary extends Component {
     }
 }
 
-function formatReactComponentStack(stack: String) {
+function formatReactComponentStack(stack: string) {
     return stack.split(/\s*\n\s*/g).filter((line) => line.length > 0);
 }
 
@@ -51,7 +51,7 @@ export function reportReactError(
         const context: Context = {
             react: {
                 componentStack: formatReactComponentStack(
-                    reactErrorInfo.componentStack,
+                    reactErrorInfo?.componentStack ?? '',
                 ),
             },
         };
