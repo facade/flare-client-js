@@ -25,7 +25,7 @@
         "fast-glob": "^3.2.12"
     },
     "devDependencies": {
-        "@flareapp/js": "^1.0.0",
+        "@flareapp/js": "file:../js",
         "@types/node": "^18.11.17",
         "typescript": "^5.3.3",
         "vite": "^4.0.0||^5.0.0"
