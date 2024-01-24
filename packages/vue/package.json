@@ -20,12 +20,13 @@
         "typescript": "exit 0"
     },
     "devDependencies": {
+        "@flareapp/js": "^1.0.0",
         "tsup": "^8.0.1",
         "typescript": "^5.3.3",
         "vue": "^3.0.0"
     },
     "peerDependencies": {
-        "@flareapp/js": "*",
+        "@flareapp/js": "^1.0.0",
         "vue": "^2.0.0||^3.0.0"
     },
     "publishConfig": {
