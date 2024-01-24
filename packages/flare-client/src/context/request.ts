@@ -1,10 +1,10 @@
 export default function request() {
     return {
         request: {
-            url: document.location.href,
-            useragent: navigator.userAgent,
-            referrer: document.referrer,
-            readyState: document.readyState,
+            url: window.document.location.href,
+            useragent: window.navigator.userAgent,
+            referrer: window.document.referrer,
+            readyState: window.document.readyState,
         },
     };
 }

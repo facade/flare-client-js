@@ -1,11 +1,11 @@
 export default function requestData() {
-    if (!location.search) {
+    if (!window.location.search) {
         return {};
     }
 
     const queryString: { [key: string]: string } = {};
 
-    new URLSearchParams(location.search).forEach((value, key) => {
+    new URLSearchParams(window.location.search).forEach((value, key) => {
         queryString[key] = value;
     });
 

@@ -231,18 +231,24 @@ export default class FlareClient {
                     return;
                 }
 
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', this.config.reportingUrl);
-
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-                xhr.setRequestHeader('x-api-token', this.config.key);
-
-                xhr.send(
-                    flatJsonStringify({
+                fetch(this.config.reportingUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'x-api-token': this.config.key,
+                    },
+                    body: flatJsonStringify({
                         ...reportReadyForSubmit,
                         key: this.config.key,
                     }),
+                }).then(
+                    (response) => {
+                        if (response.status !== 204) {
+                            response.text().then((text) => console.error(text));
+                        }
+                    },
+                    (error) => console.error(error),
                 );
 
                 this.reportedErrorsTimestamps.push(Date.now());

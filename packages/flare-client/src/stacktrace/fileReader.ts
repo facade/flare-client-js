@@ -42,32 +42,19 @@ export function getCodeSnippet(
 }
 
 function readFile(url: string): Promise<string | null> {
-    return new Promise((resolve) => {
-        const rawFile = new XMLHttpRequest();
+    if (cachedFiles[url]) {
+        return Promise.resolve(cachedFiles[url]);
+    }
 
-        if (cachedFiles[url]) {
-            return resolve(cachedFiles[url]);
-        }
-
-        rawFile.open('GET', url, false);
-        rawFile.onreadystatechange = () => {
-            if (rawFile.readyState === 4) {
-                if (rawFile.status === 200 || rawFile.status == 0) {
-                    cachedFiles[url] = rawFile.responseText;
-
-                    return resolve(rawFile.responseText);
-                }
+    return fetch(url)
+        .then((response) => {
+            if (response.status !== 200) {
+                return null;
             }
 
-            return resolve(null);
-        };
-
-        try {
-            rawFile.send(null);
-        } catch (error) {
-            return resolve(null);
-        }
-    });
+            return response.text();
+        })
+        .catch(() => null);
 }
 
 export function readLinesFromFile(
