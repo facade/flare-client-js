@@ -1,6 +1,6 @@
 {
     "name": "@flareapp/vue",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2",
     "description": "Vue client for flareapp.io",
     "homepage": "https://flareapp.io",
     "bugs": "https://github.com/facade/flare-client-js/issues",
@@ -26,7 +26,7 @@
         "vue": "^3.0.0"
     },
     "peerDependencies": {
-        "@flareapp/js": "^1.0.0",
+        "@flareapp/js": "^1.0.0-beta",
         "vue": "^2.0.0||^3.0.0"
     },
     "publishConfig": {

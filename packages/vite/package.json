@@ -1,6 +1,6 @@
 {
     "name": "@flareapp/vite",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0-beta.2",
     "description": "Vite plugin for flareapp.io",
     "homepage": "https://flareapp.io",
     "bugs": "https://github.com/facade/flare-client-js/issues",
@@ -25,7 +25,6 @@
         "fast-glob": "^3.2.12"
     },
     "devDependencies": {
-        "@flareapp/js": "file:../js",
         "@types/node": "^18.11.17",
         "typescript": "^5.3.3",
         "vite": "^4.0.0||^5.0.0"
