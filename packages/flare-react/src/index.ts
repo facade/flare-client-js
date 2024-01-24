@@ -1,5 +1,5 @@
-import { ReactNode, Component } from 'react';
-import { FlareClient } from '@flareapp/flare-client';
+import { ReactNode, Component, PropsWithChildren } from 'react';
+import { flare } from '@flareapp/flare-client';
 
 interface Context {
     react: {
@@ -7,47 +7,8 @@ interface Context {
     };
 }
 
-interface Props {
-    flare?: typeof FlareClient;
-    children: ReactNode;
-}
-
-export class FlareErrorBoundary extends Component<Props> {
-    flare = typeof window !== 'undefined' ? window.flare : null;
-
-    constructor(props: Props) {
-        super(props);
-
-        if (props.flare) {
-            this.flare = props.flare;
-        }
-
-        if (!this.flare) {
-            throw new Error(
-                'Flare React Plugin: the Flare Client could not be found. Errors in your React components will not be reported.',
-            );
-        }
-    }
-
+export class FlareErrorBoundary extends Component<PropsWithChildren> {
     componentDidCatch(error: Error, reactErrorInfo: React.ErrorInfo) {
-        reportReactError(error, reactErrorInfo, this.flare);
-    }
-
-    render() {
-        return this.props.children;
-    }
-}
-
-function formatReactComponentStack(stack: string) {
-    return stack.split(/\s*\n\s*/g).filter((line) => line.length > 0);
-}
-
-export function reportReactError(
-    error: Error,
-    reactErrorInfo: React.ErrorInfo,
-    flare: Flare | null,
-) {
-    if (flare) {
         const context: Context = {
             react: {
                 componentStack: formatReactComponentStack(
@@ -58,4 +19,12 @@ export function reportReactError(
 
         flare.report(error, context, { react: { errorInfo: reactErrorInfo } });
     }
+
+    render() {
+        return this.props.children;
+    }
+}
+
+function formatReactComponentStack(stack: string) {
+    return stack.split(/\s*\n\s*/g).filter((line) => line.length > 0);
 }
