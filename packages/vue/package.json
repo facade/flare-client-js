@@ -1,7 +1,7 @@
 {
-    "name": "@flareapp/flare-react",
-    "version": "4.0.0-beta.0",
-    "description": "React client for flareapp.io",
+    "name": "@flareapp/vue",
+    "version": "1.0.0-beta.0",
+    "description": "Vue client for flareapp.io",
     "homepage": "https://flareapp.io",
     "bugs": "https://github.com/facade/flare-client-js/issues",
     "repository": {
@@ -14,20 +14,19 @@
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
     "scripts": {
-        "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+        "build": "tsup src/index.js --format cjs,esm --dts --clean",
         "dev": "npm run build",
         "test": "exit 0",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "exit 0"
     },
     "devDependencies": {
-        "@types/react": "^18.2.47",
-        "react": "^18.0.0",
         "tsup": "^8.0.1",
-        "typescript": "^5.3.3"
+        "typescript": "^5.3.3",
+        "vue": "^3.0.0"
     },
     "peerDependencies": {
-        "@flareapp/flare-client": "*",
-        "react": "^16.0.0||^17.0.0||^18.0.0"
+        "@flareapp/js": "*",
+        "vue": "^2.0.0||^3.0.0"
     },
     "publishConfig": {
         "access": "public"

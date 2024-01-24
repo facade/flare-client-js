@@ -1,4 +1,4 @@
-import { flare } from '@flareapp/flare-client';
+import { flare } from '@flareapp/js';
 
 export function flareVue(app) {
     const initialErrorHandler = app.config.errorHandler;

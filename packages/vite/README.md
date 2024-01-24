@@ -1,8 +1,8 @@
 # Vite plugin for sending sourcemaps to Flare
 
-The Flare Vite plugin helps you send sourcemaps of your compiled JavaScript code to Flare. This way, reports sent using the `@flareapp/flare-client` will be formatted correctly.
+The Flare Vite plugin helps you send sourcemaps of your compiled JavaScript code to Flare. This way, reports sent using the `@flareapp/js` will be formatted correctly.
 
-Additionally, it automatically passes the Flare API key to `@flareapp/flare-client`. This way, `flare.light()` works without any additional configuration.
+Additionally, it automatically passes the Flare API key to `@flareapp/js`. This way, `flare.light()` works without any additional configuration.
 
 Check the JavaScript error tracking section in [the Flare documentation](https://flareapp.io/docs/javascript-error-tracking/installation) for more information.
 
@@ -11,15 +11,15 @@ Check the JavaScript error tracking section in [the Flare documentation](https:/
 Install the plugin using NPM or Yarn:
 
 ```bash
-yarn add @flareapp/vite-plugin-sourcemap-uploader
+yarn add @flareapp/vite
 # or
-npm install @flareapp/vite-plugin-sourcemap-uploader
+npm install @flareapp/vite
 ```
 Next, add the plugin to your `vite.config.js` file:
 
 ```js
 import { defineConfig } from 'vite';
-import flareSourcemapUploader from '@flareapp/vite-plugin-sourcemap-uploader';
+import flareSourcemapUploader from '@flareapp/vite';
 
 export default defineConfig({
     plugins: [

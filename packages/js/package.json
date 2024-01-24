@@ -1,6 +1,6 @@
 {
-    "name": "@flareapp/flare-client",
-    "version": "4.0.0-beta.0",
+    "name": "@flareapp/js",
+    "version": "1.0.0-beta.0",
     "description": "JavaScript client for flareapp.io",
     "homepage": "https://flareapp.io",
     "bugs": {

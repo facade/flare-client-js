@@ -162,8 +162,7 @@ export default function flareSourcemapUploader({
 }
 
 function flareLog(message: string, isError = false) {
-    const formattedMessage =
-        '@flareapp/vite-plugin-sourcemap-uploader: ' + message;
+    const formattedMessage = '@flareapp/vite: ' + message;
 
     if (isError) {
         console.error(formattedMessage);
