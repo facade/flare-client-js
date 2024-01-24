@@ -5,8 +5,8 @@
     ],
     "scripts": {
         "build": "npm run build --workspaces",
-        "test": "npm run test --workspaces",
-        "typescript": "npm run typescript --workspaces",
+        "test": "npm run test --workspaces --if-present",
+        "typescript": "npm run typescript --workspaces --if-present",
         "format": "prettier --write \"**/*.{js,json,vue,ts,tsx}\"",
         "prepare": "husky install"
     },

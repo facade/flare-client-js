@@ -16,7 +16,6 @@
     "scripts": {
         "prepublishOnly": "npm run build",
         "build": "tsup src/index.ts --format cjs,esm --dts --clean",
-        "test": "exit 0",
         "typescript": "tsc"
     },
     "dependencies": {

@@ -15,9 +15,7 @@
     "types": "./dist/index.d.ts",
     "scripts": {
         "prepublishOnly": "npm run build",
-        "build": "tsup src/index.js --format cjs,esm --dts --clean",
-        "test": "exit 0",
-        "typescript": "exit 0"
+        "build": "tsup src/index.js --format cjs,esm --dts --clean"
     },
     "devDependencies": {
         "@flareapp/js": "file:../js",
