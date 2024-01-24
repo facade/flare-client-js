@@ -16,6 +16,7 @@
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts --clean",
         "dev": "npm run build",
+        "test": "exit 0",
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {

@@ -18,7 +18,7 @@
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts --env.FLARE_JS_CLIENT_VERSION=\\\"$(node -p \"require('./package.json').version\")\\\" --clean",
         "dev": "npm run build",
-        "test": "vitest",
+        "test": "vitest run",
         "typecheck": "tsc"
     },
     "dependencies": {
