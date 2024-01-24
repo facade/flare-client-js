@@ -19,7 +19,7 @@
         "build": "tsup src/index.ts --format cjs,esm --dts --env.FLARE_JS_CLIENT_VERSION=\\\"$(node -p \"require('./package.json').version\")\\\" --clean",
         "dev": "npm run build",
         "test": "vitest run",
-        "typecheck": "tsc"
+        "typescript": "tsc"
     },
     "dependencies": {
         "error-stack-parser": "^2.0.2"

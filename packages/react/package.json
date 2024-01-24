@@ -17,7 +17,7 @@
         "build": "tsup src/index.ts --format cjs,esm --dts --clean",
         "dev": "npm run build",
         "test": "exit 0",
-        "typecheck": "tsc --noEmit"
+        "typescript": "tsc --noEmit"
     },
     "devDependencies": {
         "@types/react": "^18.2.47",
