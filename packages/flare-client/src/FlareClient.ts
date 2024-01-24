@@ -245,7 +245,9 @@ export default class FlareClient {
                 }).then(
                     (response) => {
                         if (response.status !== 204) {
-                            response.text().then((text) => console.error(text));
+                            console.error(
+                                `Received response with status ${response.status} from Flare`,
+                            );
                         }
                     },
                     (error) => console.error(error),
