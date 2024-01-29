@@ -13,6 +13,12 @@
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        }
+    },
     "scripts": {
         "prepublishOnly": "npm run build",
         "build": "tsup src/index.ts --format cjs,esm --dts --clean",
