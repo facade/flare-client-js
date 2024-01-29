@@ -1,6 +1,6 @@
 {
     "name": "@flareapp/vue",
-    "version": "1.0.0-beta.4",
+    "version": "1.0.0-beta.5",
     "description": "Vue client for flareapp.io",
     "homepage": "https://flareapp.io",
     "bugs": "https://github.com/facade/flare-client-js/issues",
